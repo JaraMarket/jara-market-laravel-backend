@@ -2,19 +2,13 @@
 
 namespace App\Services;
 
-use App\Notifications\WalletNotification;
-use Carbon\Carbon;
-use App\Utils\Util;
+use App\Enums\Account\AccountTransactionTypeEnum;
+use App\Models\TransactionLog;
 use App\Models\User;
 use App\Models\Wallet;
-use App\Models\PaymentLog;
-use App\Models\TransactionLog;
+use App\Utils\Util;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Enums\TransactionStatusEnum;
-use App\Exceptions\GeneralException;
-use App\Contracts\PaymentGatewayInterface;
-use App\Contracts\UserRepositoryInterface;
-use App\Enums\Account\AccountTransactionTypeEnum;
 
 class TransactionLogService
 {
@@ -36,7 +30,7 @@ class TransactionLogService
 
     public static function get_old_balance(int $account_owner_id, string $account_owner_type, ?int $wallet_id = null)
     {
-        return (new TransactionLogService())->get_account_owner($account_owner_type, $account_owner_id, $wallet_id)?->latest('id')?->first()?->new_balance ?? 0;
+        return (new TransactionLogService)->get_account_owner($account_owner_type, $account_owner_id, $wallet_id)?->latest('id')?->first()?->new_balance ?? 0;
     }
 
     public static function debit(
@@ -50,13 +44,13 @@ class TransactionLogService
     ) {
 
         $wallet = Wallet::where('user_id', $account_owner_id)->first();
-        $old_balance = $wallet->balance;//self::get_old_balance($account_owner_id, $account_owner_type, $wallet?->id);
+        $old_balance = $wallet->balance; // self::get_old_balance($account_owner_id, $account_owner_type, $wallet?->id);
         $new_balance = $old_balance - $amount;
 
         DB::beginTransaction();
 
         $wallet?->update(['balance' => $new_balance]);
-        
+
         $account = TransactionLog::create([
             'account_owner_id' => $account_owner_id,
             'account_owner_type' => $account_owner_type,
@@ -68,16 +62,17 @@ class TransactionLogService
             'old_balance' => $old_balance,
             'new_balance' => $new_balance,
             'wallet_id' => $wallet?->id,
-            'currency'  => $currency,
+            'currency' => $currency,
             'comment' => $comment,
             'is_refund' => false,
-            'has_refund' => false
+            'has_refund' => false,
         ]);
 
         DB::commit();
+
         return $account;
     }
-    
+
     public static function credit(
         int $account_owner_id,
         string $account_owner_type,
@@ -90,11 +85,11 @@ class TransactionLogService
         $wallet = Wallet::where('user_id', $account_owner_id)->first();
         $old_balance = $wallet->balance ?? 0;
         $new_balance = $old_balance + $amount;
-    
+
         DB::beginTransaction();
-    
+
         $wallet?->update(['balance' => $new_balance]);
-    
+
         $account = TransactionLog::create([
             'account_owner_id' => $account_owner_id,
             'account_owner_type' => $account_owner_type,
@@ -106,16 +101,16 @@ class TransactionLogService
             'old_balance' => $old_balance,
             'new_balance' => $new_balance,
             'wallet_id' => $wallet?->id,
-            'currency'  => $currency,
+            'currency' => $currency,
             'comment' => $comment,
             'is_refund' => true,
             'has_refund' => false,
         ]);
-    
+
         DB::commit();
+
         return $account;
     }
-    
 
     public function get_transactions_by_date_range(string $user_type, int $user_id, ?string $start = null, ?string $end = null)
     {

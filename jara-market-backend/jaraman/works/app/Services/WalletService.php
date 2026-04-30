@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use App\Enums\WalletTransactionTypeEnum;
+use App\Models\TransactionLog;
+use App\Models\User;
+use App\Notifications\WalletNotification;
 use App\Services\Firebase\FirebaseNotificationService;
 use App\Services\PaymentGateways\Paystack;
-use App\Enums\WalletTransactionTypeEnum;
-use App\Models\User;
-use App\Models\TransactionLog;
-use App\Notifications\WalletNotification;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -40,16 +40,16 @@ class WalletService
                 null, null, $data['currency'] ?? 'NGN', $data['remark'] ?? 'Bank withdrawal'
             );
 
-            $amount     = (float) $data['amount'];
+            $amount = (float) $data['amount'];
             $newBalance = (float) $user->wallet->fresh()->balance;
 
             $this->firebase->sendToUser(
                 $user,
                 'Withdrawal Initiated',
-                '₦' . number_format($amount, 2) . ' withdrawal has been initiated.',
+                '₦'.number_format($amount, 2).' withdrawal has been initiated.',
                 [
-                    'type'      => 'withdrawal_initiated',
-                    'amount'    => (string) $amount,
+                    'type' => 'withdrawal_initiated',
+                    'amount' => (string) $amount,
                     'reference' => $transfer->reference ?? '',
                 ]
             );

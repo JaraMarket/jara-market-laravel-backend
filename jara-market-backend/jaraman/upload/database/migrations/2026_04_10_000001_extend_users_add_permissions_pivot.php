@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\State;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -53,7 +54,7 @@ return new class extends Migration
         Schema::dropIfExists('user_permissions');
 
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeignIdFor(\App\Models\State::class);
+            $table->dropForeignIdFor(State::class);
             $table->dropColumn(['state_id', 'fcm_token', 'is_verified']);
         });
     }

@@ -9,7 +9,7 @@ class HttpMacro
     public function paystack()
     {
         return function () {
-            $url    = config('app.paystack_url', 'https://api.paystack.co');
+            $url = config('app.paystack_url', 'https://api.paystack.co');
             $secret = config('app.paystack_secret_key');
 
             if (empty($secret)) {
@@ -37,7 +37,7 @@ class HttpMacro
     public function flutterwave()
     {
         return function () {
-            $url    = config('app.flutterwave_url', 'https://api.flutterwave.com/v3');
+            $url = config('app.flutterwave_url', 'https://api.flutterwave.com/v3');
             $secret = config('app.flutterwave_secret_key');
 
             return Http::withToken($secret ?? '')

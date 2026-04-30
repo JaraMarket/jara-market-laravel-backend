@@ -10,7 +10,7 @@ enum TransactionStatusEnum: string
 {
     use InvokableCases, Names, Values;
 
-    case PENDING            = 'pending';
-    case FAILED             = 'failed';
+    case PENDING = 'pending';
+    case FAILED = 'failed';
     case PAYMENT_SUCCESSFUL = 'success';
 }

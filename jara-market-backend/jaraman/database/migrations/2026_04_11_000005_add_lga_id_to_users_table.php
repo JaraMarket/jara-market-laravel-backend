@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Lga;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +12,10 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             if (! Schema::hasColumn('users', 'lga_id')) {
                 $table->foreignId('lga_id')
-                      ->nullable()
-                      ->constrained('lgas')
-                      ->nullOnDelete()
-                      ->after('state_id');
+                    ->nullable()
+                    ->constrained('lgas')
+                    ->nullOnDelete()
+                    ->after('state_id');
             }
         });
     }
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeignIdFor(\App\Models\Lga::class);
+            $table->dropForeignIdFor(Lga::class);
             $table->dropColumn('lga_id');
         });
     }

@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PaymentMethodEnum;
+use App\Enums\ShopSizeEnum;
 use App\Enums\UserPermissionsEnum;
 use App\Models\User;
-use App\Enums\ShopSizeEnum;
-use Illuminate\Validation\Rule;
-use App\Enums\PaymentMethodEnum;
-use Illuminate\Validation\Rules\Enum;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class UserProfileRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class UserProfileRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules()
     {
@@ -53,26 +54,26 @@ class UserProfileRequest extends FormRequest
         }
 
         return [
-            "firstname"    => "nullable|string|max:30",
-            "lastname"     => "nullable|string|max:30",
+            'firstname' => 'nullable|string|max:30',
+            'lastname' => 'nullable|string|max:30',
             'phone_number' => $phoneRule,
 
-            'country_id'   => ['nullable', 'exists:countries,id'],
-            'profile_picture'  => 'nullable|mimes:jpg,jpeg,png|max:2048',
+            'country_id' => ['nullable', 'exists:countries,id'],
+            'profile_picture' => 'nullable|mimes:jpg,jpeg,png|max:2048',
 
-            'business_name'    => 'nullable|string|max:255',
+            'business_name' => 'nullable|string|max:255',
             'business_address' => 'nullable|string|max:255',
-            'shop_size'        => ['nullable', Rule::in(ShopSizeEnum::values())],
+            'shop_size' => ['nullable', Rule::in(ShopSizeEnum::values())],
 
-            'latitude'         => 'nullable',
-            'longitude'        => 'nullable',
+            'latitude' => 'nullable',
+            'longitude' => 'nullable',
 
-            'bank_id'          => 'nullable|exists:banks,id',
-            'account_number'   => 'nullable',
-            'account_name'     => 'nullable',
+            'bank_id' => 'nullable|exists:banks,id',
+            'account_number' => 'nullable',
+            'account_name' => 'nullable',
 
-            'payment_method'   => ['nullable', new Enum(PaymentMethodEnum::class)],
-            'is_active'        => ['nullable', 'boolean'],
+            'payment_method' => ['nullable', new Enum(PaymentMethodEnum::class)],
+            'is_active' => ['nullable', 'boolean'],
         ];
     }
 
@@ -81,10 +82,10 @@ class UserProfileRequest extends FormRequest
         return [
             'firstname.required' => 'First name is required.',
             'firstname.max' => 'First name cannot be more than 30 characters.',
-            
+
             'lastname.required' => 'Last name is required.',
             'lastname.max' => 'Last name cannot be more than 30 characters.',
-                        
+
             'phone_number.unique' => 'Phone number is already registered.',
         ];
     }

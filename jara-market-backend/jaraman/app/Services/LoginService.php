@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use Exception;
-use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Traits\AuthenticateUserTrait;
-
+use Illuminate\Http\Request;
 
 class LoginService
 {
@@ -37,6 +35,7 @@ class LoginService
     {
         $user = $this->authenticate($request);
         $user->update(['last_login' => now()]);
+
         return $this->mergeUserWithToken($user);
     }
 
@@ -49,9 +48,8 @@ class LoginService
             [
                 'token' => $token,
                 'token_type' => 'Bearer',
-                'expires_in' => 3600
+                'expires_in' => 3600,
             ]
         );
     }
-
 }

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Enums\PinTypeEnum;
 use App\Http\Requests\PinRequest;
 use App\Notifications\PinNotification;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Http\Response;
-use Exception;
 
 class PinController extends Controller
 {
@@ -20,7 +20,7 @@ class PinController extends Controller
     {
         try {
             $user = $request->user();
-            if (!$user) {
+            if (! $user) {
                 return response()->errorResponse('User not found.', Response::HTTP_NOT_FOUND);
             }
 
@@ -32,6 +32,7 @@ class PinController extends Controller
             return response()->success('Transaction PIN set successfully.', [], Response::HTTP_OK);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Failed to set PIN.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -43,11 +44,11 @@ class PinController extends Controller
     {
         try {
             $user = $request->user();
-            if (!$user) {
+            if (! $user) {
                 return response()->errorResponse('User not found.', Response::HTTP_NOT_FOUND);
             }
 
-            if (!Hash::check($request->pin, $user->pin)) {
+            if (! Hash::check($request->pin, $user->pin)) {
                 return response()->errorResponse('Invalid PIN.', Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
@@ -55,17 +56,18 @@ class PinController extends Controller
                 $token = Str::random(60);
                 $user->remember_pin_token = $token;
                 $user->pin_token_expiry = now()->addDays(7);
-                $user->save();         
+                $user->save();
 
                 return response()->success('PIN verified successfully.', [
-                    'pin_token'  => $token,
-                    'expires_at' => $user->pin_token_expiry
+                    'pin_token' => $token,
+                    'expires_at' => $user->pin_token_expiry,
                 ], Response::HTTP_OK);
             }
 
             return response()->success('PIN verified successfully.', [], Response::HTTP_OK);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Failed to verify PIN.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -77,22 +79,24 @@ class PinController extends Controller
     {
         try {
             $user = $request->user();
-            if (!$user) {
+            if (! $user) {
                 return response()->errorResponse('User not found.', Response::HTTP_NOT_FOUND);
             }
 
             $token = $request->header('X-PIN-TOKEN');
 
             if ($user->remember_pin_token === $token && now()->lessThan($user->pin_token_expiry)) {
-                $user->notify(new PinNotification(PinTypeEnum::TOKEN_VALIDATED()));    
+                $user->notify(new PinNotification(PinTypeEnum::TOKEN_VALIDATED()));
+
                 return response()->success('PIN token is valid.', [], Response::HTTP_OK);
             }
 
-            $user->notify(new PinNotification(PinTypeEnum::TOKEN_INVALID()));    
+            $user->notify(new PinNotification(PinTypeEnum::TOKEN_INVALID()));
 
             return response()->errorResponse('Invalid or expired PIN token.', Response::HTTP_UNAUTHORIZED);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Failed to validate PIN token.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -104,7 +108,7 @@ class PinController extends Controller
     {
         try {
             $user = $request->user();
-            if (!$user) {
+            if (! $user) {
                 return response()->errorResponse('User not found.', Response::HTTP_NOT_FOUND);
             }
 
@@ -117,6 +121,7 @@ class PinController extends Controller
             return response()->success('PIN token cleared.', [], Response::HTTP_OK);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Failed to clear PIN token.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -128,7 +133,7 @@ class PinController extends Controller
     {
         try {
             $user = $request->user();
-            if (!$user) {
+            if (! $user) {
                 return response()->errorResponse('User not found.', Response::HTTP_NOT_FOUND);
             }
 
@@ -137,11 +142,12 @@ class PinController extends Controller
             $user->pin_reset_expiry = now()->addMinutes(5);
             $user->save();
 
-            $user->notify(new PinNotification(PinTypeEnum::RESET_REQUEST(),$token, $user->pin_reset_expiry));
+            $user->notify(new PinNotification(PinTypeEnum::RESET_REQUEST(), $token, $user->pin_reset_expiry));
 
             return response()->success('PIN reset token sent successfully.', [], Response::HTTP_OK);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Failed to request PIN reset.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -153,7 +159,7 @@ class PinController extends Controller
     {
         try {
             $user = $request->user();
-            if (!$user) {
+            if (! $user) {
                 return response()->errorResponse('User not found.', Response::HTTP_NOT_FOUND);
             }
 
@@ -174,6 +180,7 @@ class PinController extends Controller
             return response()->success('Transaction PIN reset successfully.', [], Response::HTTP_OK);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Failed to reset PIN.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

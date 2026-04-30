@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Exception;
 use App\Http\Resources\NotificationResource;
+use Exception;
+use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
@@ -22,17 +22,17 @@ class NotificationController extends Controller
                 ->take(15)
                 ->get()
                 ->map(fn ($n) => [
-                    'id'         => $n->id,
-                    'type'       => class_basename($n->type),
-                    'title'      => $n->data['type']    ?? 'Notification',
-                    'message'    => $n->data['message'] ?? null,
-                    'is_read'    => ! is_null($n->read_at),
+                    'id' => $n->id,
+                    'type' => class_basename($n->type),
+                    'title' => $n->data['type'] ?? 'Notification',
+                    'message' => $n->data['message'] ?? null,
+                    'is_read' => ! is_null($n->read_at),
                     'created_at' => $n->created_at->diffForHumans(),
                 ]);
 
             return response()->json([
                 'status' => true,
-                'data'   => $notifications,
+                'data' => $notifications,
                 'unread' => $user->unreadNotifications()->count(),
             ]);
         } catch (Exception $e) {
@@ -68,7 +68,7 @@ class NotificationController extends Controller
     public function markAsRead(Request $request, $id)
     {
         try {
-            $user         = auth()->user();
+            $user = auth()->user();
             $notification = $user->notifications()->where('id', $id)->firstOrFail();
             $notification->markAsRead();
 
@@ -81,6 +81,7 @@ class NotificationController extends Controller
             if ($request->expectsJson() || $request->ajax()) {
                 return response()->json(['status' => false], 500);
             }
+
             return back();
         }
     }

@@ -2,25 +2,21 @@
 
 namespace App\Notifications;
 
-
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class UserCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
-    { }
+    public function __construct() {}
 
     /**
      * Get the notification's delivery channels.
@@ -37,16 +33,16 @@ class UserCreatedNotification extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
-        $subject = "Your Account Created Successfully"; 
-        
+        $subject = 'Your Account Created Successfully';
+
         return (new MailMessage)
             ->subject($subject)
             ->markdown('emails.user_registered', [
-                'user'  => $notifiable
+                'user' => $notifiable,
             ]);
     }
 
@@ -55,11 +51,10 @@ class UserCreatedNotification extends Notification implements ShouldQueue
         return [
             'message' => "Your Account {$notifiable->name} was created successfully.",
             'user_id' => $notifiable->id,
-            'email'   => $notifiable->email,
+            'email' => $notifiable->email,
         ];
     }
 
-    
     /**
      * Get the array representation of the notification.
      *
@@ -71,7 +66,7 @@ class UserCreatedNotification extends Notification implements ShouldQueue
         return [
             'message' => "Your account {$notifiable->name} was created successfully.",
             'user_id' => $notifiable->id,
-            'email'   => $notifiable->email,
+            'email' => $notifiable->email,
         ];
     }
 }

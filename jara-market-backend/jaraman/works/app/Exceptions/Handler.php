@@ -2,14 +2,12 @@
 
 namespace App\Exceptions;
 
-use App\Http\Responses\ApiResponse;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -64,7 +62,7 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'success' => false,
                     'message' => $e->getMessage(),
-                    'errors'  => $e->errors(),
+                    'errors' => $e->errors(),
                 ], 422);
             }
 
@@ -92,6 +90,7 @@ class Handler extends ExceptionHandler
             /* ── 4. Model not found → 404 ── */
             if ($e instanceof ModelNotFoundException) {
                 $model = class_basename($e->getModel());
+
                 return response()->json([
                     'success' => false,
                     'message' => "{$model} not found.",

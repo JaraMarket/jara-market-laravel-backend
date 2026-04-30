@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Bank;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class FetchBanks extends Command
 {

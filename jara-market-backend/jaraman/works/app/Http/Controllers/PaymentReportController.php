@@ -18,9 +18,9 @@ class PaymentReportController extends Controller
             ->get();
 
         $totalPayments = $payments->sum('amount');
-        $paymentsByStatus = $payments->groupBy('status')->map(fn($s) => $s->count());
+        $paymentsByStatus = $payments->groupBy('status')->map(fn ($s) => $s->count());
 
-        return view('payments.index', compact('payments','totalPayments','paymentsByStatus','startDate','endDate'));
+        return view('payments.index', compact('payments', 'totalPayments', 'paymentsByStatus', 'startDate', 'endDate'));
     }
 
     public function export(Request $request)
@@ -49,7 +49,7 @@ class PaymentReportController extends Controller
                     $payment->created_at->format('Y-m-d H:i:s'),
                     $payment->owner->name,
                     $amt,
-                    $payment->status,                    
+                    $payment->status,
                 ]);
             }
             fclose($file);

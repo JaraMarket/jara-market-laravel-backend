@@ -39,4 +39,4 @@ interface BaseRepositoryInterface
      * Get instance of model query builder.
      */
     public function queryBuilder(): Builder;
-}//end interface
+}// end interface

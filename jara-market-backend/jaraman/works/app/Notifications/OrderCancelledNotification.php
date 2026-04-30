@@ -4,9 +4,9 @@ namespace App\Notifications;
 
 use App\Enums\UserPermissionsEnum;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class OrderCancelledNotification extends Notification implements ShouldQueue
 {
@@ -24,8 +24,8 @@ class OrderCancelledNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject('Order Cancelled')
             ->markdown('emails.order_cancelled', [
-                'user'    => $notifiable,
-                'order'   => $this->order,
+                'user' => $notifiable,
+                'order' => $this->order,
                 'message' => $this->getMessage($notifiable),
             ]);
     }
@@ -34,12 +34,12 @@ class OrderCancelledNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'Order Cancelled',
-            'body'  => $this->getMessage($notifiable),
-            'data'  => [
+            'body' => $this->getMessage($notifiable),
+            'data' => [
                 'order_id' => $this->order->id,
-                'status'   => $this->order->status,
-                'total'    => $this->order->total,
-                'type'     => 'order.cancelled',
+                'status' => $this->order->status,
+                'total' => $this->order->total,
+                'type' => 'order.cancelled',
             ],
         ];
     }
@@ -57,11 +57,11 @@ class OrderCancelledNotification extends Notification implements ShouldQueue
     private function payload($notifiable): array
     {
         return [
-            'message'  => $this->getMessage($notifiable),
+            'message' => $this->getMessage($notifiable),
             'order_id' => $this->order->id,
-            'status'   => $this->order->status,
-            'total'    => $this->order->total,
-            'user_id'  => $notifiable->id,
+            'status' => $this->order->status,
+            'total' => $this->order->total,
+            'user_id' => $notifiable->id,
         ];
     }
 

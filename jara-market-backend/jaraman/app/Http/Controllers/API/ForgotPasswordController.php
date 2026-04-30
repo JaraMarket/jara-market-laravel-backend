@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
-
-use Exception;
-use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Services\UserRegistrationService;
 use App\Http\Requests\ForgotPasswordLinkRequest;
+use App\Models\User;
+use App\Services\UserRegistrationService;
+use Exception;
 
 class ForgotPasswordController extends Controller
 {
-    public function __construct(public UserRegistrationService $userService)
-    { }
+    public function __construct(public UserRegistrationService $userService) {}
 
     public function sendResetLink(ForgotPasswordLinkRequest $request)
     {
@@ -28,7 +26,7 @@ class ForgotPasswordController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'An OTP has been sent to your email address. It expires after 15 minutes.',
-                'data' => []
+                'data' => [],
             ], 201);
         } catch (Exception $e) {
             report($e);
@@ -36,7 +34,7 @@ class ForgotPasswordController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => $e->getMessage(),
-                'data' => []
+                'data' => [],
             ], 201);
         }
     }

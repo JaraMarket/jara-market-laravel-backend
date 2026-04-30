@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Wallet;
-use App\Models\Order;
-use Exception;
 use App\Enums\UserPermissionsEnum;
 use App\Http\Requests\UserProfileRequest;
-use App\Models\Vendor;
+use App\Models\Order;
 use App\Models\User;
+use App\Models\Vendor;
+use App\Models\Wallet;
+use Exception;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class VendorController extends Controller
@@ -46,7 +46,7 @@ class VendorController extends Controller
 
         return DataTables::of($query)
             ->addIndexColumn()
-            ->editColumn('created_at', fn($vendor) => $vendor->created_at->format('M d, Y H:i'))
+            ->editColumn('created_at', fn ($vendor) => $vendor->created_at->format('M d, Y H:i'))
             ->editColumn('status', function ($vendor) {
                 return $vendor->is_active
                     ? '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>'
@@ -92,11 +92,11 @@ class VendorController extends Controller
             ]);
 
             Wallet::create(['user_id' => $user->id]);
-        
+
             return redirect()->back()
                 ->with('success', 'Vendor created successfully');
 
-        } catch (Exception $e) {      
+        } catch (Exception $e) {
             return redirect()->back()
                 ->with('error', $e->getMessage());
         }
@@ -112,12 +112,13 @@ class VendorController extends Controller
         $orders = Order::whereHas('items', function ($query) use ($user) {
             $query->where('vendor_id', $user->id);
         })->with(['items.product', 'items.vendor'])
-          ->get();
-        
+            ->get();
+
         if (request()->wantsJson()) {
             return response()->json($user);
         }
-        return view('vendors.edit', compact(['user','orders']));
+
+        return view('vendors.edit', compact(['user', 'orders']));
     }
 
     /**
@@ -138,13 +139,14 @@ class VendorController extends Controller
     public function destroy(User $vendor)
     {
         $vendor->delete();
+
         return redirect()->route('vendors.index')
             ->with('success', 'Vendor deleted successfully');
     }
 
     public function toggleStatus(Vendor $vendor)
     {
-        $vendor->is_active = !$vendor->is_active;
+        $vendor->is_active = ! $vendor->is_active;
         $vendor->save();
 
         return redirect()->route('vendors.index')
@@ -153,7 +155,7 @@ class VendorController extends Controller
 
     public function toggleVerification(Vendor $vendor)
     {
-        $vendor->is_verified = !$vendor->is_verified;
+        $vendor->is_verified = ! $vendor->is_verified;
         $vendor->save();
 
         return redirect()->route('vendors.index')

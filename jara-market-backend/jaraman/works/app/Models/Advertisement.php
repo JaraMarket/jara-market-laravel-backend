@@ -10,7 +10,7 @@ class Advertisement extends Model
     use HasFactory;
 
     protected $fillable = [
-        'image', 'type', 'value', 'ingredient_ids', 'status'
+        'image', 'type', 'value', 'ingredient_ids', 'status',
     ];
 
     protected $casts = [

@@ -2,20 +2,19 @@
 
 namespace App\Services\PaymentGateways;
 
-use Throwable;
-use App\Utils\Util;
-use App\Models\Transfer;
-use App\Models\PaymentLog;
-use App\Models\BankAccount;
-use Illuminate\Http\Response;
-use App\Exceptions\GeneralException;
-use App\Support\Facades\LogActivity;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Database\Eloquent\Model;
-use App\Jobs\TransactionStatusUpdateJob;
 use App\Contracts\PaymentGatewayInterface;
+use App\Exceptions\GeneralException;
+use App\Jobs\TransactionStatusUpdateJob;
+use App\Models\BankAccount;
+use App\Models\PaymentLog;
+use App\Models\Transfer;
 use App\Services\Payment\AbstractPaymentGateway;
-use App\Services\ServiceProvider\ProviderBankAccountService;
+use App\Support\Facades\LogActivity;
+use App\Utils\Util;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class Paystack extends AbstractPaymentGateway implements PaymentGatewayInterface
 {
@@ -98,7 +97,7 @@ class Paystack extends AbstractPaymentGateway implements PaymentGatewayInterface
         }
 
         if (empty($channels)) {
-            $channels = ["card", "bank", "ussd", "qr", "mobile_money", "eft"];
+            $channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'eft'];
         }
 
         $reference = Util::generate_sub_txn_ref();
@@ -122,7 +121,7 @@ class Paystack extends AbstractPaymentGateway implements PaymentGatewayInterface
 
         $meta = (array) $metadata;
         $plan_code = isset($meta['plan_code']) ? $meta['plan_code'] : null;
-        $post_id   = isset($meta['post_id']) ? $meta['post_id'] : null;
+        $post_id = isset($meta['post_id']) ? $meta['post_id'] : null;
 
         $txn_data = [
             'txn_ref' => $reference,
@@ -135,8 +134,8 @@ class Paystack extends AbstractPaymentGateway implements PaymentGatewayInterface
             'transaction_initiator_id' => $this->initiator_id,
             'transaction_initiator_type' => $this->initiator_type,
             'provider' => class_basename($this),
-            'plan' =>  $plan_code,
-            'post' =>  $post_id
+            'plan' => $plan_code,
+            'post' => $post_id,
         ];
 
         LogActivity::logTransaction($txn_data);

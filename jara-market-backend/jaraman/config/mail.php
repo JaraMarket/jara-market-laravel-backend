@@ -109,7 +109,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'no-reply@yaramarket.com'),
-       'name' => env('MAIL_FROM_NAME', 'YaraMarket'),
+        'name' => env('MAIL_FROM_NAME', 'YaraMarket'),
 
     ],
 

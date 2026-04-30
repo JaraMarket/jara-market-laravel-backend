@@ -7,13 +7,14 @@ use App\Filters\LgaFilter\Search as LgaFilterSearch;
 use App\Filters\LgaFilter\State as LgaFilterState;
 use App\Http\Resources\StatesAndLga\LgaResource;
 use App\Models\Lga;
+use Illuminate\Http\Response;
 
 class LgaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {

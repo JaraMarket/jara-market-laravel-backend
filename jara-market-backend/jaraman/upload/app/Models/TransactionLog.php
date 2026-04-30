@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\AddPipelineToModelTrait;
-use Illuminate\Database\Eloquent\Model;
-use App\Enums\Account\AccountTransactionTypeEnum;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Enums\Account\AccountTransactionStatusEnum;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\Account\AccountTransactionTypeEnum;
+use App\Traits\AddPipelineToModelTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Database\Eloquent\Model;
 
 class TransactionLog extends Model
 {
@@ -33,7 +30,7 @@ class TransactionLog extends Model
         'is_refund',
         'has_refund',
         'wallet_id',
-        'currency'
+        'currency',
     ];
 
     public static function booted(): void
@@ -67,7 +64,6 @@ class TransactionLog extends Model
         );
     }
 
-    
     public function beneficiaryName(): Attribute
     {
         return Attribute::make(
@@ -81,7 +77,6 @@ class TransactionLog extends Model
             }
         );
     }
-
 
     public function scopeInfo($query, int $user_id, ?string $virtual_account_reference = null)
     {
@@ -102,7 +97,6 @@ class TransactionLog extends Model
 
         return $results;
     }
-
 
     public function wallet()
     {

@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Ingredient extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
@@ -23,9 +23,9 @@ class Ingredient extends Model
     ];
 
     protected $casts = [
-        'price'            => 'decimal:2',
+        'price' => 'decimal:2',
         'discounted_price' => 'decimal:2',
-        'stock'            => 'integer',
+        'stock' => 'integer',
     ];
 
     // ─── Relationships ────────────────────────────────────────────────────────
@@ -66,7 +66,7 @@ class Ingredient extends Model
      *   2. State price (regional fallback)
      *   3. Default     (ingredient table price — global fallback)
      *
-     * @param  int|null  $lgaId    Customer's LGA ID
+     * @param  int|null  $lgaId  Customer's LGA ID
      * @param  int|null  $stateId  Customer's State ID (used as fallback if no LGA price)
      * @return array{price: string, discounted_price: string|null, price_source: string}
      */
@@ -78,9 +78,9 @@ class Ingredient extends Model
 
             if ($lgaPrice) {
                 return [
-                    'price'            => $lgaPrice->price,
+                    'price' => $lgaPrice->price,
                     'discounted_price' => $lgaPrice->discounted_price,
-                    'price_source'     => 'lga',
+                    'price_source' => 'lga',
                 ];
             }
         }
@@ -91,18 +91,18 @@ class Ingredient extends Model
 
             if ($statePrice) {
                 return [
-                    'price'            => $statePrice->price,
+                    'price' => $statePrice->price,
                     'discounted_price' => $statePrice->discounted_price,
-                    'price_source'     => 'state',
+                    'price_source' => 'state',
                 ];
             }
         }
 
         // 3️⃣  Default ingredient price
         return [
-            'price'            => $this->price,
+            'price' => $this->price,
             'discounted_price' => $this->discounted_price,
-            'price_source'     => 'default',
+            'price_source' => 'default',
         ];
     }
 

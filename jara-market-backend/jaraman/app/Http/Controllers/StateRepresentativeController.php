@@ -13,12 +13,14 @@ class StateRepresentativeController extends Controller
     public function index()
     {
         $representatives = StateRepresentative::with('user')->latest()->paginate(10);
+
         return view('representatives.index', compact('representatives'));
     }
 
     public function create()
     {
         $users = User::get();
+
         return view('representatives.create', compact('users'));
     }
 
@@ -41,7 +43,7 @@ class StateRepresentativeController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make(Str::random(12)), // Generate a random password
             'role' => 'STATE_REPRESENTATIVE',
-            'referral_code' => Str::random(10)
+            'referral_code' => Str::random(10),
         ]);
 
         // Create the state representative
@@ -50,7 +52,7 @@ class StateRepresentativeController extends Controller
             'phone' => $validated['phone'],
             'state' => $validated['state'],
             'lga' => $validated['lga'],
-            'address' => $validated['address']
+            'address' => $validated['address'],
         ]);
 
         return redirect()->route('representatives.index')
@@ -60,6 +62,7 @@ class StateRepresentativeController extends Controller
     public function edit(StateRepresentative $representative)
     {
         $users = User::where('is_active', true)->get();
+
         return view('representatives.edit', compact('representative', 'users'));
     }
 
@@ -68,7 +71,7 @@ class StateRepresentativeController extends Controller
         $validated = $request->validate([
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:users,email,' . $representative->user->id],
+            'email' => ['required', 'email', 'unique:users,email,'.$representative->user->id],
             'phone' => ['required', 'string', 'max:20'],
             'state' => ['required', 'string', 'max:255'],
             'lga' => ['required', 'string', 'max:255'],
@@ -81,7 +84,7 @@ class StateRepresentativeController extends Controller
             $user->update([
                 'firstname' => $validated['firstname'],
                 'lastname' => $validated['lastname'],
-                'email' => $validated['email']
+                'email' => $validated['email'],
             ]);
         }
 
@@ -89,7 +92,7 @@ class StateRepresentativeController extends Controller
             'phone' => $validated['phone'],
             'state' => $validated['state'],
             'lga' => $validated['lga'],
-            'address' => $validated['address']
+            'address' => $validated['address'],
         ]);
 
         return redirect()->route('representatives.index')
@@ -102,15 +105,16 @@ class StateRepresentativeController extends Controller
         if ($representative->user) {
             $representative->user->delete();
         }
-        
+
         $representative->delete();
+
         return redirect()->route('representatives.index')
             ->with('success', 'State Representative deleted successfully');
     }
 
     public function toggleStatus(StateRepresentative $representative)
     {
-        $representative->is_active = !$representative->is_active;
+        $representative->is_active = ! $representative->is_active;
         $representative->save();
 
         return redirect()->route('representatives.index')

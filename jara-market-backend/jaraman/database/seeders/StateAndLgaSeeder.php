@@ -861,11 +861,11 @@ class StateAndLgaSeeder extends Seeder
             ],
         ];
 
-       // Country::firstOrCreate([
-      //      'id' => 1,
-      //      'name' => 'Nigeria',
-      //      'code' => '+234',
-      // ]);
+        // Country::firstOrCreate([
+        //      'id' => 1,
+        //      'name' => 'Nigeria',
+        //      'code' => '+234',
+        // ]);
 
         $state_data = [];
         $state_id = 1;

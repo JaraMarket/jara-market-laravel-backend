@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use App\Enums\UserPermissionsEnum;
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -11,8 +13,8 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @param  Request  $request
+     * @return array|Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
@@ -48,9 +50,9 @@ class UserResource extends JsonResource
             'is_active' => $this->is_active,
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'last_login' => Carbon::parse($this->last_login)->toDateTimeString(),
-            'wallet'  => new WalletResource($this->wallet),
-            'favorites' =>  FavoriteResource::collection($this->favorites),
-            'contact_address' =>  AddressResource::collection($this->addresses),
+            'wallet' => new WalletResource($this->wallet),
+            'favorites' => FavoriteResource::collection($this->favorites),
+            'contact_address' => AddressResource::collection($this->addresses),
         ];
 
         return $response;

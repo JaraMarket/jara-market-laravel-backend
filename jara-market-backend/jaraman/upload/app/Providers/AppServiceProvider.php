@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Channels\FirebaseChannel;
+use App\Console\Kernel;
+use App\Http\Controllers\SettingsController;
 use App\Services\Firebase\FirebaseNotificationService;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
@@ -20,14 +22,14 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             \Illuminate\Contracts\Console\Kernel::class,
-            \App\Console\Kernel::class
+            Kernel::class
         );
     }
 
     public function boot(): void
     {
         // Dynamically reconfigure S3 from DB settings if storage_disk = s3
-        \App\Http\Controllers\SettingsController::reconfigureS3();
+        SettingsController::reconfigureS3();
 
         // Register firebase as a notification channel
         Notification::resolved(function (ChannelManager $service) {
@@ -37,12 +39,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // API response macros (duplicated from MacroServiceProvider as fallback)
-        if (!Response::hasMacro('success')) {
+        if (! Response::hasMacro('success')) {
             Response::macro('success', function ($message, $data = [], $status = 200) {
                 return Response::json(['status' => true, 'message' => $message, 'data' => $data], $status);
             });
         }
-        if (!Response::hasMacro('errorResponse')) {
+        if (! Response::hasMacro('errorResponse')) {
             Response::macro('errorResponse', function ($message, $data = [], $status = 400) {
                 return Response::json(['status' => false, 'message' => $message, 'errors' => $data], $status);
             });

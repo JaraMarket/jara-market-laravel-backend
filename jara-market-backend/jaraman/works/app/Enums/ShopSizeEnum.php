@@ -8,10 +8,10 @@ use ArchTech\Enums\Values;
 
 enum ShopSizeEnum: string
 {
-    use InvokableCases, Values, Names;
+    use InvokableCases, Names, Values;
 
-    case JUST_ME     = 'just_me';
+    case JUST_ME = 'just_me';
     case TWO_TO_FIVE = '2-5';
-    case SIX_TO_TEN  = '6-10';
+    case SIX_TO_TEN = '6-10';
     case ELEVEN_PLUS = '11+';
 }

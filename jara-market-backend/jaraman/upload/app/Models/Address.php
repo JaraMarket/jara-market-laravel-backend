@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
     protected $fillable = [
-        'user_id', 'state_id', 'lga_id','country_id', 'contact_address', 'phone_number', 'is_default',
+        'user_id', 'state_id', 'lga_id', 'country_id', 'contact_address', 'phone_number', 'is_default',
     ];
 
     public function user()
@@ -28,5 +29,4 @@ class Address extends Model
     {
         return $this->belongsTo(Country::class);
     }
-
 }

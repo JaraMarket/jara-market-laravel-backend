@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Utils\Util;
-use App\Models\User;
 use App\Models\Admin;
+use App\Models\User;
 use App\Notifications\FailedPaymentNotification;
+use App\Utils\Util;
 
 class HandleChargeSuccessService
 {
-     public function __construct(
+    public function __construct(
         public TransactionService $transactionService
     ) {}
 
@@ -25,7 +25,8 @@ class HandleChargeSuccessService
         $admin = Admin::first();
 
         if (! $user && ! $admin) {
-            $admin->notify( new FailedPaymentNotification($email, $data));
+            $admin->notify(new FailedPaymentNotification($email, $data));
+
             return;
         }
 

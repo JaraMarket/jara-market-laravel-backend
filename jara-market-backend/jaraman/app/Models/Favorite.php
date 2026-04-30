@@ -13,7 +13,7 @@ class Favorite extends Model
 
     protected $fillable = [
         'user_id',
-        'product_id'
+        'product_id',
     ];
 
     public function user()
@@ -25,4 +25,4 @@ class Favorite extends Model
     {
         return $this->belongsTo(Product::class);
     }
-} 
+}

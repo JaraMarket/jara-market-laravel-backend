@@ -5,26 +5,23 @@ namespace App\Http\Controllers;
 use App\Enums\StatusEnum;
 use App\Models\Order;
 use App\Models\User;
-use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user    = auth()->user();
+        $user = auth()->user();
         $stateId = $user->isStateAdmin() ? $user->state_id : null;
-        $stats   = [];
+        $stats = [];
 
         if ($user->hasPermission('view_orders')) {
-            $oq = Order::when($stateId, fn ($q) =>
-                $q->whereHas('user', fn ($u) => $u->where('state_id', $stateId)));
-            $stats['total_orders']      = $oq->count();
-            $stats['pending_orders']    = (clone $oq)->where('status', StatusEnum::PENDING())->count();
+            $oq = Order::when($stateId, fn ($q) => $q->whereHas('user', fn ($u) => $u->where('state_id', $stateId)));
+            $stats['total_orders'] = $oq->count();
+            $stats['pending_orders'] = (clone $oq)->where('status', StatusEnum::PENDING())->count();
             $stats['processing_orders'] = (clone $oq)->where('status', StatusEnum::PROCESSING())->count();
-            $stats['completed_orders']  = (clone $oq)->where('status', StatusEnum::COMPLETED())->count();
-            $stats['cancelled_orders']  = (clone $oq)->where('status', StatusEnum::CANCELLED())->count();
+            $stats['completed_orders'] = (clone $oq)->where('status', StatusEnum::COMPLETED())->count();
+            $stats['cancelled_orders'] = (clone $oq)->where('status', StatusEnum::CANCELLED())->count();
         }
 
         if ($user->hasPermission('view_transactions')) {
@@ -50,8 +47,8 @@ class DashboardController extends Controller
             ? User::customers()->when($stateId, fn ($q) => $q->where('state_id', $stateId))->latest()->take(6)->get()
             : collect();
 
-        $productsChartData  = ['labels' => [], 'data' => []];
-        $orderStatusChart   = [];
+        $productsChartData = ['labels' => [], 'data' => []];
+        $orderStatusChart = [];
 
         if ($user->hasPermission('view_reports')) {
             $topProducts = DB::table('order_items')
@@ -62,7 +59,7 @@ class DashboardController extends Controller
 
             $productsChartData = [
                 'labels' => $topProducts->pluck('name')->toArray(),
-                'data'   => $topProducts->pluck('total_quantity')->map(fn ($v) => (int)$v)->toArray(),
+                'data' => $topProducts->pluck('total_quantity')->map(fn ($v) => (int) $v)->toArray(),
             ];
         }
 

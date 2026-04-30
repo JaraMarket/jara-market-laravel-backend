@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Enums\StatusEnum;
 use App\Enums\UserPermissionsEnum;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
@@ -51,7 +51,7 @@ class VendorDashboardController extends Controller
         $vendor = auth()->user();
 
         /* ── Abort if caller is not a vendor (or admin viewing as vendor) ── */
-        if (!in_array($vendor->role, [
+        if (! in_array($vendor->role, [
             UserPermissionsEnum::VENDOR(),
             UserPermissionsEnum::ADMIN(),
         ])) {
@@ -132,31 +132,31 @@ class VendorDashboardController extends Controller
             ->limit(5)
             ->get()
             ->map(fn ($item) => [
-                'item_id'        => $item->id,
-                'order_ref'      => $item->order?->reference,
-                'ingredient'     => $item->ingredient?->name,
-                'quantity'       => $item->quantity,
-                'vendor_amount'  => (float) $item->vendor_amount,
-                'completed_at'   => $item->vendor_at?->toDateTimeString(),
+                'item_id' => $item->id,
+                'order_ref' => $item->order?->reference,
+                'ingredient' => $item->ingredient?->name,
+                'quantity' => $item->quantity,
+                'vendor_amount' => (float) $item->vendor_amount,
+                'completed_at' => $item->vendor_at?->toDateTimeString(),
             ]);
 
         return response()->json([
-            'period'     => $period,
+            'period' => $period,
             'date_range' => [
                 'from' => $from->toDateString(),
-                'to'   => $to->toDateString(),
+                'to' => $to->toDateString(),
             ],
             'stats' => [
-                'revenue'          => round((float) $revenue, 2),
-                'orders_accepted'  => $ordersAccepted,
+                'revenue' => round((float) $revenue, 2),
+                'orders_accepted' => $ordersAccepted,
                 'orders_completed' => $ordersCompleted,
                 'orders_cancelled' => $ordersCancelled,
-                'orders_pending'   => $ordersPending,
-                'total_items'      => $totalItems,
-                'avg_order_value'  => $avgOrderValue,
-                'commission_paid'  => round((float) $commissionPaid, 2),
+                'orders_pending' => $ordersPending,
+                'total_items' => $totalItems,
+                'avg_order_value' => $avgOrderValue,
+                'commission_paid' => round((float) $commissionPaid, 2),
             ],
-            'chart'         => $chart,
+            'chart' => $chart,
             'recent_orders' => $recentOrders,
         ]);
     }
@@ -175,7 +175,7 @@ class VendorDashboardController extends Controller
         $now = Carbon::now();
 
         $from = match ($period) {
-            'day'   => $now->copy()->startOfDay(),
+            'day' => $now->copy()->startOfDay(),
             'month' => $now->copy()->startOfMonth(),
             default => $now->copy()->startOfWeek(),   // 'week'
         };
@@ -193,17 +193,17 @@ class VendorDashboardController extends Controller
     {
         /* Aggregate raw data from DB — one row per day */
         $rows = OrderItem::selectRaw(
-                'DATE(vendor_at) as day,
+            'DATE(vendor_at) as day,
                  SUM(CASE WHEN status = ? THEN vendor_amount ELSE 0 END) as revenue,
                  COUNT(DISTINCT CASE WHEN status = ? THEN order_id END) as orders_completed,
                  COUNT(DISTINCT CASE WHEN status IN (?,?) THEN order_id END) as orders_accepted',
-                [
-                    StatusEnum::COMPLETED(),
-                    StatusEnum::COMPLETED(),
-                    StatusEnum::PROCESSING(),
-                    StatusEnum::COMPLETED(),
-                ]
-            )
+            [
+                StatusEnum::COMPLETED(),
+                StatusEnum::COMPLETED(),
+                StatusEnum::PROCESSING(),
+                StatusEnum::COMPLETED(),
+            ]
+        )
             ->where('vendor_id', $vendorId)
             ->whereBetween('vendor_at', [$from, $to])
             ->groupByRaw('DATE(vendor_at)')
@@ -213,32 +213,32 @@ class VendorDashboardController extends Controller
 
         /* Fill every calendar day in range (including days with 0 activity) */
         $chart = [];
-        $step  = $period === 'day' ? 'hour' : 'day';
+        $step = $period === 'day' ? 'hour' : 'day';
 
         if ($period === 'day') {
             // Hourly breakdown for "today"
             for ($h = 0; $h < 24; $h++) {
                 $label = $from->copy()->addHours($h)->format('H:00');
                 $chart[] = [
-                    'date'             => $label,
-                    'revenue'          => 0.00,
+                    'date' => $label,
+                    'revenue' => 0.00,
                     'orders_completed' => 0,
-                    'orders_accepted'  => 0,
+                    'orders_accepted' => 0,
                 ];
             }
             // Fill in actuals
             $hourlyRaw = OrderItem::selectRaw(
-                    'HOUR(vendor_at) as hr,
+                'HOUR(vendor_at) as hr,
                      SUM(CASE WHEN status = ? THEN vendor_amount ELSE 0 END) as revenue,
                      COUNT(DISTINCT CASE WHEN status = ? THEN order_id END) as orders_completed,
                      COUNT(DISTINCT CASE WHEN status IN (?,?) THEN order_id END) as orders_accepted',
-                    [
-                        StatusEnum::COMPLETED(),
-                        StatusEnum::COMPLETED(),
-                        StatusEnum::PROCESSING(),
-                        StatusEnum::COMPLETED(),
-                    ]
-                )
+                [
+                    StatusEnum::COMPLETED(),
+                    StatusEnum::COMPLETED(),
+                    StatusEnum::PROCESSING(),
+                    StatusEnum::COMPLETED(),
+                ]
+            )
                 ->where('vendor_id', $vendorId)
                 ->whereBetween('vendor_at', [$from, $to])
                 ->groupByRaw('HOUR(vendor_at)')
@@ -248,9 +248,9 @@ class VendorDashboardController extends Controller
             foreach ($chart as $i => &$slot) {
                 $row = $hourlyRaw->get($i);
                 if ($row) {
-                    $slot['revenue']          = round((float) $row->revenue, 2);
+                    $slot['revenue'] = round((float) $row->revenue, 2);
                     $slot['orders_completed'] = (int) $row->orders_completed;
-                    $slot['orders_accepted']  = (int) $row->orders_accepted;
+                    $slot['orders_accepted'] = (int) $row->orders_accepted;
                 }
             }
         } else {
@@ -261,10 +261,10 @@ class VendorDashboardController extends Controller
                 $key = $date->toDateString();
                 $row = $rows->get($key);
                 $chart[] = [
-                    'date'             => $key,
-                    'revenue'          => $row ? round((float) $row->revenue, 2) : 0.00,
+                    'date' => $key,
+                    'revenue' => $row ? round((float) $row->revenue, 2) : 0.00,
                     'orders_completed' => $row ? (int) $row->orders_completed : 0,
-                    'orders_accepted'  => $row ? (int) $row->orders_accepted  : 0,
+                    'orders_accepted' => $row ? (int) $row->orders_accepted : 0,
                 ];
             }
         }

@@ -17,12 +17,12 @@ abstract class BaseFilter
         }
 
         return $this->applyFilter($process);
-    }//end handle()
+    }// end handle()
 
     abstract protected function applyFilter($process);
 
     protected function filterName(): string
     {
         return Str::snake(class_basename($this));
-    }//end filterName()
-}//end class
+    }// end filterName()
+}// end class

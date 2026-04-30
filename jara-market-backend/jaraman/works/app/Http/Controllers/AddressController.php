@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\Address;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddressRequest;
 use App\Http\Resources\AddressResource;
+use App\Models\Address;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
@@ -14,6 +14,7 @@ class AddressController extends Controller
     {
         try {
             $addresses = auth()->user()->addresses()->latest()->get();
+
             return response()->success('Addresses retrieved successfully', AddressResource::collection($addresses));
         } catch (Exception $e) {
             return response()->errorResponse('Failed to fetch addresses', [], 500);
@@ -25,12 +26,12 @@ class AddressController extends Controller
         try {
             $address = DB::transaction(function () use ($request) {
                 $user = auth()->user();
-    
+
                 // If user marks this new address as default, reset all others
                 if ($request->is_default) {
                     $user->addresses()->update(['is_default' => false]);
                 }
-    
+
                 return $user->addresses()->create($request->validated());
             });
 
@@ -51,7 +52,7 @@ class AddressController extends Controller
                 if ($request->is_default) {
                     $address->user->addresses()->update(['is_default' => false]);
                 }
-    
+
                 $address->update($request->validated());
             });
 

@@ -9,14 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         // Add group column to permissions
-        if (!Schema::hasColumn('permissions', 'group')) {
+        if (! Schema::hasColumn('permissions', 'group')) {
             Schema::table('permissions', function (Blueprint $table) {
                 $table->string('group')->default('general')->after('slug');
             });
         }
 
         // Create user_permissions pivot (replaces admin_permissions)
-        if (!Schema::hasTable('user_permissions')) {
+        if (! Schema::hasTable('user_permissions')) {
             Schema::create('user_permissions', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');

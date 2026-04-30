@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\TransactionStatusEnum;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Paystack\VerifyPaystackRequest;
@@ -11,7 +12,6 @@ use App\Models\PaymentLog;
 use App\Models\User;
 use App\Services\HandlePaystackWebhookService;
 use App\Services\PaymentGateways\Paystack;
-use App\Enums\TransactionStatusEnum;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,8 +20,8 @@ use Illuminate\Http\Response;
 class PaymentController extends Controller
 {
     public function __construct(
-        protected Paystack                      $paystack,
-        protected HandlePaystackWebhookService  $webhookService,
+        protected Paystack $paystack,
+        protected HandlePaystackWebhookService $webhookService,
     ) {}
 
     /*
@@ -33,9 +33,11 @@ class PaymentController extends Controller
     {
         try {
             $this->webhookService->handleWebhook($request->all());
+
             return response()->json(['status' => true]);
         } catch (Exception $e) {
             report($e);
+
             // Always 200 to Paystack — prevents endless retries
             return response()->json(['status' => false, 'message' => 'Processed with errors.']);
         }
@@ -51,11 +53,13 @@ class PaymentController extends Controller
     {
         try {
             $data = $this->paystack->verifyTransaction($reference);
+
             return response()->success('Transaction verified.', $data);
         } catch (GeneralException $e) {
             return response()->errorResponse($e->getMessage(), [], $e->getCode() ?: 400);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Unable to verify transaction.', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -70,13 +74,11 @@ class PaymentController extends Controller
         $transactions = PaymentLog::with('initiator', 'owner')
             ->when($request->boolean('is_admin'), function ($q) use ($request) {
                 if ($request->filled('user_id')) {
-                    $q->whereHasMorph('initiator', [User::class], fn ($q) =>
-                        $q->where('id', $request->user_id)
+                    $q->whereHasMorph('initiator', [User::class], fn ($q) => $q->where('id', $request->user_id)
                     );
                 }
             }, function ($q) {
-                $q->whereHasMorph('initiator', [User::class], fn ($q) =>
-                    $q->where('id', auth()->id())
+                $q->whereHasMorph('initiator', [User::class], fn ($q) => $q->where('id', auth()->id())
                 )->where('status', TransactionStatusEnum::PAYMENT_SUCCESSFUL());
             })
             ->latest()
@@ -97,8 +99,7 @@ class PaymentController extends Controller
         try {
             $transaction = PaymentLog::with('initiator', 'owner')
                 ->when(! request()->boolean('is_admin'), function ($q) {
-                    $q->whereHasMorph('initiator', [User::class], fn ($q) =>
-                        $q->where('id', auth()->id())
+                    $q->whereHasMorph('initiator', [User::class], fn ($q) => $q->where('id', auth()->id())
                     )->where('status', TransactionStatusEnum::PAYMENT_SUCCESSFUL());
                 })
                 ->findOrFail($id);
@@ -116,18 +117,18 @@ class PaymentController extends Controller
     */
     public function getTransfers(Request $request): JsonResponse
     {
-        $user      = $request->user();
+        $user = $request->user();
         $transfers = $user->transfers()->orderByDesc('created_at')->paginate(15);
-        $total     = $user->transfers()->sum('amount');
+        $total = $user->transfers()->sum('amount');
 
         return response()->success('Transfers retrieved.', [
-            'transfers'    => TransferResource::collection($transfers),
+            'transfers' => TransferResource::collection($transfers),
             'total_amount' => number_format($total, 2),
-            'pagination'   => [
-                'total'        => $transfers->total(),
-                'per_page'     => $transfers->perPage(),
+            'pagination' => [
+                'total' => $transfers->total(),
+                'per_page' => $transfers->perPage(),
                 'current_page' => $transfers->currentPage(),
-                'last_page'    => $transfers->lastPage(),
+                'last_page' => $transfers->lastPage(),
             ],
         ]);
     }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\Favorite;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FavoriteRequest;
 use App\Http\Resources\FavoriteResource;
+use App\Models\Favorite;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class FavoritesController extends Controller
 {
@@ -15,11 +15,11 @@ class FavoritesController extends Controller
         $user = Auth::user();
         $favorites = Favorite::where('user_id', $user->id)
             ->get();
-            
+
         return response()->json([
             'status' => true,
-            'message' => "Favorites retrieved successfully",
-            'data' => FavoriteResource::collection($favorites)
+            'message' => 'Favorites retrieved successfully',
+            'data' => FavoriteResource::collection($favorites),
         ]);
     }
 
@@ -31,25 +31,25 @@ class FavoritesController extends Controller
             $exists = Favorite::where('user_id', $user->id)
                 ->where('product_id', $request->product_id)
                 ->exists();
-    
+
             if ($exists) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Product already in favorites'
+                    'message' => 'Product already in favorites',
                 ], 400);
             }
-    
+
             $favorite = Favorite::create([
                 'user_id' => $user->id,
                 'product_id' => $request->product_id,
             ]);
-    
+
             return response()->json([
                 'status' => true,
                 'message' => 'Product added to favorites',
-                'data' => new FavoriteResource($favorite)
+                'data' => new FavoriteResource($favorite),
             ], 201);
-    
+
         } catch (Exception $e) {
             return response()->json([
                 'status' => false,
@@ -65,10 +65,10 @@ class FavoritesController extends Controller
             ->where('id', $id)
             ->first();
 
-        if (!$favorite) {
+        if (! $favorite) {
             return response()->json([
                 'status' => false,
-                'message' => 'Favorite not found'
+                'message' => 'Favorite not found',
             ], 404);
         }
 
@@ -76,7 +76,7 @@ class FavoritesController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Favorite removed successfully'
+            'message' => 'Favorite removed successfully',
         ]);
     }
-} 
+}

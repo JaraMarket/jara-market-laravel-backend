@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('business_name')->after('country_id')->nullable();
             $table->text('business_address')->after('business_name')->nullable();
             $table->string('shop_size')->after('business_address')->nullable();
-            $table->decimal('latitude',10,7)->after('shop_size')->nullable();
-            $table->decimal('longitude',10,7)->after('latitude')->nullable();
+            $table->decimal('latitude', 10, 7)->after('shop_size')->nullable();
+            $table->decimal('longitude', 10, 7)->after('latitude')->nullable();
         });
     }
 

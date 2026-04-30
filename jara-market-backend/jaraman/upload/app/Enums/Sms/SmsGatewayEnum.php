@@ -8,7 +8,7 @@ use ArchTech\Enums\Values;
 
 enum SmsGatewayEnum: string
 {
-    use InvokableCases, Values, Names;
+    use InvokableCases, Names, Values;
 
     case TERMII = 'termii';
     case TWILIO = 'twilio';

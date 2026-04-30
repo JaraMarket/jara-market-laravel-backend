@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Utils\Util;
-use App\Models\User;
-use App\Models\PaymentLog;
-use App\Enums\TransactionStatusEnum;
-use App\Exceptions\GeneralException;
 use App\Contracts\PaymentGatewayInterface;
 use App\Contracts\UserRepositoryInterface;
+use App\Enums\TransactionStatusEnum;
 use App\Enums\WalletTransactionTypeEnum;
+use App\Exceptions\GeneralException;
+use App\Models\PaymentLog;
+use App\Models\User;
 use App\Notifications\WalletNotification;
+use App\Utils\Util;
 
 class TransactionService
 {
@@ -24,19 +24,19 @@ class TransactionService
         if ($transaction = PaymentLog::firstWhere('txn_ref', $data['reference'])) {
             $amount = Util::get_amount_by_currency($data['amount'], $data['currency']);
 
-            //$vat = Util::VAT($total);
-            //$amount = $total - $vat;
+            // $vat = Util::VAT($total);
+            // $amount = $total - $vat;
 
             $this->updateWallet($amount, $transaction_owner);
 
             $transaction_owner->notify(new WalletNotification(
                 WalletTransactionTypeEnum::CREDIT(),
-                number_format($amount,2),
-                number_format($transaction_owner->wallet->balance,2),
+                number_format($amount, 2),
+                number_format($transaction_owner->wallet->balance, 2),
                 $data['reference'],
-                "You have successfully fund your wallet"
+                'You have successfully fund your wallet'
             ));
-               
+
             return tap($transaction)->update([
                 'status' => $data['status'],
                 'amount' => $amount,

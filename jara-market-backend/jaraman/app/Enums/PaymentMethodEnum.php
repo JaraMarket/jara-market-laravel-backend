@@ -11,6 +11,6 @@ enum PaymentMethodEnum: string
     use InvokableCases, Names, Values;
 
     case PAY_NOW = 'pay_now';
-    case ONLINE  = 'online';
+    case ONLINE = 'online';
     case OFFLINE = 'offline';
 }

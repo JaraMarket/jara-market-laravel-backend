@@ -7,6 +7,7 @@ use App\Http\Middleware\PaystackWebhook;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         then: function () {
             // Vendor API routes (old vendor.php)
-            \Illuminate\Support\Facades\Route::prefix('api')
+            Route::prefix('api')
                 ->middleware('api')
                 ->group(base_path('routes/vendor.php'));
         },
@@ -28,9 +29,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // ── Custom middleware aliases ─────────────────────────────────
         // These replace the $middlewareAliases array in the old Kernel.php
         $middleware->alias([
-            'admin'            => AdminMiddleware::class,
-            'permission'       => CheckPermission::class,
-            'vendor'           => IsVendor::class,
+            'admin' => AdminMiddleware::class,
+            'permission' => CheckPermission::class,
+            'vendor' => IsVendor::class,
             'paystack-webhook' => PaystackWebhook::class,
         ]);
 

@@ -20,15 +20,17 @@ class FirebaseChannel
 
     public function send(mixed $notifiable, Notification $notification): void
     {
-        if (!method_exists($notification, 'toFirebase')) return;
+        if (! method_exists($notification, 'toFirebase')) {
+            return;
+        }
 
         $payload = $notification->toFirebase($notifiable);
 
         $this->firebase->sendToUser(
             $notifiable,
             $payload['title'] ?? '',
-            $payload['body']  ?? '',
-            $payload['data']  ?? [],
+            $payload['body'] ?? '',
+            $payload['data'] ?? [],
         );
     }
 }

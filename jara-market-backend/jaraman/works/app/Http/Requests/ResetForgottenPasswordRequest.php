@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use Exception;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Validator;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Validator;
 
 class ResetForgottenPasswordRequest extends FormRequest
 {
     public ?User $user = null;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -48,6 +48,7 @@ class ResetForgottenPasswordRequest extends FormRequest
 
             if (! $this->user) {
                 $validator->errors()->add('recipient', 'We could not find a user with this email or phone.');
+
                 return;
             }
 

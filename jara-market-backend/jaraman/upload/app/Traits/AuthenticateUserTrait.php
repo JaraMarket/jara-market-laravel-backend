@@ -2,13 +2,12 @@
 
 namespace App\Traits;
 
-
 use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 trait AuthenticateUserTrait
@@ -18,7 +17,7 @@ trait AuthenticateUserTrait
      *
      * @return App\Models\User
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate(Request $request)
     {
@@ -27,13 +26,14 @@ trait AuthenticateUserTrait
         try {
             $this->loginWithCredentials($request);
         } catch (Exception $e) {
-            throw new Exception('Error Generating Token '. $e->getMessage(), Response::HTTP_UNAUTHORIZED, $e);
+            throw new Exception('Error Generating Token '.$e->getMessage(), Response::HTTP_UNAUTHORIZED, $e);
         }
         $this->ensureAccountIsActive();
-        
+
         RateLimiter::clear($this->throttleKey($request));
 
         $user = auth()->user();
+
         return $user;
     }
 
@@ -94,5 +94,4 @@ trait AuthenticateUserTrait
     {
         return 'email';
     }
-
 }

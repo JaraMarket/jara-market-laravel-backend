@@ -20,9 +20,11 @@ class HandleTransferSuccessService
         $transfer->update(['status' => StatusEnum::SUCCESS()]);
 
         $user = $transfer->owner;
-        if (! $user) return;
+        if (! $user) {
+            return;
+        }
 
-        $amount     = (float) ($data['amount'] / 100); // kobo → naira
+        $amount = (float) ($data['amount'] / 100); // kobo → naira
         $newBalance = (float) ($user->wallet?->balance ?? 0);
 
         $user->notify(new WalletNotification(
@@ -30,7 +32,7 @@ class HandleTransferSuccessService
             amount    : $amount,
             balance   : $newBalance,
             reference : $data['transfer_code'],
-            remarks   : 'Bank transfer confirmed — ' . ($transfer->bank_name ?? ''),
+            remarks   : 'Bank transfer confirmed — '.($transfer->bank_name ?? ''),
         ));
     }
 }

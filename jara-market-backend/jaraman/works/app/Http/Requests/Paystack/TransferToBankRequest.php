@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Paystack;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransferToBankRequest extends FormRequest
@@ -17,15 +18,15 @@ class TransferToBankRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'amount'   => ['required', 'numeric', 'min:100'], // min ₦100
-            'bank_id' =>  ['required', 'exists:bank_accounts,id'],
+            'amount' => ['required', 'numeric', 'min:100'], // min ₦100
+            'bank_id' => ['required', 'exists:bank_accounts,id'],
             'currency' => ['nullable', 'string', 'in:NGN'],   // only NGN for Paystack
-            'remark'   => ['nullable', 'string', 'max:255'],
+            'remark' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

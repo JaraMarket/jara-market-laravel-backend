@@ -3,9 +3,9 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class FailedPaymentNotification extends Notification implements ShouldQueue
 {
@@ -23,9 +23,9 @@ class FailedPaymentNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject('Unknown Payment Detected')
             ->markdown('emails.failed_payment', [
-                'user'  => $notifiable,
+                'user' => $notifiable,
                 'email' => $this->email,
-                'data'  => $this->data,
+                'data' => $this->data,
             ]);
     }
 
@@ -33,10 +33,10 @@ class FailedPaymentNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'Payment Alert',
-            'body'  => "A payment attempt from {$this->email} could not be verified.",
-            'data'  => [
+            'body' => "A payment attempt from {$this->email} could not be verified.",
+            'data' => [
                 'email' => $this->email,
-                'type'  => 'payment.failed',
+                'type' => 'payment.failed',
             ],
         ];
     }
@@ -55,8 +55,8 @@ class FailedPaymentNotification extends Notification implements ShouldQueue
     {
         return [
             'message' => "A payment attempt from {$this->email} could not be verified.",
-            'email'   => $this->email,
-            'data'    => $this->data,
+            'email' => $this->email,
+            'data' => $this->data,
             'user_id' => $notifiable->id,
         ];
     }

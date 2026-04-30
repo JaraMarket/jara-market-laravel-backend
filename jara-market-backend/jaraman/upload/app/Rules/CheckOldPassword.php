@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\InvokableRule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
 class CheckOldPassword implements InvokableRule
 {
@@ -12,7 +13,7 @@ class CheckOldPassword implements InvokableRule
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param  \Closure(string): PotentiallyTranslatedString  $fail
      * @return void
      */
     public function __invoke($attribute, $value, $fail)

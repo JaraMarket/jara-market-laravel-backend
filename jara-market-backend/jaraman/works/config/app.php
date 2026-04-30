@@ -1,6 +1,13 @@
 <?php
 
 use App\Enums\Sms\SmsGatewayEnum;
+use App\Providers\ActivityLogServiceProvider;
+use App\Providers\AppServiceProvider;
+use App\Providers\AuthServiceProvider;
+use App\Providers\EventServiceProvider;
+use App\Providers\MacroServiceProvider;
+use App\Providers\RepositoryServiceProvider;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,7 +25,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    
+
     'referral_bonus' => 10,
 
     /*
@@ -64,18 +71,17 @@ return [
 
     'payment-provider' => env('PAYMENT_PROVIDER', 'Paystack'),
     'sms_gateway' => env('SMS_GATEWAY', SmsGatewayEnum::TERMII()),
-    'emergency_phone_number' => env('EMERGENCY_PHONE_NUMBER','+234'),
-    'email_url' => env('EMAL_URL','hi@yaramarket.com'),
-    'contact_address' => env('CONTACT_ADDRESS','11 IBB Way, Akwa Ibom State'),
+    'emergency_phone_number' => env('EMERGENCY_PHONE_NUMBER', '+234'),
+    'email_url' => env('EMAL_URL', 'hi@yaramarket.com'),
+    'contact_address' => env('CONTACT_ADDRESS', '11 IBB Way, Akwa Ibom State'),
     'otp_expiry_time' => env('OTP_EXPIRY_TIME', '15'),
 
-    //paystack key
+    // paystack key
     'paystack_url' => env('PAYSTACK_URL', 'https://api.paystack.co'),
     'paystack_secret_key' => env('PAYSTACK_SECRET_KEY'),
     'paystack_pub_key' => env('PAYSTACK_PUBLIC_KEY'),
 
-
-    //termii
+    // termii
     'termii_base_url' => env('TERMII_BASE_URL', 'https://api.ng.termii.com/api/'),
     'termii_api_key' => env('TERMII_API_KEY'),
     'termii_sender_id' => env('TERMII_SENDER_ID', 'N-Alert'),
@@ -188,15 +194,15 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\ActivityLogServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
+        AppServiceProvider::class,
+        ActivityLogServiceProvider::class,
+        AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        EventServiceProvider::class,
+        RouteServiceProvider::class,
         // App\Providers\SwaggerUiServiceProvider::class, // Removed - scribe not used
-        App\Providers\MacroServiceProvider::class,
-        App\Providers\RepositoryServiceProvider::class,
+        MacroServiceProvider::class,
+        RepositoryServiceProvider::class,
 
     ])->toArray(),
 

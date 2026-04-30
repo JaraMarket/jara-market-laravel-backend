@@ -11,19 +11,21 @@ class FranchiseController extends Controller
     public function index()
     {
         $franchises = Franchise::with('owner')->latest()->paginate(10);
+
         return view('franchises.index', compact('franchises'));
     }
 
     public function create()
     {
         $users = User::all();
+
         return view('franchises.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'owner_id' => ['required', 'exists:users,id'],
         ]);
@@ -37,13 +39,14 @@ class FranchiseController extends Controller
     public function edit(Franchise $franchise)
     {
         $users = User::all();
+
         return view('franchises.edit', compact('franchise', 'users'));
     }
 
     public function update(Request $request, Franchise $franchise)
     {
         $validated = $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'owner_id' => ['required', 'exists:users,id'],
         ]);

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Wallet;
 use App\Enums\UserPermissionsEnum;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
     public function index()
     {
         $admins = User::where('role', 'admin')->latest()->paginate(10);
+
         return view('admin.index', compact('admins'));
     }
 
@@ -68,7 +68,7 @@ class AdminController extends Controller
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $admin->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$admin->id],
             'password' => ['nullable', Password::defaults()],
         ]);
 
@@ -77,7 +77,7 @@ class AdminController extends Controller
         $admin->email = $validated['email'];
         $admin->phone_number = $validated['phone_number'];
 
-        if (!empty($validated['password'])) {
+        if (! empty($validated['password'])) {
             $admin->password = $validated['password'];
         }
 
@@ -90,13 +90,14 @@ class AdminController extends Controller
     public function destroy(User $admin)
     {
         $admin->delete();
+
         return redirect()->route('admin.index')
             ->with('success', 'Admin deleted successfully');
     }
 
     public function toggleStatus(User $admin)
     {
-        $admin->is_active = !$admin->is_active;
+        $admin->is_active = ! $admin->is_active;
         $admin->save();
 
         return redirect()->route('admin.index')
@@ -106,6 +107,7 @@ class AdminController extends Controller
     public function profile()
     {
         $admin = auth()->user();
+
         return view('admin.profile', compact('admin'));
     }
 
@@ -116,13 +118,13 @@ class AdminController extends Controller
         $validated = $request->validate([
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $admin->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$admin->id],
             'current_password' => ['nullable', 'required_with:new_password'],
             'new_password' => ['nullable', Password::defaults()],
         ]);
 
-        if (!empty($validated['current_password'])) {
-            if (!Hash::check($validated['current_password'], $admin->password)) {
+        if (! empty($validated['current_password'])) {
+            if (! Hash::check($validated['current_password'], $admin->password)) {
                 return back()->withErrors(['current_password' => 'The current password is incorrect.']);
             }
             $admin->password = $validated['new_password'];

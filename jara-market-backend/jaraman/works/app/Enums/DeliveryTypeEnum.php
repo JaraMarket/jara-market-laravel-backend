@@ -10,7 +10,7 @@ enum DeliveryTypeEnum: string
 {
     use InvokableCases, Names, Values;
 
-    case PICKUP    = 'pickup';
-    case DELIVERY  = 'delivery';
-    case WALKIN    = 'walkin';
+    case PICKUP = 'pickup';
+    case DELIVERY = 'delivery';
+    case WALKIN = 'walkin';
 }

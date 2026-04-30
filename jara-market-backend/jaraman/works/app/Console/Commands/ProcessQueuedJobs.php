@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Artisan;
 
 class ProcessQueuedJobs extends Command
 {
@@ -27,31 +27,32 @@ class ProcessQueuedJobs extends Command
     public function handle(): int
     {
         $timeout = (int) $this->option('timeout');
-        $queues  = $this->option('queue');
-        $tries   = (int) $this->option('tries');
+        $queues = $this->option('queue');
+        $tries = (int) $this->option('tries');
 
         $this->info('['.now()->toDateTimeString().'] Processing queued jobs...');
 
         // Log pending jobs count
         $pending = DB::table('jobs')->count();
-        $failed  = DB::table('failed_jobs')->count();
+        $failed = DB::table('failed_jobs')->count();
 
         $this->info("  Pending jobs : {$pending}");
         $this->info("  Failed jobs  : {$failed}");
 
         if ($pending === 0) {
             $this->info('  No pending jobs — exiting.');
+
             return 0;
         }
 
         // Run queue worker with time limit (stops before cron fires again)
         $exitCode = Artisan::call('queue:work', [
-            '--queue'            => $queues,
-            '--timeout'          => $timeout - 5,   // inner job timeout
-            '--max-time'         => $timeout,        // total worker lifetime
-            '--tries'            => $tries,
-            '--stop-when-empty'  => true,
-            '--no-interaction'   => true,
+            '--queue' => $queues,
+            '--timeout' => $timeout - 5,   // inner job timeout
+            '--max-time' => $timeout,        // total worker lifetime
+            '--tries' => $tries,
+            '--stop-when-empty' => true,
+            '--no-interaction' => true,
         ]);
 
         $remaining = DB::table('jobs')->count();

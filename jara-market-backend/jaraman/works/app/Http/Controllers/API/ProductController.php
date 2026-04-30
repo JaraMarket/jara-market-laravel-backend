@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\API;
 
 use App\Enums\CategoryTypeEnum;
-use App\Models\Uom;
-use App\Models\State;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\Ingredient;
-use App\Http\Resources\UomResource;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\IngredientResource;
-use App\Filters\FoodFilter\Type as FoodFilterType;
 use App\Filters\FoodFilter\Name as FoodFilterByName;
 use App\Filters\FoodFilter\Search as FoodFilterSearch;
+use App\Filters\FoodFilter\Type as FoodFilterType;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\IngredientResource;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\UomResource;
+use App\Models\Category;
+use App\Models\Ingredient;
+use App\Models\Product;
+use App\Models\State;
+use App\Models\Uom;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -36,7 +36,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Categories retrieved successfully',
-            'data'    => CategoryResource::collection($data),
+            'data' => CategoryResource::collection($data),
         ]);
     }
 
@@ -47,10 +47,10 @@ class ProductController extends Controller
     public function getCategoriesLimitProducts(Request $request)
     {
         $stateId = (int) $request->query('state_id') ?: null;
-        $lgaId   = (int) $request->query('lga_id')   ?: null;
+        $lgaId = (int) $request->query('lga_id') ?: null;
         if ($request->user()) {
             $stateId = $stateId ?: ($request->user()->state_id ?? null);
-            $lgaId   = $lgaId   ?: ($request->user()->lga_id   ?? null);
+            $lgaId = $lgaId ?: ($request->user()->lga_id ?? null);
         }
 
         $data = Category::with([
@@ -58,9 +58,9 @@ class ProductController extends Controller
                 $query->orderBy('created_at', 'desc')->limit(8);
             },
             'products.categories',
-            'products.statePrices'    => fn ($q) => $stateId ? $q->where('state_id', $stateId) : $q->whereRaw('1=0'),
+            'products.statePrices' => fn ($q) => $stateId ? $q->where('state_id', $stateId) : $q->whereRaw('1=0'),
             'products.ingredients.statePrices' => fn ($q) => $stateId ? $q->where('state_id', $stateId) : $q->whereRaw('1=0'),
-            'products.ingredients.lgaPrices'   => fn ($q) => $lgaId   ? $q->where('lga_id',   $lgaId)   : $q->whereRaw('1=0'),
+            'products.ingredients.lgaPrices' => fn ($q) => $lgaId ? $q->where('lga_id', $lgaId) : $q->whereRaw('1=0'),
         ])
             ->where('category_type_id', CategoryTypeEnum::FOOD())
             ->whereNull('deleted_at')
@@ -69,7 +69,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Categories retrieved successfully',
-            'data'    => CategoryResource::collection($data),
+            'data' => CategoryResource::collection($data),
         ]);
     }
 
@@ -80,14 +80,14 @@ class ProductController extends Controller
     public function fetchProduct(Request $request)
     {
         $stateId = (int) $request->query('state_id') ?: null;
-        if (!$stateId && $request->user()) {
+        if (! $stateId && $request->user()) {
             $stateId = $request->user()->state_id ?? null;
         }
 
         $products = Product::with([
-                'categories',
-                'statePrices' => fn ($q) => $stateId ? $q->where('state_id', $stateId) : $q->whereRaw('1=0'),
-            ])
+            'categories',
+            'statePrices' => fn ($q) => $stateId ? $q->where('state_id', $stateId) : $q->whereRaw('1=0'),
+        ])
             ->filterWithPipeline([
                 FoodFilterByName::class,
                 FoodFilterSearch::class,
@@ -98,7 +98,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Products retrieved successfully',
-            'data'    => ProductResource::collection($products),
+            'data' => ProductResource::collection($products),
         ]);
     }
 
@@ -109,7 +109,7 @@ class ProductController extends Controller
     public function getProductById(Request $request, int $id)
     {
         $stateId = (int) $request->query('state_id') ?: null;
-        if (!$stateId && $request->user()) {
+        if (! $stateId && $request->user()) {
             $stateId = $request->user()->state_id ?? null;
         }
 
@@ -121,7 +121,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Product retrieved successfully',
-            'data'    => new ProductResource($product),
+            'data' => new ProductResource($product),
         ]);
     }
 
@@ -137,7 +137,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Categories retrieved successfully',
-            'data'    => CategoryResource::collection($data),
+            'data' => CategoryResource::collection($data),
         ]);
     }
 
@@ -155,26 +155,26 @@ class ProductController extends Controller
     public function fetchIngredient(Request $request)
     {
         // Resolve location from query or authenticated user profile
-        $lgaId   = (int) $request->query('lga_id')   ?: null;
+        $lgaId = (int) $request->query('lga_id') ?: null;
         $stateId = (int) $request->query('state_id') ?: null;
 
         if (! $lgaId && ! $stateId && $request->user()) {
-            $lgaId   = $request->user()->lga_id   ?? null;
+            $lgaId = $request->user()->lga_id ?? null;
             $stateId = $request->user()->state_id ?? null;
         }
 
         // Eager-load only the price rows needed for this request
         $data = Ingredient::with([
-                'category:id,name',
-                'lgaPrices'   => fn ($q) => $lgaId   ? $q->where('lga_id',   $lgaId)   : $q->whereRaw('1=0'),
-                'statePrices' => fn ($q) => $stateId ? $q->where('state_id', $stateId) : $q->whereRaw('1=0'),
-            ])
+            'category:id,name',
+            'lgaPrices' => fn ($q) => $lgaId ? $q->where('lga_id', $lgaId) : $q->whereRaw('1=0'),
+            'statePrices' => fn ($q) => $stateId ? $q->where('state_id', $stateId) : $q->whereRaw('1=0'),
+        ])
             ->orderBy('name')
             ->get();
 
         return response()->json([
             'message' => 'Ingredients retrieved successfully',
-            'data'    => IngredientResource::collection($data),
+            'data' => IngredientResource::collection($data),
         ]);
     }
 
@@ -184,7 +184,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Units of measurement retrieved successfully',
-            'data'    => UomResource::collection($data),
+            'data' => UomResource::collection($data),
         ]);
     }
 
@@ -194,7 +194,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'States retrieved successfully',
-            'data'    => $data->map(fn ($s) => ['id' => $s->id, 'name' => $s->name]),
+            'data' => $data->map(fn ($s) => ['id' => $s->id, 'name' => $s->name]),
         ]);
     }
 }

@@ -12,43 +12,44 @@ class SettingsController extends Controller
     public function index()
     {
         $settings = Setting::all()->pluck('value', 'key');
+
         return view('settings.index', compact('settings'));
     }
 
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'site_name'            => ['required', 'string', 'max:255'],
-            'site_description'     => ['nullable', 'string'],
-            'contact_email'        => ['required', 'email'],
-            'contact_phone'        => ['nullable', 'string'],
-            'support_email'        => ['nullable', 'string'],
-            'address'              => ['nullable', 'string'],
-            'currency'             => ['required', 'string'],
-            'tax_rate'             => ['required', 'numeric', 'min:0', 'max:100'],
-            'shipping_fee'         => ['required', 'numeric', 'min:0'],
-            'social_facebook'      => ['nullable', 'url'],
-            'social_twitter'       => ['nullable', 'url'],
-            'social_instagram'     => ['nullable', 'url'],
-            'social_youtube'       => ['nullable', 'url'],
-            'social_tiktok'        => ['nullable', 'url'],
-            'payment_methods'      => ['nullable', 'array'],
-            'order_statuses'       => ['nullable'],
+            'site_name' => ['required', 'string', 'max:255'],
+            'site_description' => ['nullable', 'string'],
+            'contact_email' => ['required', 'email'],
+            'contact_phone' => ['nullable', 'string'],
+            'support_email' => ['nullable', 'string'],
+            'address' => ['nullable', 'string'],
+            'currency' => ['required', 'string'],
+            'tax_rate' => ['required', 'numeric', 'min:0', 'max:100'],
+            'shipping_fee' => ['required', 'numeric', 'min:0'],
+            'social_facebook' => ['nullable', 'url'],
+            'social_twitter' => ['nullable', 'url'],
+            'social_instagram' => ['nullable', 'url'],
+            'social_youtube' => ['nullable', 'url'],
+            'social_tiktok' => ['nullable', 'url'],
+            'payment_methods' => ['nullable', 'array'],
+            'order_statuses' => ['nullable'],
             'minimum_order_amount' => ['nullable', 'numeric'],
-            'first_order_bonus'    => ['nullable', 'numeric'],
-            'repeat_order_bonus'   => ['nullable', 'numeric'],
-            'timezone'             => ['nullable', 'timezone'],
-            'company_logo'         => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:1024'],
-            'favicon_logo'         => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:1024'],
+            'first_order_bonus' => ['nullable', 'numeric'],
+            'repeat_order_bonus' => ['nullable', 'numeric'],
+            'timezone' => ['nullable', 'timezone'],
+            'company_logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:1024'],
+            'favicon_logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:1024'],
 
             // Storage settings
-            'storage_disk'         => ['nullable', 'in:public,s3'],
-            's3_bucket'            => ['nullable', 'string'],
-            's3_region'            => ['nullable', 'string'],
-            's3_access_key'        => ['nullable', 'string'],
-            's3_secret_key'        => ['nullable', 'string'],
-            's3_url'               => ['nullable', 'string'],
-            's3_endpoint'          => ['nullable', 'string'],
+            'storage_disk' => ['nullable', 'in:public,s3'],
+            's3_bucket' => ['nullable', 'string'],
+            's3_region' => ['nullable', 'string'],
+            's3_access_key' => ['nullable', 'string'],
+            's3_secret_key' => ['nullable', 'string'],
+            's3_url' => ['nullable', 'string'],
+            's3_endpoint' => ['nullable', 'string'],
         ]);
 
         if ($request->hasFile('company_logo')) {
@@ -91,14 +92,14 @@ class SettingsController extends Controller
         }
 
         $config = [
-            'driver'   => 's3',
-            'key'      => $settings['s3_access_key']  ?? env('AWS_ACCESS_KEY_ID', ''),
-            'secret'   => $settings['s3_secret_key']  ?? env('AWS_SECRET_ACCESS_KEY', ''),
-            'region'   => $settings['s3_region']      ?? env('AWS_DEFAULT_REGION', 'us-east-1'),
-            'bucket'   => $settings['s3_bucket']      ?? env('AWS_BUCKET', ''),
-            'url'      => $settings['s3_url']         ?? env('AWS_URL', ''),
-            'endpoint' => !empty($settings['s3_endpoint']) ? $settings['s3_endpoint'] : null,
-            'use_path_style_endpoint' => !empty($settings['s3_endpoint']),
+            'driver' => 's3',
+            'key' => $settings['s3_access_key'] ?? env('AWS_ACCESS_KEY_ID', ''),
+            'secret' => $settings['s3_secret_key'] ?? env('AWS_SECRET_ACCESS_KEY', ''),
+            'region' => $settings['s3_region'] ?? env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'bucket' => $settings['s3_bucket'] ?? env('AWS_BUCKET', ''),
+            'url' => $settings['s3_url'] ?? env('AWS_URL', ''),
+            'endpoint' => ! empty($settings['s3_endpoint']) ? $settings['s3_endpoint'] : null,
+            'use_path_style_endpoint' => ! empty($settings['s3_endpoint']),
         ];
 
         Config::set('filesystems.disks.s3', $config);

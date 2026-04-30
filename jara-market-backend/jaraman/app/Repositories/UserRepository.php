@@ -2,21 +2,20 @@
 
 namespace App\Repositories;
 
-use Exception;
-use Carbon\Carbon;
-use App\Models\User;
-use Illuminate\Http\Response;
+use App\Contracts\UserRepositoryInterface;
 use App\Enums\UserPermissionsEnum;
 use App\Exceptions\GeneralException;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use App\Contracts\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     public function __construct()
     {
-        $this->model = new User();
+        $this->model = new User;
     }
 
     /**
@@ -27,7 +26,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->builderAll()
             ->where('deleted_at', null)
             ->get();
-    } //end all()
+    } // end all()
 
     public function getByPermission(array $permission)
     {
@@ -37,20 +36,20 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                     return $query->whereIn('name', $permission);
                 });
             })->where('deleted_at', null);
-    } //end getByPermission()
+    } // end getByPermission()
 
     public function findByField($field, $value)
     {
         return $this->builderAll()
             ->where($field, $value)
             ->first();
-    } //end findByField()
+    } // end findByField()
 
     public function whereIn($field, $fieldValues)
     {
         return $this->builderAll()
             ->whereIn($field, $fieldValues);
-    } //end whereIn()
+    } // end whereIn()
 
     public function find_user_by_email_or_phone_number($value)
     {
@@ -58,7 +57,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->where('email', $value)
             ->orWhere('phone_number', $value)
             ->first();
-    } //end find_user_by_email_or_phone_number()
+    } // end find_user_by_email_or_phone_number()
 
     public function find_user_by_email_or_referral_code($value)
     {
@@ -66,7 +65,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->where('email', $value)
             ->orWhere('referral_code', $value)
             ->first();
-    } //end find_user_by_email_or_referral_code()
+    } // end find_user_by_email_or_referral_code()
 
     public function firstOrCreate($find, $create)
     {
@@ -75,7 +74,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->firstOrCreate($find, $create);
     }
 
-    
     public function info()
     {
         return $this->builderAll()->selectRaw('count(*) as total')
@@ -101,7 +99,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->saveModel($model);
 
         return $model;
-    } //end create()
+    } // end create()
 
     /**
      * {@inheritdoc}
@@ -123,7 +121,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->saveModel($model);
 
         return $model;
-    } //end update()
+    } // end update()
 
     /**
      * {@inheritdoc}
@@ -133,7 +131,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->builderAll()
             ->whereIn($field, $fieldData)
             ->update($updateData);
-    } //end update()
+    } // end update()
 
     /**
      * {@inheritdoc}
@@ -152,7 +150,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->deleteModel($model);
 
         return true;
-    } //end delete()
+    } // end delete()
 
     /**
      * {@inheritdoc}
@@ -175,7 +173,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
 
         return $this->create($data);
-    } //end update()
+    } // end update()
 
     /**
      * {@inheritdoc}
@@ -185,5 +183,5 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function updateOrCreateWithThrashed(array $uniqueFields, array $data): Model
     {
         return $this->model->withTrashed()->updateOrCreate($uniqueFields, $data);
-    } //end update()
+    } // end update()
 }

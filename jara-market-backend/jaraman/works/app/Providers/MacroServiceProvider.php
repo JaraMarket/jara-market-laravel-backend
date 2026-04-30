@@ -17,8 +17,8 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Response::mixin(new ResponseMacro());
-        Http::mixin(new HttpMacro());
+        Response::mixin(new ResponseMacro);
+        Http::mixin(new HttpMacro);
     }
 
     /**
@@ -26,8 +26,5 @@ class MacroServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        
-    }
+    public function boot() {}
 }

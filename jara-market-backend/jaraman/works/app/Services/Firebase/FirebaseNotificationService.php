@@ -4,9 +4,9 @@ namespace App\Services\Firebase;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
-use Kreait\Firebase\Contract\Messaging;
 
 class FirebaseNotificationService
 {
@@ -15,10 +15,10 @@ class FirebaseNotificationService
     /**
      * Send a push notification to a single user via their stored FCM token.
      *
-     * @param  User   $user   The recipient — must have a non-null fcm_token column.
-     * @param  string $title  Notification title shown on the device.
-     * @param  string $body   Notification body text.
-     * @param  array  $data   Arbitrary key/value payload delivered alongside the notification.
+     * @param  User  $user  The recipient — must have a non-null fcm_token column.
+     * @param  string  $title  Notification title shown on the device.
+     * @param  string  $body  Notification body text.
+     * @param  array  $data  Arbitrary key/value payload delivered alongside the notification.
      */
     public function sendToUser(User $user, string $title, string $body, array $data = []): void
     {
@@ -45,9 +45,9 @@ class FirebaseNotificationService
             // Never let a push notification failure bubble up and break the
             // business transaction — log and continue.
             Log::error('[Firebase] Failed to send notification', [
-                'token'   => substr($token, 0, 20) . '…',
-                'title'   => $title,
-                'error'   => $e->getMessage(),
+                'token' => substr($token, 0, 20).'…',
+                'title' => $title,
+                'error' => $e->getMessage(),
             ]);
         }
     }
@@ -55,7 +55,7 @@ class FirebaseNotificationService
     /**
      * Fan-out to multiple users at once (e.g. all admins).
      *
-     * @param  iterable<User> $users
+     * @param  iterable<User>  $users
      */
     public function sendToUsers(iterable $users, string $title, string $body, array $data = []): void
     {

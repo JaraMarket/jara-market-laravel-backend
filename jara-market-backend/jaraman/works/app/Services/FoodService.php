@@ -3,9 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
-use App\Models\ProductStatePrice;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class FoodService
 {
@@ -15,26 +13,26 @@ class FoodService
             $image_url = upload_image('food', $data['image_url'] ?? null);
 
             $product = Product::create([
-                'name'              => $data['name'],
-                'description'       => $data['description'] ?? null,
-                'price'             => $data['price'],
-                'discount_price'    => $data['discount_price'] ?? null,
+                'name' => $data['name'],
+                'description' => $data['description'] ?? null,
+                'price' => $data['price'],
+                'discount_price' => $data['discount_price'] ?? null,
                 'preparation_steps' => $data['preparation_steps'] ?? null,
-                'stock'             => $data['stock'] ?? 0,
-                'rating'            => $data['rating'] ?? null,
-                'image_url'         => $image_url,
+                'stock' => $data['stock'] ?? 0,
+                'rating' => $data['rating'] ?? null,
+                'image_url' => $image_url,
             ]);
 
-            if (!empty($data['categories'])) {
+            if (! empty($data['categories'])) {
                 $product->categories()->attach($data['categories']);
             }
 
-            if (!empty($data['ingredients'])) {
+            if (! empty($data['ingredients'])) {
                 foreach ($data['ingredients'] as $ingredient) {
-                    if (!empty($ingredient['ingredient_id'])) {
+                    if (! empty($ingredient['ingredient_id'])) {
                         $product->ingredients()->attach($ingredient['ingredient_id'], [
                             'quantity' => $ingredient['quantity'],
-                            'unit'     => $ingredient['unit'],
+                            'unit' => $ingredient['unit'],
                         ]);
                     }
                 }
@@ -49,32 +47,32 @@ class FoodService
     public function update(array $data, Product $product): Product
     {
         return DB::transaction(function () use ($data, $product) {
-            $image_url = !empty($data['image_url'])
+            $image_url = ! empty($data['image_url'])
                 ? upload_image('food', $data['image_url'], $product->image_url)
                 : $product->image_url;
 
             $product->update([
-                'name'              => $data['name'],
-                'description'       => $data['description'] ?? null,
-                'price'             => $data['price'],
-                'discount_price'    => $data['discount_price'] ?? null,
+                'name' => $data['name'],
+                'description' => $data['description'] ?? null,
+                'price' => $data['price'],
+                'discount_price' => $data['discount_price'] ?? null,
                 'preparation_steps' => $data['preparation_steps'] ?? null,
-                'stock'             => $data['stock'] ?? $product->stock,
-                'rating'            => $data['rating'] ?? $product->rating,
-                'image_url'         => $image_url,
+                'stock' => $data['stock'] ?? $product->stock,
+                'rating' => $data['rating'] ?? $product->rating,
+                'image_url' => $image_url,
             ]);
 
-            if (!empty($data['categories'])) {
+            if (! empty($data['categories'])) {
                 $product->categories()->sync($data['categories']);
             }
 
-            if (!empty($data['ingredients'])) {
+            if (! empty($data['ingredients'])) {
                 $syncData = [];
                 foreach ($data['ingredients'] as $ingredient) {
-                    if (!empty($ingredient['ingredient_id'])) {
+                    if (! empty($ingredient['ingredient_id'])) {
                         $syncData[$ingredient['ingredient_id']] = [
                             'quantity' => $ingredient['quantity'],
-                            'unit'     => $ingredient['unit'],
+                            'unit' => $ingredient['unit'],
                         ];
                     }
                 }
@@ -108,7 +106,7 @@ class FoodService
     {
         // Build a keyed map of incoming state prices
         $incoming = collect($statePrices)
-            ->filter(fn ($sp) => !empty($sp['state_id']))
+            ->filter(fn ($sp) => ! empty($sp['state_id']))
             ->keyBy('state_id');
 
         // Delete removed state prices
@@ -121,7 +119,7 @@ class FoodService
             $product->statePrices()->updateOrCreate(
                 ['state_id' => $stateId],
                 [
-                    'price'          => $sp['price'],
+                    'price' => $sp['price'],
                     'discount_price' => $sp['discount_price'] ?? null,
                 ]
             );

@@ -9,13 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'state_id')) {
+            if (! Schema::hasColumn('users', 'state_id')) {
                 $table->foreignId('state_id')->nullable()->constrained('states')->nullOnDelete()->after('country_id');
             }
-            if (!Schema::hasColumn('users', 'fcm_token')) {
+            if (! Schema::hasColumn('users', 'fcm_token')) {
                 $table->string('fcm_token')->nullable()->after('payment_method');
             }
-            if (!Schema::hasColumn('users', 'is_verified')) {
+            if (! Schema::hasColumn('users', 'is_verified')) {
                 $table->boolean('is_verified')->default(false)->after('is_active');
             }
         });

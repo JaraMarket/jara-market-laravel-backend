@@ -25,7 +25,7 @@ class OrderItem extends Model
         'vendor_amount',
         'commision',
         'referral',
-        'referral_id'
+        'referral_id',
     ];
 
     public function order()
@@ -47,7 +47,7 @@ class OrderItem extends Model
     {
         return $this->belongsTo(User::class, 'vendor_id');
     }
-    
+
     public function quality_assurance_user()
     {
         return $this->belongsTo(User::class, 'assurance_user_id');

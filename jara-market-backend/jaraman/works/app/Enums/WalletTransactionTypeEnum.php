@@ -11,5 +11,5 @@ enum WalletTransactionTypeEnum: string
     use InvokableCases, Names, Values;
 
     case CREDIT = 'credit';
-    case DEBIT  = 'debit';
+    case DEBIT = 'debit';
 }

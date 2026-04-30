@@ -3,36 +3,35 @@
 namespace App\Models;
 
 use App\Enums\UserPermissionsEnum;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
-        'firstname','lastname','password','email','role',
-        'referral_code','referrer_id','referral_count','email_verified_at',
-        'phone_number','is_active','pin','last_login','profile_picture',
-        'country_id','business_name','business_address','shop_size',
-        'latitude','longitude','bank_name','bank_code','receipient_code',
-        'account_number','account_name','payment_method','state_id','lga_id','fcm_token','is_verified',
+        'firstname', 'lastname', 'password', 'email', 'role',
+        'referral_code', 'referrer_id', 'referral_count', 'email_verified_at',
+        'phone_number', 'is_active', 'pin', 'last_login', 'profile_picture',
+        'country_id', 'business_name', 'business_address', 'shop_size',
+        'latitude', 'longitude', 'bank_name', 'bank_code', 'receipient_code',
+        'account_number', 'account_name', 'payment_method', 'state_id', 'lga_id', 'fcm_token', 'is_verified',
     ];
 
-    protected $hidden = ['password','remember_token','pin'];
+    protected $hidden = ['password', 'remember_token', 'pin'];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password'          => 'hashed',
-        'is_active'         => 'boolean',
-        'is_verified'       => 'boolean',
+        'password' => 'hashed',
+        'is_active' => 'boolean',
+        'is_verified' => 'boolean',
     ];
 
     protected function name(): Attribute
@@ -52,41 +51,77 @@ class User extends Authenticatable
         return in_array($this->role, [UserPermissionsEnum::SUPER_ADMIN(), UserPermissionsEnum::ADMIN()]);
     }
 
-    public function isStateAdmin(): bool    { return $this->role === UserPermissionsEnum::STATE_ADMIN(); }
-    public function isVendorManager(): bool { return $this->role === UserPermissionsEnum::VENDOR_MANAGER(); }
-    public function isAccounts(): bool      { return $this->role === UserPermissionsEnum::ACCOUNTS(); }
-    public function isAudit(): bool         { return $this->role === UserPermissionsEnum::AUDIT(); }
-    public function isLogistics(): bool     { return $this->role === UserPermissionsEnum::LOGISTICS(); }
-    public function isVendor(): bool        { return $this->role === UserPermissionsEnum::VENDOR(); }
-    public function isCustomer(): bool      { return $this->role === UserPermissionsEnum::CUSTOMER(); }
+    public function isStateAdmin(): bool
+    {
+        return $this->role === UserPermissionsEnum::STATE_ADMIN();
+    }
+
+    public function isVendorManager(): bool
+    {
+        return $this->role === UserPermissionsEnum::VENDOR_MANAGER();
+    }
+
+    public function isAccounts(): bool
+    {
+        return $this->role === UserPermissionsEnum::ACCOUNTS();
+    }
+
+    public function isAudit(): bool
+    {
+        return $this->role === UserPermissionsEnum::AUDIT();
+    }
+
+    public function isLogistics(): bool
+    {
+        return $this->role === UserPermissionsEnum::LOGISTICS();
+    }
+
+    public function isVendor(): bool
+    {
+        return $this->role === UserPermissionsEnum::VENDOR();
+    }
+
+    public function isCustomer(): bool
+    {
+        return $this->role === UserPermissionsEnum::CUSTOMER();
+    }
 
     // ── Permission checks ─────────────────────────────────────────────
 
     public function hasPermission(string $permission): bool
     {
-        if ($this->isSuperAdmin()) return true;
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
         return $this->userPermissions->contains('slug', $permission);
     }
 
     public function hasAnyPermission(array $permissions): bool
     {
         foreach ($permissions as $perm) {
-            if ($this->hasPermission($perm)) return true;
+            if ($this->hasPermission($perm)) {
+                return true;
+            }
         }
+
         return false;
     }
 
     public function hasAllPermissions(array $permissions): bool
     {
         foreach ($permissions as $perm) {
-            if (!$this->hasPermission($perm)) return false;
+            if (! $this->hasPermission($perm)) {
+                return false;
+            }
         }
+
         return true;
     }
 
     public function syncDefaultPermissions(): void
     {
-        $slugs   = UserPermissionsEnum::from($this->role)->defaultPermissions();
+        $slugs = UserPermissionsEnum::from($this->role)->defaultPermissions();
         $permIds = Permission::whereIn('slug', $slugs)->pluck('id');
         $this->userPermissions()->sync($permIds);
     }

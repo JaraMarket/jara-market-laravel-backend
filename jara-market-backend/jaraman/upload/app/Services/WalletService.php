@@ -51,10 +51,10 @@ class WalletService
     |--------------------------------------------------------------------------
     */
     public function credit(
-        User    $user,
-        float   $amount,
-        string  $reference,
-        string  $comment = 'Wallet funding'
+        User $user,
+        float $amount,
+        string $reference,
+        string $comment = 'Wallet funding'
     ): void {
         DB::transaction(function () use ($user, $amount, $reference, $comment) {
             TransactionLogService::credit(
@@ -70,11 +70,11 @@ class WalletService
             $this->firebase->sendToUser(
                 $user,
                 'Wallet Funded',
-                '₦' . number_format($amount, 2) . ' has been added to your wallet.',
+                '₦'.number_format($amount, 2).' has been added to your wallet.',
                 [
-                    'type'      => 'wallet_credit',
-                    'amount'    => (string) $amount,
-                    'balance'   => (string) $newBalance,
+                    'type' => 'wallet_credit',
+                    'amount' => (string) $amount,
+                    'balance' => (string) $newBalance,
                     'reference' => $reference,
                 ]
             );
@@ -95,11 +95,11 @@ class WalletService
     |--------------------------------------------------------------------------
     */
     public function debit(
-        User    $user,
-        float   $amount,
-        ?int    $ownerId   = null,
+        User $user,
+        float $amount,
+        ?int $ownerId = null,
         ?string $ownerType = null,
-        string  $comment   = 'Wallet debit'
+        string $comment = 'Wallet debit'
     ): void {
         $this->ensureSufficientBalance($user, $amount);
 
@@ -119,10 +119,10 @@ class WalletService
             $this->firebase->sendToUser(
                 $user,
                 'Wallet Debited',
-                '₦' . number_format($amount, 2) . ' was deducted from your wallet.',
+                '₦'.number_format($amount, 2).' was deducted from your wallet.',
                 [
-                    'type'    => 'wallet_debit',
-                    'amount'  => (string) $amount,
+                    'type' => 'wallet_debit',
+                    'amount' => (string) $amount,
                     'balance' => (string) $newBalance,
                 ]
             );
@@ -160,7 +160,7 @@ class WalletService
             );
 
             // Initiate Paystack payout
-            $transfer  = $this->paystack->payout(
+            $transfer = $this->paystack->payout(
                 bank_account : $bankAccount,
                 amount       : (int) $amount,
                 owner_id     : $user->id,
@@ -168,15 +168,15 @@ class WalletService
             );
 
             $newBalance = (float) $user->wallet->fresh()->balance;
-            $reference  = $transfer->reference ?? null;
+            $reference = $transfer->reference ?? null;
 
             $this->firebase->sendToUser(
                 $user,
                 'Withdrawal Initiated',
-                '₦' . number_format($amount, 2) . ' withdrawal initiated to ' . $bankAccount->bank_name . '.',
+                '₦'.number_format($amount, 2).' withdrawal initiated to '.$bankAccount->bank_name.'.',
                 [
-                    'type'      => 'withdrawal_initiated',
-                    'amount'    => (string) $amount,
+                    'type' => 'withdrawal_initiated',
+                    'amount' => (string) $amount,
                     'reference' => (string) ($reference ?? ''),
                 ]
             );
@@ -186,16 +186,16 @@ class WalletService
                 amount    : $amount,
                 balance   : $newBalance,
                 reference : $reference,
-                remarks   : $data['remark'] ?? 'Bank withdrawal to ' . $bankAccount->bank_name,
+                remarks   : $data['remark'] ?? 'Bank withdrawal to '.$bankAccount->bank_name,
             ));
 
             return [
-                'reference'      => $reference,
-                'account_name'   => $bankAccount->account_name,
+                'reference' => $reference,
+                'account_name' => $bankAccount->account_name,
                 'account_number' => $bankAccount->account_number,
-                'bank_name'      => $bankAccount->bank_name,
-                'amount'         => $amount,
-                'new_balance'    => $newBalance,
+                'bank_name' => $bankAccount->bank_name,
+                'amount' => $amount,
+                'new_balance' => $newBalance,
             ];
         });
     }
@@ -225,7 +225,7 @@ class WalletService
 
         if ($balance < $amount) {
             throw new GeneralException(
-                'Insufficient wallet balance. Available: ₦' . number_format($balance, 2),
+                'Insufficient wallet balance. Available: ₦'.number_format($balance, 2),
                 400
             );
         }

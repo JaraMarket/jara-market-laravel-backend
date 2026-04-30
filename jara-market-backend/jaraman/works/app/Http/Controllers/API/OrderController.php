@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-use Exception;
+use App\Exceptions\GeneralException;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\DecideOrderItemRequest;
+use App\Http\Requests\OrderRequest;
+use App\Http\Resources\IngredientOrderResource;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Services\OrderService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Services\OrderService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderRequest;
-use App\Exceptions\GeneralException;
-use App\Http\Resources\OrderResource;
-use App\Http\Requests\DecideOrderItemRequest;
-use App\Http\Resources\IngredientOrderResource;
 
 class OrderController extends Controller
 {
@@ -24,10 +24,12 @@ class OrderController extends Controller
     {
         try {
             $orders = $this->orderService->all((int) $request->get('per_page', 15));
+
             return response()->success('Orders retrieved successfully',
                 OrderResource::collection($orders)->response()->getData(true), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -36,12 +38,15 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderService->getOrderById($order->id);
+
             return response()->success('Order retrieved successfully', new OrderResource($order), 200);
         } catch (GeneralException $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], $e->getCode());
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -50,12 +55,15 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderService->createOrder($request);
+
             return response()->success('Order created successfully', new OrderResource($order), 201);
         } catch (GeneralException $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], $e->getCode());
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -64,9 +72,11 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderService->cancelOrder($order);
+
             return response()->success('Order cancelled successfully', new OrderResource($order), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -78,10 +88,12 @@ class OrderController extends Controller
     {
         try {
             $orders = $this->orderService->getAvailableOrders((int) $request->get('per_page', 20));
+
             return response()->success('Available orders retrieved successfully',
                 IngredientOrderResource::collection($orders)->response()->getData(true), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -91,10 +103,12 @@ class OrderController extends Controller
     {
         try {
             $orders = $this->orderService->getMyOrders((int) $request->get('per_page', 20));
+
             return response()->success('Accepted orders retrieved successfully',
                 IngredientOrderResource::collection($orders)->response()->getData(true), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -104,9 +118,11 @@ class OrderController extends Controller
     {
         try {
             $orderItem = $this->orderService->showOrderByItemId($item_id);
+
             return response()->success('Order retrieved successfully', new IngredientOrderResource($orderItem), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -116,9 +132,11 @@ class OrderController extends Controller
     {
         try {
             $orderItem = $this->orderService->decide($request->validated(), $item_id);
+
             return response()->success('Action taken successfully', new IngredientOrderResource($orderItem), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

@@ -37,6 +37,7 @@ class Admin extends Authenticatable
         if (is_string($permission)) {
             return $this->permissions->contains('slug', $permission);
         }
+
         return false;
     }
 
@@ -49,6 +50,7 @@ class Admin extends Authenticatable
                 }
             }
         }
+
         return false;
     }
 }

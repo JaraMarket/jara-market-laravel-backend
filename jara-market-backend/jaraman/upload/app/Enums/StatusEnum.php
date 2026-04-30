@@ -8,21 +8,21 @@ use ArchTech\Enums\Values;
 
 enum StatusEnum: string
 {
-    use InvokableCases, Values, Names;
+    use InvokableCases, Names, Values;
 
-    case PENDING    = 'pending';
-    case SUCCESS    = 'success';
-    case APPROVED   = 'approved';
-    case ACCEPTED   = 'accepted';
-    case CANCELLED  = 'cancelled';
-    case CLOSED     = 'closed';
-    case OPEN       = 'open';
+    case PENDING = 'pending';
+    case SUCCESS = 'success';
+    case APPROVED = 'approved';
+    case ACCEPTED = 'accepted';
+    case CANCELLED = 'cancelled';
+    case CLOSED = 'closed';
+    case OPEN = 'open';
     case INPROGRESS = 'in progress';
-    case RESOLVED   = 'resolved';
-    case BLOCKED    = 'blocked';
-    case COMPLETED  = 'completed';
-    case ACTIVE     = 'active';
+    case RESOLVED = 'resolved';
+    case BLOCKED = 'blocked';
+    case COMPLETED = 'completed';
+    case ACTIVE = 'active';
     case PROCESSING = 'processing';
-    case STOP       = 'stop';
-    case FAILED     = 'failed';
+    case STOP = 'stop';
+    case FAILED = 'failed';
 }

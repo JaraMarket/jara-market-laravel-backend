@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Get the active storage disk from settings.
@@ -14,7 +14,7 @@ function active_storage_disk(): string
         try {
             return DB::table('settings')->where('key', 'storage_disk')->value('value')
                    ?? env('FILESYSTEM_DISK', 'public');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return env('FILESYSTEM_DISK', 'public');
         }
     });
@@ -25,10 +25,12 @@ function active_storage_disk(): string
  */
 function upload_image(string $folder, $image_file, ?string $old_file = null): ?string
 {
-    if (!$image_file) return null;
+    if (! $image_file) {
+        return null;
+    }
 
-    $disk     = active_storage_disk();
-    $filename = time() . '_' . preg_replace('/\s+/', '_', $image_file->getClientOriginalName());
+    $disk = active_storage_disk();
+    $filename = time().'_'.preg_replace('/\s+/', '_', $image_file->getClientOriginalName());
 
     try {
         // Delete old file if exists
@@ -37,14 +39,16 @@ function upload_image(string $folder, $image_file, ?string $old_file = null): ?s
         }
 
         $path = $image_file->storeAs($folder, $filename, $disk);
+
         return $path;
 
-    } catch (\Exception $e) {
-        \Log::error('Image upload failed', [
-            'disk'  => $disk,
-            'file'  => $filename,
+    } catch (Exception $e) {
+        Log::error('Image upload failed', [
+            'disk' => $disk,
+            'file' => $filename,
             'error' => $e->getMessage(),
         ]);
+
         return null;
     }
 }
@@ -54,17 +58,21 @@ function upload_image(string $folder, $image_file, ?string $old_file = null): ?s
  */
 function delete_image(?string $path): bool
 {
-    if (!$path) return false;
+    if (! $path) {
+        return false;
+    }
 
     $disk = active_storage_disk();
 
     try {
         if (Storage::disk($disk)->exists($path)) {
             Storage::disk($disk)->delete($path);
+
             return true;
         }
+
         return false;
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         return false;
     }
 }
@@ -74,12 +82,14 @@ function delete_image(?string $path): bool
  */
 function get_media_url(?string $path): ?string
 {
-    if (!$path) return null;
+    if (! $path) {
+        return null;
+    }
 
     $disk = active_storage_disk();
 
     try {
-        if (!Storage::disk($disk)->exists($path)) {
+        if (! Storage::disk($disk)->exists($path)) {
             return null;
         }
 
@@ -91,13 +101,13 @@ function get_media_url(?string $path): ?string
         $url = Storage::disk($disk)->url($path);
         $url = str_replace('/storage/app/public', '/storage', $url);
 
-        if (!file_exists(public_path('storage'))) {
-            $url = asset('storage/app/public/' . ltrim($path, '/'));
+        if (! file_exists(public_path('storage'))) {
+            $url = asset('storage/app/public/'.ltrim($path, '/'));
         }
 
         return $url;
 
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         return null;
     }
 }
@@ -105,17 +115,17 @@ function get_media_url(?string $path): ?string
 /**
  * Read settings from DB (cached statically per request).
  */
-if (!function_exists('company')) {
+if (! function_exists('company')) {
     function company(?string $key = null, $default = null)
     {
         static $settings;
 
-        if (!$settings) {
+        if (! $settings) {
             try {
                 $settings = DB::table('settings')
                     ->pluck('value', 'key')
                     ->toArray();
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $settings = [];
             }
         }

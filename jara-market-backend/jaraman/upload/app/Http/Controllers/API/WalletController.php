@@ -35,6 +35,7 @@ class WalletController extends Controller
             return response()->success('Wallet retrieved', new WalletResource($wallet));
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Unable to retrieve wallet.', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -60,6 +61,7 @@ class WalletController extends Controller
             return response()->errorResponse($e->getMessage(), [], $e->getCode() ?: 400);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Unable to initialize payment.', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -83,6 +85,7 @@ class WalletController extends Controller
             return response()->errorResponse($e->getMessage(), [], $e->getCode() ?: 400);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Unable to process withdrawal. Please try again.', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -95,7 +98,7 @@ class WalletController extends Controller
     public function transactions(Request $request): JsonResponse
     {
         $request->validate([
-            'type'     => 'nullable|in:credit,debit',
+            'type' => 'nullable|in:credit,debit',
             'per_page' => 'nullable|integer|min:1|max:100',
         ]);
 
@@ -112,6 +115,7 @@ class WalletController extends Controller
             );
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse('Unable to retrieve transactions.', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

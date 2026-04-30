@@ -19,8 +19,8 @@ class EmailVerificationController extends Controller
         $user = User::find($request->route('id'));
 
         if (
-            !$user ||
-            !hash_equals(sha1($user->getEmailForVerification()), $request->route('hash'))
+            ! $user ||
+            ! hash_equals(sha1($user->getEmailForVerification()), $request->route('hash'))
         ) {
             throw new AuthorizationException;
         }

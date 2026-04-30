@@ -20,12 +20,16 @@ class HandleTransferFailedService
             ->firstOrFail();
 
         // Idempotency — already reversed
-        if ($transfer->status === StatusEnum::FAILED()) return;
+        if ($transfer->status === StatusEnum::FAILED()) {
+            return;
+        }
 
         $transfer->update(['status' => StatusEnum::FAILED()]);
 
         $user = $transfer->owner;
-        if (! $user) return;
+        if (! $user) {
+            return;
+        }
 
         $amount = (float) ($data['amount'] / 100); // kobo → naira
 
@@ -34,7 +38,7 @@ class HandleTransferFailedService
             user      : $user,
             amount    : $amount,
             reference : $data['transfer_code'],
-            comment   : 'Reversal: bank transfer failed — ' . ($data['reason'] ?? 'no reason provided'),
+            comment   : 'Reversal: bank transfer failed — '.($data['reason'] ?? 'no reason provided'),
         );
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\BankResource;
 use App\Models\Bank;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class BankController extends Controller
@@ -13,7 +13,7 @@ class BankController extends Controller
     {
         $query = Bank::query();
 
-        if ($request->has('search') && !empty($request->search)) {
+        if ($request->has('search') && ! empty($request->search)) {
             $search = $request->search;
             $query->where('name', 'LIKE', "%{$search}%");
         }

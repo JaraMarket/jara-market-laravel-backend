@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-
-use Illuminate\Validation\Rule;
 use App\Enums\DeliveryTypeEnum;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderRequest extends FormRequest
 {
@@ -20,16 +20,16 @@ class OrderRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         $deliveryType = $this->input('delivery_type');
 
         return [
-            'order_date'    => ['required', 'date_format:Y-m-d', 'after_or_equal:today'],
+            'order_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:today'],
             'delivery_type' => ['required', Rule::in(DeliveryTypeEnum::values())],
-            'shipping_fee'  => [
+            'shipping_fee' => [
                 'nullable',
                 'numeric',
                 Rule::requiredIf($deliveryType === DeliveryTypeEnum::PICKUP()),
@@ -44,7 +44,7 @@ class OrderRequest extends FormRequest
                 'exists:addresses,id',
                 Rule::requiredIf($deliveryType === DeliveryTypeEnum::PICKUP()),
             ],
-            
+
             'products' => ['nullable', 'array', 'required_without:ingredients'],
             'products.*.product_id' => ['nullable', 'exists:products,id'],
             'products.*.price' => ['nullable', 'numeric'],
@@ -73,7 +73,7 @@ class OrderRequest extends FormRequest
         $data = $this->all();
 
         foreach (['products', 'ingredients'] as $field) {
-            if (!empty($data[$field]) && is_string($data[$field])) {
+            if (! empty($data[$field]) && is_string($data[$field])) {
                 $decoded = json_decode($data[$field], true);
 
                 if (json_last_error() === JSON_ERROR_NONE) {

@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\TransferResource;
-use Exception;
-use Throwable;
-use App\Utils\Util;
-use App\Models\User;
-use App\Models\PaymentLog;
-use App\Models\PaymentNow;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Support\Facades\Payment;
+use App\Contracts\PaymentGatewayInterface;
 use App\Enums\TransactionStatusEnum;
 use App\Exceptions\GeneralException;
 use App\Http\Requests\FundWalletRequest;
-use App\Services\Payment\PaymentService;
-use App\Contracts\PaymentGatewayInterface;
-use App\Http\Resources\TransactionResource;
-use App\Services\HandlePaystackWebhookService;
 use App\Http\Requests\Paystack\VerifyPaystackRequest;
-use App\Models\Transfer;
+use App\Http\Resources\TransactionResource;
+use App\Http\Resources\TransferResource;
+use App\Models\PaymentLog;
+use App\Models\PaymentNow;
+use App\Models\User;
+use App\Services\HandlePaystackWebhookService;
+use App\Services\Payment\PaymentService;
+use App\Support\Facades\Payment;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Throwable;
 
 class PaymentController extends Controller
 {
@@ -30,7 +28,6 @@ class PaymentController extends Controller
         public PaymentService $paymentService
     ) {}
 
-    
     public function index()
     {
         $payments = PaymentLog::with('user')
@@ -61,6 +58,7 @@ class PaymentController extends Controller
         }
 
         $payments = $query->latest('payment_date')->paginate(10);
+
         return view('payments.index', compact('payments'));
     }
 
@@ -83,8 +81,9 @@ class PaymentController extends Controller
         try {
             $data = $request->validated();
             $payment_link = $this->initialize_payment($data);
+
             return response()->success('Payment is initialized successfully, here is the payment link generated', ['url' => $payment_link]);
-            
+
         } catch (GeneralException $e) {
             report($e);
 
@@ -102,20 +101,20 @@ class PaymentController extends Controller
 
     public function initialize_payment($data)
     {
-            $user = auth()->user();
-            $amount = $data['amount'];
-            $metadata = ['amount' => $amount] + $data['metadata'] ?? [];
+        $user = auth()->user();
+        $amount = $data['amount'];
+        $metadata = ['amount' => $amount] + $data['metadata'] ?? [];
 
-            $generate_payment_link = Payment::gateway($data['payment_gateway'])->setTransactionInitiator($user)
-                ->initializeTransaction(
-                    email: $user->email,
-                    amount: $amount,
-                    currency: $data['currency'],
-                    callback: $data['callback_url'],
-                    metadata: $metadata,
-                );
+        $generate_payment_link = Payment::gateway($data['payment_gateway'])->setTransactionInitiator($user)
+            ->initializeTransaction(
+                email: $user->email,
+                amount: $amount,
+                currency: $data['currency'],
+                callback: $data['callback_url'],
+                metadata: $metadata,
+            );
 
-            return  $generate_payment_link['authorization_url'] ?? $generate_payment_link['link'];
+        return $generate_payment_link['authorization_url'] ?? $generate_payment_link['link'];
     }
 
     public function handlePaystackWebhook(VerifyPaystackRequest $request)

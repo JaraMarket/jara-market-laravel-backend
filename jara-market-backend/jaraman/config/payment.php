@@ -5,6 +5,6 @@ return [
     'gateways' => [
         'paystack' => [],
         'flutterwave' => [],
-        'stripe'  => [],
+        'stripe' => [],
     ],
 ];

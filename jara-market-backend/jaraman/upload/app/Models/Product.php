@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Traits\AddPipelineToModelTrait;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory, AddPipelineToModelTrait;
+    use AddPipelineToModelTrait, HasFactory;
 
     protected $hidden = ['pivot'];
 
@@ -24,10 +24,10 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'price'          => 'decimal:2',
+        'price' => 'decimal:2',
         'discount_price' => 'decimal:2',
-        'rating'         => 'decimal:1',
-        'stock'          => 'integer',
+        'rating' => 'decimal:1',
+        'stock' => 'integer',
     ];
 
     // ─── Relationships ────────────────────────────────────────────────────────
@@ -59,7 +59,7 @@ class Product extends Model
      * Note: Products use state-level pricing (not LGA-level).
      * Ingredients use the more granular LGA → State → Default chain.
      *
-     * @param  int|null $stateId  Customer's state ID
+     * @param  int|null  $stateId  Customer's state ID
      * @return array{price: string, discount_price: string|null, price_source: string}
      */
     public function getPriceForLocation(?int $stateId = null): array
@@ -69,17 +69,17 @@ class Product extends Model
 
             if ($statePrice) {
                 return [
-                    'price'          => $statePrice->price,
+                    'price' => $statePrice->price,
                     'discount_price' => $statePrice->discount_price,
-                    'price_source'   => 'state',
+                    'price_source' => 'state',
                 ];
             }
         }
 
         return [
-            'price'          => $this->price,
+            'price' => $this->price,
             'discount_price' => $this->discount_price,
-            'price_source'   => 'default',
+            'price_source' => 'default',
         ];
     }
 
@@ -103,6 +103,7 @@ class Product extends Model
             );
             $total += $convertedQuantity * ($ingredient->price_per_unit ?? $ingredient->price);
         }
+
         return $total;
     }
 
@@ -112,6 +113,7 @@ class Product extends Model
             'kg' => 1, 'g' => 0.001, 'l' => 1, 'ml' => 0.001,
             'piece' => 1, 'cup' => 0.25, 'tbsp' => 0.015, 'tsp' => 0.005,
         ];
+
         return $quantity * ($rates[$unit] ?? 1);
     }
 }

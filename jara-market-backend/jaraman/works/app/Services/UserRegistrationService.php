@@ -1,16 +1,17 @@
 <?php
+
 namespace App\Services;
 
-use App\Models\BankAccount;
 use App\Models\Bank;
-use Exception;
+use App\Models\BankAccount;
 use App\Models\User;
-use App\Models\Wallet;
 use App\Models\User_otp;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use App\Models\Wallet;
 use App\Notifications\OtpNotification;
 use App\Notifications\UserCreatedNotification;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserRegistrationService
 {
@@ -24,16 +25,17 @@ class UserRegistrationService
             if ($existing_user) {
                 $existing_user->update(['role' => 'vendor']);
                 $this->sendOtp($existing_user->email);
+
                 return $existing_user;
             }
 
             $user = User::create([
-                'firstname'     => $data['firstname'],
-                'lastname'      => $data['lastname'],
-                'email'         => $data['email'],
-                'password'      => $data['password'],
-                'role'          => $data['role'],
-                'phone_number'  => $data['phone_number'],
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'role' => $data['role'],
+                'phone_number' => $data['phone_number'],
                 'referral_code' => Str::random(10),
             ]);
 
@@ -45,6 +47,7 @@ class UserRegistrationService
 
             // Queue the OTP email
             $this->sendOtp($user->email);
+
             return $user;
         });
     }
@@ -55,7 +58,7 @@ class UserRegistrationService
 
         $user = User::where('email', $email)->first();
 
-        if (!$user) {
+        if (! $user) {
             throw new Exception('No user record found', 404);
         }
 
@@ -64,11 +67,12 @@ class UserRegistrationService
 
         // Create a new OTP record
         User_otp::create([
-            'otp'   => $otp,
+            'otp' => $otp,
             'email' => $user->email,
         ]);
 
         $user->notify(new OtpNotification($otp));
+
         return $user;
     }
 
@@ -76,7 +80,9 @@ class UserRegistrationService
     {
         $referrer = User::where('referral_code', $referralCode)->first();
 
-        if (!$referrer) return;
+        if (! $referrer) {
+            return;
+        }
 
         $referrerWallet = Wallet::firstOrCreate(['user_id' => $referrer->id]);
 
@@ -89,7 +95,7 @@ class UserRegistrationService
     {
         return DB::transaction(function () use ($email, $otp) {
             $user = User::where('email', $email)->first();
-            if (!$user) {
+            if (! $user) {
                 throw new Exception('No user record found', 404);
             }
             $otpRecord = User_otp::where('email', $email)
@@ -97,10 +103,11 @@ class UserRegistrationService
                 ->where('created_at', '>=', now()->subMinutes(15))
                 ->first();
 
-            if (!$otpRecord) {
+            if (! $otpRecord) {
                 throw new Exception('Invalid OTP or OTP has expired', 400);
             }
             $otpRecord->delete();
+
             return $user;
         });
     }
@@ -108,12 +115,12 @@ class UserRegistrationService
     public function validateEmail($user)
     {
         return DB::transaction(function () use ($user) {
-            
-            if (!$user) {
+
+            if (! $user) {
                 throw new Exception('No user record found', 404);
             }
-            $user->update(['email_verified_at' => now(), 'is_active' => 1]);          
-            $user->notify(new UserCreatedNotification());
+            $user->update(['email_verified_at' => now(), 'is_active' => 1]);
+            $user->notify(new UserCreatedNotification);
 
             return $user;
         });
@@ -138,13 +145,14 @@ class UserRegistrationService
         ]);
 
         if ($request->hasFile('profile_picture')) {
-            $path = upload_image("Users", $request->profile_picture, $request);
+            $path = upload_image('Users', $request->profile_picture, $request);
             $data['profile_picture'] = $path;
         }
 
         $this->updateOrCreateBankAccount($user, $request);
 
         $user->update($data);
+
         return $user;
     }
 
@@ -162,14 +170,14 @@ class UserRegistrationService
 
         BankAccount::updateOrCreate(
             [
-                'owner_id'   => $user->id,
+                'owner_id' => $user->id,
                 'owner_type' => User::class,
             ],
             [
-                'bank_name'      => $bank->name,
-                'bank_code'      => $bank->code,
+                'bank_name' => $bank->name,
+                'bank_code' => $bank->code,
                 'account_number' => $request->account_number,
-                'account_name'   => $user->account_name,
+                'account_name' => $user->account_name,
             ]
         );
     }

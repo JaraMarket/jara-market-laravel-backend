@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use App\Enums\UserPermissionsEnum;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DecideOrderItemRequest extends FormRequest
 {
@@ -19,12 +20,12 @@ class DecideOrderItemRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         $rules = [
-            'status' => ['required', Rule::in(['accepted', 'rejected','completed'])],
+            'status' => ['required', Rule::in(['accepted', 'rejected', 'completed'])],
         ];
 
         if (auth()->user()->role === UserPermissionsEnum::ADMIN()) {

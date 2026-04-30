@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('help_tickets', function (Blueprint $table) {
             $table->id();
-        
+
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-        
+
             $table->string('subject');
             $table->text('message');
-        
+
             $table->string('attachment')->nullable();
-        
+
             $table->enum('status', ['open', 'in_progress', 'resolved', 'closed'])
-                  ->default('open');
-        
+                ->default('open');
+
             $table->timestamps();
         });
     }

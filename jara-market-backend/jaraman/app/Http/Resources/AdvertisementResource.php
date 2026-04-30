@@ -20,12 +20,12 @@ class AdvertisementResource extends JsonResource
             'type' => $this->type,
             'value' => $this->value,
             'ingredients' => $this->ingredients->map(function ($ingredient) {
-                                return [
-                                    'name' => $ingredient->name,
-                                    'price' => $ingredient->price,
-                                    'discounted_price' => $ingredient->discounted_price,
-                                ];
-                            }),
+                return [
+                    'name' => $ingredient->name,
+                    'price' => $ingredient->price,
+                    'discounted_price' => $ingredient->discounted_price,
+                ];
+            }),
             'status' => $this->status,
             'created_at' => $this->created_at->diffForHumans(),
         ];

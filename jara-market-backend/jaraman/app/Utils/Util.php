@@ -2,17 +2,16 @@
 
 namespace App\Utils;
 
-use App\Models\Commission;
-use App\Models\Setting;
-use App\Models\Order;
-use App\Models\Country;
-use App\Models\PaymentLog;
-use Illuminate\Support\Str;
 use App\Enums\Prefix\PrefixEnum;
+use App\Models\Commission;
+use App\Models\Order;
+use App\Models\PaymentLog;
+use App\Models\Setting;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Util
-{ 
+{
     public static function generate_sub_txn_ref()
     {
         $generated_id = PrefixEnum::DEPOSIT_TXN().mt_rand(1000000000, 999999999999).time();
@@ -24,7 +23,7 @@ class Util
 
         return $generated_id;
     }
-    
+
     public static function generate_code()
     {
         $generated_code = Str::random(5);
@@ -95,11 +94,11 @@ class Util
     {
         $setting = Setting::where('key', 'tax_rate')->first();
         $vat_rate = $setting->value;
-    
+
         if ($vat_rate < 0) {
             return 0;
         }
-    
+
         return $amount * ($vat_rate / 100);
     }
 
@@ -143,13 +142,13 @@ class Util
                 'commission' => $commission_fee,
             ];
         }
-    
-         // Normal commission lookup
-            $commission = Commission::query()
+
+        // Normal commission lookup
+        $commission = Commission::query()
             ->where('min_amount', '<=', $amount)
             ->where(function ($q) use ($amount) {
                 $q->whereNull('max_amount')
-                ->orWhere('max_amount', '>=', $amount);
+                    ->orWhere('max_amount', '>=', $amount);
             })
             ->orderByDesc('min_amount')
             ->first();

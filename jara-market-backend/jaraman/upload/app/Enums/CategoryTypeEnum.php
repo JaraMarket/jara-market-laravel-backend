@@ -8,8 +8,8 @@ use ArchTech\Enums\Values;
 
 enum CategoryTypeEnum: string
 {
-    use InvokableCases, Values, Names;
+    use InvokableCases, Names, Values;
 
-    case FOOD   = 1;
+    case FOOD = 1;
     case VENDOR = 2;
 }

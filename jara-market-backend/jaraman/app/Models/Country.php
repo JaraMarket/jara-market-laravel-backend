@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Traits\AddPipelineToModelTrait;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    use HasFactory, AddPipelineToModelTrait;
+    use AddPipelineToModelTrait, HasFactory;
 
-    protected $fillable = ['name', 'code', 'currency', 'currency_sym','flag_id', 'vat'];
+    protected $fillable = ['name', 'code', 'currency', 'currency_sym', 'flag_id', 'vat'];
 
     public function states()
     {
@@ -29,12 +29,12 @@ class Country extends Model
 
     public function getFlagUrlAttribute()
     {
-        return $this->flag ? url(config('paths.uploads_base_path') . '/' .'flags/' . $this->flag->source) : '';
+        return $this->flag ? url(config('paths.uploads_base_path').'/'.'flags/'.$this->flag->source) : '';
     }
 
     public function marketplaces()
     {
-        return $this->belongsToMany(Marketplace::class, 'marketplace_countries','country_id','marketplace_id')->withTimestamps();
+        return $this->belongsToMany(Marketplace::class, 'marketplace_countries', 'country_id', 'marketplace_id')->withTimestamps();
     }
 
     public function featurePosts()

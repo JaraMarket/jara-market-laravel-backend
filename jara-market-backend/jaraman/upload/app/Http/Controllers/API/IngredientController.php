@@ -23,7 +23,7 @@ class IngredientController extends Controller
 
         return response()->json([
             'message' => 'Ingredients retrieved successfully.',
-            'data'    => IngredientResource::collection($ingredients),
+            'data' => IngredientResource::collection($ingredients),
         ]);
     }
 
@@ -39,7 +39,7 @@ class IngredientController extends Controller
 
         return response()->json([
             'message' => 'Ingredient retrieved successfully.',
-            'data'    => new IngredientResource($ingredient),
+            'data' => new IngredientResource($ingredient),
         ]);
     }
 }

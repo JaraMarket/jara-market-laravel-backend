@@ -16,7 +16,7 @@ class StateRepresentative extends Model
         'state',
         'lga',
         'address',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [

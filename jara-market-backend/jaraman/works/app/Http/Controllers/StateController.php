@@ -7,13 +7,14 @@ use App\Filters\StateFilter\Name as StateFilterName;
 use App\Filters\StateFilter\Search as StateFilterSearch;
 use App\Http\Resources\StatesAndLga\StateResource;
 use App\Models\State;
+use Illuminate\Http\Response;
 
 class StateController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      *π
      */
     public function index()

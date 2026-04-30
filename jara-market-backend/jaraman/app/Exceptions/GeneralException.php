@@ -8,7 +8,7 @@ class GeneralException extends Exception
 {
     protected $error_source;
 
-    public function __construct(string $message = '', int $code = 0, Exception $previous = null, $error_source = [])
+    public function __construct(string $message = '', int $code = 0, ?Exception $previous = null, $error_source = [])
     {
         $this->error_source = $error_source;
         parent::__construct($message, $code, $previous);

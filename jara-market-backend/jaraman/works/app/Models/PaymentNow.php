@@ -9,7 +9,7 @@ class PaymentNow extends Model
 {
     use HasFactory;
 
-    protected $table = "payments";
+    protected $table = 'payments';
 
     protected $fillable = [
         'user_id',
@@ -20,13 +20,13 @@ class PaymentNow extends Model
         'status',
         'currency',
         'payment_date',
-        'metadata'
+        'metadata',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'payment_date' => 'datetime',
-        'metadata' => 'array'
+        'metadata' => 'array',
     ];
 
     public function user()

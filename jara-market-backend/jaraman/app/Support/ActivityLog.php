@@ -2,17 +2,16 @@
 
 namespace App\Support;
 
-
-use App\Models\PaymentLog;
-use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
+use App\Models\PaymentLog;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 class ActivityLog
 {
     public function log($causedBy, $performedOn, $message, $withProperties = [])
     {
-        //activity()->by($causedBy)->performedOn($performedOn)->withProperties($withProperties)->log($message);
+        // activity()->by($causedBy)->performedOn($performedOn)->withProperties($withProperties)->log($message);
     }
 
     public function logTransaction(array $data)

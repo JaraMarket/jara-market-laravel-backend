@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\BlockedDomain;
-use Illuminate\Validation\Rule;
 use App\Enums\UserPermissionsEnum;
+use App\Rules\BlockedDomain;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -20,7 +21,7 @@ class RegisterRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -29,12 +30,12 @@ class RegisterRequest extends FormRequest
         if ($this->input('role') !== UserPermissionsEnum::VENDOR()) {
             $emailRules[] = Rule::unique('users', 'email')->whereNull('deleted_at');
         }
-    
+
         return [
-            "firstname" => "required|string|max:30",
-            "lastname" => "required|string|max:30",
+            'firstname' => 'required|string|max:30',
+            'lastname' => 'required|string|max:30',
             'email' => $email_rules,
-            "password" => "required|min:8",
+            'password' => 'required|min:8',
             'referral_code' => 'nullable|string|exists:users,referral_code',
             'phone_number' => ['nullable', Rule::unique('users', 'phone_number')->whereNull('deleted_at')],
             'role' => ['nullable', Rule::in(UserPermissionsEnum::values())],
@@ -46,21 +47,21 @@ class RegisterRequest extends FormRequest
         return [
             'firstname.required' => 'First name is required.',
             'firstname.max' => 'First name cannot be more than 30 characters.',
-            
+
             'lastname.required' => 'Last name is required.',
             'lastname.max' => 'Last name cannot be more than 30 characters.',
-            
+
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email is already taken.',
-            
+
             'password.required' => 'Password is required.',
             'password.min' => 'Password must be at least 8 characters.',
-            
+
             'referral_code.exists' => 'The referral code is invalid.',
-            
+
             'phone_number.unique' => 'Phone number is already registered.',
-            
+
             'role.required' => 'User role is required.',
             'role.in' => 'The selected role is invalid.',
         ];

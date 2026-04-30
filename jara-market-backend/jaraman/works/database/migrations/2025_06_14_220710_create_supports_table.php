@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('message');
             $table->string('attachment')->nullable();
-            $table->enum('status', ['pending', 'answered','cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'answered', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

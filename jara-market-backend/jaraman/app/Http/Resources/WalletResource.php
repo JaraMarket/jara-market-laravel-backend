@@ -9,10 +9,10 @@ class WalletResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'              => $this->id,
-            'balance'         => number_format((float) $this->balance, 2),
-            'balance_raw'     => (float) $this->balance,
-            'currency'        => 'NGN',
+            'id' => $this->id,
+            'balance' => number_format((float) $this->balance, 2),
+            'balance_raw' => (float) $this->balance,
+            'currency' => 'NGN',
             'last_updated_at' => $this->updated_at?->toDateTimeString(),
         ];
     }

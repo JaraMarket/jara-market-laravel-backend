@@ -15,9 +15,9 @@ return new class extends Migration
             $table->dropForeign(['vendor_id']);
 
             $table->foreign('vendor_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
@@ -31,9 +31,9 @@ return new class extends Migration
 
             // Restore old constraint if needed (to `vendors`)
             $table->foreign('vendor_id')
-                  ->references('id')
-                  ->on('vendors')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('vendors')
+                ->onDelete('cascade');
         });
     }
 };

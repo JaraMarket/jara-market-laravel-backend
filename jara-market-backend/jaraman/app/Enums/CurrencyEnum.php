@@ -8,8 +8,8 @@ use ArchTech\Enums\Values;
 
 enum CurrencyEnum: string
 {
-    use InvokableCases, Values, Names;
+    use InvokableCases, Names, Values;
 
-    case NGN   = 'NGN';
-    case USD  = 'USD';
+    case NGN = 'NGN';
+    case USD = 'USD';
 }

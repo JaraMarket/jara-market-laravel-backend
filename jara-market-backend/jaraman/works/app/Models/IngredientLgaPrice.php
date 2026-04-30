@@ -17,7 +17,7 @@ class IngredientLgaPrice extends Model
     ];
 
     protected $casts = [
-        'price'            => 'decimal:2',
+        'price' => 'decimal:2',
         'discounted_price' => 'decimal:2',
     ];
 

@@ -2,8 +2,8 @@
 
 namespace App\Services\PaymentGateways;
 
-use App\Models\User;
 use App\Contracts\PaymentGatewayInterface;
+use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class PaymentBridge

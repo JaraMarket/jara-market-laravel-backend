@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,10 +14,10 @@ class CategoryTypeSeeder extends Seeder
     {
         DB::table('category_types')->insert([
             [
-                 'id' => 1,
-                 'name' => 'Food',
-                 'created_at' => now(),
-                 'updated_at' => now(),
+                'id' => 1,
+                'name' => 'Food',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 2,

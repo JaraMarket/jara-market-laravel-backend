@@ -2,19 +2,19 @@
 
 namespace App\Services\PaymentGateways;
 
-use Throwable;
-use App\Utils\Util;
-use App\Models\Transfer;
-use App\Models\PaymentLog;
-use App\Models\BankAccount;
-use Illuminate\Http\Response;
-use App\Exceptions\GeneralException;
-use App\Support\Facades\LogActivity;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Database\Eloquent\Model;
-use App\Jobs\TransactionStatusUpdateJob;
 use App\Contracts\PaymentGatewayInterface;
+use App\Exceptions\GeneralException;
+use App\Jobs\TransactionStatusUpdateJob;
+use App\Models\BankAccount;
+use App\Models\PaymentLog;
+use App\Models\Transfer;
 use App\Services\Payment\AbstractPaymentGateway;
+use App\Support\Facades\LogActivity;
+use App\Utils\Util;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class Flutterwave extends AbstractPaymentGateway implements PaymentGatewayInterface
 {
@@ -311,7 +311,7 @@ class Flutterwave extends AbstractPaymentGateway implements PaymentGatewayInterf
      */
     public function bankTransfer(float $amount, string $bankCode, string $accountNumber, string $reference, string $narration, string $currency = 'NGN')
     {
-        //TODO bankTransfer;
+        // TODO bankTransfer;
     }
 
     /**

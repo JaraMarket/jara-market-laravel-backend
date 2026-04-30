@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Paystack\TransferToBankRequest;
 use App\Http\Resources\TransactionResource;
 use App\Http\Resources\WalletResource;
 use App\Services\WalletService;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class WalletController extends Controller
 {
@@ -20,9 +20,11 @@ class WalletController extends Controller
     {
         try {
             $result = $this->walletService->transferToBank($request->user(), $request->validated());
+
             return response()->success('Withdrawal initiated successfully', $result, 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -34,6 +36,7 @@ class WalletController extends Controller
             return response()->success('Wallet retrieved', new WalletResource($request->user()->wallet), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -47,10 +50,12 @@ class WalletController extends Controller
                 (int) $request->get('per_page', 20),
                 $request->get('type')
             );
+
             return response()->success('Transaction history retrieved successfully',
                 TransactionResource::collection($logs)->response()->getData(true), 200);
         } catch (Exception $e) {
             report($e);
+
             return response()->errorResponse($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Exception;
-use App\Models\HelpTicket;
 use App\Http\Requests\HelpTicketRequest;
 use App\Http\Resources\HelpTicketResource;
+use App\Models\HelpTicket;
+use Exception;
+use Illuminate\Http\Request;
 
 class HelpTicketController extends Controller
 {
@@ -21,11 +21,11 @@ class HelpTicketController extends Controller
             $data = $request->validated();
 
             if ($request->hasFile('attachment')) {
-                $data['attachment'] = upload_image("help-tickets", $data['attachment']);
+                $data['attachment'] = upload_image('help-tickets', $data['attachment']);
             }
 
             $data['user_id'] = auth()->id();
-            $data['status'] = "open";
+            $data['status'] = 'open';
 
             $ticket = HelpTicket::create($data);
 
@@ -35,7 +35,7 @@ class HelpTicketController extends Controller
             report($e);
 
             return response()->errorResponse([
-                'message' => 'Failed to create ticket'
+                'message' => 'Failed to create ticket',
             ]);
         }
     }
@@ -80,13 +80,13 @@ class HelpTicketController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:open,in_progress,resolved,closed'
+            'status' => 'required|in:open,in_progress,resolved,closed',
         ]);
 
         $ticket = HelpTicket::findOrFail($id);
 
         $ticket->update([
-            'status' => $request->status
+            'status' => $request->status,
         ]);
 
         return response()->success(

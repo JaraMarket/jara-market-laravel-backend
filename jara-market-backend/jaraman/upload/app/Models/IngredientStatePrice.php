@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class IngredientStatePrice extends Model
 {
@@ -17,7 +17,7 @@ class IngredientStatePrice extends Model
     ];
 
     protected $casts = [
-        'price'            => 'decimal:2',
+        'price' => 'decimal:2',
         'discounted_price' => 'decimal:2',
     ];
 

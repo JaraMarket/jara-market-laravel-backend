@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Food;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Info(title="JaraMarket API", version="1.0")
+ *
  * @OA\Server(url="http://localhost:8000")
+ *
  * @OA\Tag(
  *     name="Foods",
  *     description="API Endpoints for managing food items"

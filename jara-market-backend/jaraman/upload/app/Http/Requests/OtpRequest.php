@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OtpRequest extends FormRequest
 {
@@ -18,7 +19,7 @@ class OtpRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -45,7 +46,7 @@ class OtpRequest extends FormRequest
             'otp.integer' => 'OTP must be a number.',
             'otp.digits' => 'OTP must be exactly 4 digits.',
             'otp.exists' => 'This OTP is invalid or has expired.',
-        
+
             'email.required' => 'Email is required.',
             'email.string' => 'Email must be a valid string.',
             'email.email' => 'Please provide a valid email address.',

@@ -10,6 +10,6 @@ enum PaymentChannelEnum: string
 {
     use InvokableCases, Names, Values;
 
-    case PAYSTACK    = 'paystack';
+    case PAYSTACK = 'paystack';
     case FLUTTERWAVE = 'flutterwave';
 }

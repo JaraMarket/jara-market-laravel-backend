@@ -22,7 +22,7 @@ class Vendor extends Model
         'account_name',
         'is_verified',
         'is_active',
-        'user_id'
+        'user_id',
     ];
 
     protected $casts = [

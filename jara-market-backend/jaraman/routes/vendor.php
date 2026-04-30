@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\Api\VendorDashboardController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,8 +16,8 @@ use App\Http\Controllers\PaymentController;
 */
 
 Route::prefix('jaram/vendor')->middleware('verified', 'auth:sanctum')->group(function () {
-    Route::middleware('vendor')->group(function () {   
-        Route::get('/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');     
+    Route::middleware('vendor')->group(function () {
+        Route::get('/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
         Route::controller(OrderController::class)->prefix('orders')->group(function () {
             Route::get('/', 'getAvailableOrders');
             Route::get('/accepted', 'myOrders');
@@ -25,7 +25,5 @@ Route::prefix('jaram/vendor')->middleware('verified', 'auth:sanctum')->group(fun
             Route::post('/item/{id}/decision', 'decide');
         });
 
-
     });
 });
-

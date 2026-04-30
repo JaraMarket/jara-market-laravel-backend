@@ -16,14 +16,14 @@ class AddressResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'              => $this->id,
-            'country'         => $this->country->name,
-            'state'           => $this->state->name,
-            'lga'             => $this->lga->name,
+            'id' => $this->id,
+            'country' => $this->country->name,
+            'state' => $this->state->name,
+            'lga' => $this->lga->name,
             'contact_address' => $this->contact_address,
-            'phone_number'    => $this->phone_number,
-            'is_default'      => $this->is_default,
-            'created_at'      => Carbon::parse($this->created_at)->toDateTimeString(),
+            'phone_number' => $this->phone_number,
+            'is_default' => $this->is_default,
+            'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
         ];
     }
 }

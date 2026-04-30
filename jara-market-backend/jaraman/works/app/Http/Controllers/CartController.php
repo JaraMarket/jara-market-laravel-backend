@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
  * @OA\Info(title="JaraMarket API", version="1.0")
+ *
  * @OA\Server(url="http://localhost:8000")
+ *
  * @OA\PathItem(
  *     path="/orders",
  *     description="Operations related to orders"
@@ -30,7 +32,7 @@ class CartController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => $carts
+            'data' => $carts,
         ]);
     }
 
@@ -41,11 +43,11 @@ class CartController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $user = Auth::user();
-        
+
         // Get or create cart for the user
         $cart = Cart::firstOrCreate(
             ['user_id' => $user->id],
@@ -53,7 +55,7 @@ class CartController extends Controller
         );
 
         $product = Product::findOrFail($request->product_id);
-        
+
         // Check if product already in cart
         $existingItem = CartItem::where('cart_id', $cart->id)
             ->where('product_id', $request->product_id)
@@ -62,14 +64,14 @@ class CartController extends Controller
         if ($existingItem) {
             $existingItem->update([
                 'quantity' => $existingItem->quantity + $request->quantity,
-                'price' => $product->price * ($existingItem->quantity + $request->quantity == 0 ? 1 : $existingItem->quantity + $request->quantity)
+                'price' => $product->price * ($existingItem->quantity + $request->quantity == 0 ? 1 : $existingItem->quantity + $request->quantity),
             ]);
         } else {
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
-                'price' => $product->price * ($request->quantity == 0 ? 1 : $request->quantity)
+                'price' => $product->price * ($request->quantity == 0 ? 1 : $request->quantity),
             ]);
         }
 
@@ -79,7 +81,7 @@ class CartController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Product added to cart successfully',
-            'data' => $cart->load('items.product')
+            'data' => $cart->load('items.product'),
         ], 201);
     }
 
@@ -95,7 +97,7 @@ class CartController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => $cart
+            'data' => $cart,
         ]);
     }
 
@@ -105,7 +107,7 @@ class CartController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $user = Auth::user();
@@ -117,10 +119,10 @@ class CartController extends Controller
             ->firstOrFail();
 
         $product = Product::findOrFail($cartItem->product_id);
-        
+
         $cartItem->update([
             'quantity' => $request->quantity,
-            'price' => $product->price * $request->quantity == 0 ? 1 : $product->price * $request->quantity
+            'price' => $product->price * $request->quantity == 0 ? 1 : $product->price * $request->quantity,
         ]);
 
         // Update cart total
@@ -129,7 +131,7 @@ class CartController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Cart item updated successfully',
-            'data' => $cart->load('items.product')
+            'data' => $cart->load('items.product'),
         ]);
     }
 
@@ -153,7 +155,7 @@ class CartController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Cart item removed successfully'
+            'message' => 'Cart item removed successfully',
         ]);
     }
 

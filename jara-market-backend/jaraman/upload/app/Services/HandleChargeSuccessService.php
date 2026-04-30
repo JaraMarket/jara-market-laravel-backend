@@ -16,16 +16,17 @@ class HandleChargeSuccessService
 
     public function handleWebhook(array $payload): void
     {
-        $data  = $payload['data'];
+        $data = $payload['data'];
         $email = Util::isEmailModified($data['customer']['email'])
             ? Util::getOriginalEmail($data['customer']['email'])
             : $data['customer']['email'];
 
-        $user  = User::where('email', $email)->first();
+        $user = User::where('email', $email)->first();
         $admin = Admin::first();
 
         if (! $user) {
             $admin?->notify(new FailedPaymentNotification($email, $data));
+
             return;
         }
 
@@ -38,11 +39,11 @@ class HandleChargeSuccessService
 
         // Mark payment log as successful
         PaymentLog::where('txn_ref', $data['reference'])->update([
-            'status'                 => $data['status'],
-            'amount'                 => $amount,
-            'gateway_response'       => $data['gateway_response'] ?? null,
-            'transaction_mode'       => $data['channel'] ?? null,
-            'transaction_owner_id'   => $user->id,
+            'status' => $data['status'],
+            'amount' => $amount,
+            'gateway_response' => $data['gateway_response'] ?? null,
+            'transaction_mode' => $data['channel'] ?? null,
+            'transaction_owner_id' => $user->id,
             'transaction_owner_type' => get_class($user),
         ]);
 
@@ -51,7 +52,7 @@ class HandleChargeSuccessService
             user      : $user,
             amount    : $amount,
             reference : $data['reference'],
-            comment   : 'Wallet funding via ' . ucfirst($data['channel'] ?? 'paystack'),
+            comment   : 'Wallet funding via '.ucfirst($data['channel'] ?? 'paystack'),
         );
     }
 }

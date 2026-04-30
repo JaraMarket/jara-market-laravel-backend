@@ -8,7 +8,7 @@ use ArchTech\Enums\Values;
 
 enum PrefixEnum: string
 {
-    use InvokableCases, Values, Names;
+    use InvokableCases, Names, Values;
 
     case BONUS_CODE = 'IPC_';
     case REFERAL_CODE = 'REF_';

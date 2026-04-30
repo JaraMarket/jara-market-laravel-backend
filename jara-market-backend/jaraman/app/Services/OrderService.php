@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\DB;
 class OrderService
 {
     public function __construct(
-        protected WalletService               $walletService,
-        protected FirebaseNotificationService  $firebase,
+        protected WalletService $walletService,
+        protected FirebaseNotificationService $firebase,
     ) {}
 
     /*
@@ -62,18 +62,18 @@ class OrderService
             }
 
             $order = Order::create([
-                'order_date'     => $data['order_date'],
-                'reference'      => Util::generate_order_txn_ref(),
-                'user_id'        => $user->id,
-                'address_id'     => $data['address_id'] ?? null,
-                'delivery_type'  => $data['delivery_type'],
-                'shipping_fee'   => $data['shipping_fee'] ?? 0,
+                'order_date' => $data['order_date'],
+                'reference' => Util::generate_order_txn_ref(),
+                'user_id' => $user->id,
+                'address_id' => $data['address_id'] ?? null,
+                'delivery_type' => $data['delivery_type'],
+                'shipping_fee' => $data['shipping_fee'] ?? 0,
                 'service_charge' => $data['service_charge'],
-                'vat'            => $data['vat'] ?? 0,
-                'total'          => $data['total'],
-                'status'         => StatusEnum::PENDING(),
-                'audio'          => $audio_url,
-                'remarks'        => $data['remarks'],
+                'vat' => $data['vat'] ?? 0,
+                'total' => $data['total'],
+                'status' => StatusEnum::PENDING(),
+                'audio' => $audio_url,
+                'remarks' => $data['remarks'],
             ]);
 
             // Debit wallet — throws GeneralException on insufficient balance
@@ -143,7 +143,7 @@ class OrderService
     */
     public function getAvailableOrders(int $perPage = 20)
     {
-        $user  = auth()->user();
+        $user = auth()->user();
         $query = OrderItem::with(['ingredient.category', 'order.user', 'order.address'])
             ->where('status', StatusEnum::PENDING());
 
@@ -163,7 +163,7 @@ class OrderService
 
     public function getMyOrders(int $perPage = 20)
     {
-        $user  = auth()->user();
+        $user = auth()->user();
         $query = OrderItem::with(['order.user', 'order.address', 'ingredient', 'vendor']);
 
         if ($user->role === UserPermissionsEnum::ADMIN()) {
@@ -196,19 +196,19 @@ class OrderService
                 : $user->id;
 
             $orderItem->update([
-                'status'    => $newStatus,
+                'status' => $newStatus,
                 'vendor_id' => $vendorId,
                 'vendor_at' => now(),
             ]);
 
             OrderItemLog::create([
                 'order_item_id' => $orderItem->id,
-                'vendor_id'     => $vendorId,
-                'status'        => $newStatus,
-                'changed_at'    => now(),
+                'vendor_id' => $vendorId,
+                'status' => $newStatus,
+                'changed_at' => now(),
             ]);
 
-            $order        = $orderItem->order;
+            $order = $orderItem->order;
             $pendingCount = $order->items()->where('status', '!=', StatusEnum::PROCESSING())->count();
 
             if ($pendingCount === 0) {
@@ -249,7 +249,7 @@ class OrderService
     {
         return DB::transaction(function () use ($id) {
             $order = Order::with('items')->findOrFail($id);
-            $user  = auth()->user();
+            $user = auth()->user();
 
             if (in_array($order->status, [StatusEnum::COMPLETED(), StatusEnum::CANCELLED()])) {
                 throw new Exception("Order #{$order->reference} is already {$order->status}.");
@@ -257,9 +257,9 @@ class OrderService
 
             $order->update(['status' => StatusEnum::COMPLETED()]);
             $order->items()->update([
-                'status'                 => StatusEnum::COMPLETED(),
-                'assurance_user_id'      => $user->id,
-                'assurance_at'           => now(),
+                'status' => StatusEnum::COMPLETED(),
+                'assurance_user_id' => $user->id,
+                'assurance_at' => now(),
                 'pass_quality_assurance' => true,
             ]);
 
@@ -281,9 +281,13 @@ class OrderService
                 ->map(fn ($items) => $items->sum('vendor_amount'));
 
             foreach ($vendorCredits as $vendorId => $amount) {
-                if ($amount <= 0) continue;
+                if ($amount <= 0) {
+                    continue;
+                }
                 $vendor = User::find($vendorId);
-                if (! $vendor) continue;
+                if (! $vendor) {
+                    continue;
+                }
 
                 $this->walletService->credit(
                     user      : $vendor,
@@ -295,7 +299,7 @@ class OrderService
                 $this->firebase->sendToUser(
                     $vendor,
                     'Payment Received',
-                    '₦' . number_format($amount, 2) . " received for Order #{$order->reference}.",
+                    '₦'.number_format($amount, 2)." received for Order #{$order->reference}.",
                     ['type' => 'vendor_credited', 'order_id' => (string) $order->id]
                 );
             }
@@ -307,9 +311,13 @@ class OrderService
                 ->map(fn ($items) => $items->sum('referral'));
 
             foreach ($referralCredits as $referralId => $amount) {
-                if ($amount <= 0) continue;
+                if ($amount <= 0) {
+                    continue;
+                }
                 $referrer = User::find($referralId);
-                if (! $referrer) continue;
+                if (! $referrer) {
+                    continue;
+                }
 
                 $this->walletService->credit(
                     user      : $referrer,
@@ -330,28 +338,28 @@ class OrderService
     */
     private function getBonuses(float $price, int $quantity, Order $order, User $user): array
     {
-        $settings   = Setting::whereIn('key', ['first_order_bonus', 'repeat_order_bonus'])->pluck('value', 'key');
+        $settings = Setting::whereIn('key', ['first_order_bonus', 'repeat_order_bonus'])->pluck('value', 'key');
         $item_total = $price * $quantity;
-        $result     = Util::getCommission($item_total, $order->total);
+        $result = Util::getCommission($item_total, $order->total);
         $commission = $result['commission'];
 
         $referral_commission = 0;
-        $referral_id         = null;
+        $referral_id = null;
 
         if ($user->referrer_id) {
-            $isFirstOrder        = Order::where('user_id', $user->id)->count() === 0;
-            $percentage          = $isFirstOrder
+            $isFirstOrder = Order::where('user_id', $user->id)->count() === 0;
+            $percentage = $isFirstOrder
                 ? ($settings['first_order_bonus'] ?? 0)
                 : ($settings['repeat_order_bonus'] ?? 0);
             $referral_commission = ($commission * $percentage) / 100;
-            $referral_id         = $user->referrer_id;
+            $referral_id = $user->referrer_id;
         }
 
         return [
             'referral_commission' => $referral_commission,
-            'referral_id'         => $referral_id,
-            'commission'          => $commission,
-            'item_total'          => $item_total,
+            'referral_id' => $referral_id,
+            'commission' => $commission,
+            'item_total' => $item_total,
         ];
     }
 
@@ -364,14 +372,14 @@ class OrderService
 
             $order->items()->create([
                 'ingredient_id' => $model->id,
-                'quantity'      => $ingredient['quantity'],
-                'price'         => $price,
-                'unit'          => $ingredient['unit'],
-                'amount'        => $bonus['item_total'],
-                'commision'     => $bonus['commission'],
+                'quantity' => $ingredient['quantity'],
+                'price' => $price,
+                'unit' => $ingredient['unit'],
+                'amount' => $bonus['item_total'],
+                'commision' => $bonus['commission'],
                 'vendor_amount' => $bonus['item_total'] - $bonus['commission'],
-                'referral'      => $bonus['referral_commission'],
-                'referral_id'   => $bonus['referral_id'],
+                'referral' => $bonus['referral_commission'],
+                'referral_id' => $bonus['referral_id'],
             ]);
         }
     }
@@ -383,19 +391,19 @@ class OrderService
 
             foreach ($product->ingredients as $ingredient) {
                 $quantity = $ingredient->pivot->quantity ?? 1;
-                $bonus    = $this->getBonuses($ingredient->price, $quantity, $order, $user);
+                $bonus = $this->getBonuses($ingredient->price, $quantity, $order, $user);
 
                 $order->items()->create([
-                    'product_id'    => $product->id,
+                    'product_id' => $product->id,
                     'ingredient_id' => $ingredient->id,
-                    'quantity'      => $quantity,
-                    'price'         => $ingredient->price,
-                    'unit'          => $ingredient->pivot->unit ?? null,
-                    'amount'        => $bonus['item_total'],
-                    'commision'     => $bonus['commission'],
+                    'quantity' => $quantity,
+                    'price' => $ingredient->price,
+                    'unit' => $ingredient->pivot->unit ?? null,
+                    'amount' => $bonus['item_total'],
+                    'commision' => $bonus['commission'],
                     'vendor_amount' => $bonus['item_total'] - $bonus['commission'],
-                    'referral'      => $bonus['referral_commission'],
-                    'referral_id'   => $bonus['referral_id'],
+                    'referral' => $bonus['referral_commission'],
+                    'referral_id' => $bonus['referral_id'],
                 ]);
             }
         }

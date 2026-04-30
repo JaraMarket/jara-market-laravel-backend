@@ -3,28 +3,26 @@
 namespace App\Services;
 
 use App\Models\Ingredient;
-use App\Models\IngredientLgaPrice;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class IngredientService
 {
     public function create(array $data): Ingredient
     {
         return DB::transaction(function () use ($data) {
-            $image_url = !empty($data['image_url'])
+            $image_url = ! empty($data['image_url'])
                 ? upload_image('ingredients', $data['image_url'])
                 : null;
 
             $ingredient = Ingredient::create([
-                'name'             => $data['name'],
-                'description'      => $data['description'] ?? null,
-                'price'            => $data['price'],
+                'name' => $data['name'],
+                'description' => $data['description'] ?? null,
+                'price' => $data['price'],
                 'discounted_price' => $data['discounted_price'] ?? null,
-                'unit'             => $data['unit'],
-                'stock'            => $data['stock'] ?? 0,
-                'category_id'      => $data['category_id'] ?? null,
-                'image_url'        => $image_url,
+                'unit' => $data['unit'],
+                'stock' => $data['stock'] ?? 0,
+                'category_id' => $data['category_id'] ?? null,
+                'image_url' => $image_url,
             ]);
 
             $this->syncStatePrices($ingredient, $data['state_prices'] ?? []);
@@ -37,19 +35,19 @@ class IngredientService
     public function update(array $data, Ingredient $ingredient): Ingredient
     {
         return DB::transaction(function () use ($data, $ingredient) {
-            $image_url = !empty($data['image_url'])
+            $image_url = ! empty($data['image_url'])
                 ? upload_image('ingredients', $data['image_url'], $ingredient->image_url)
                 : $ingredient->image_url;
 
             $ingredient->update([
-                'name'             => $data['name'],
-                'description'      => $data['description'] ?? null,
-                'price'            => $data['price'],
+                'name' => $data['name'],
+                'description' => $data['description'] ?? null,
+                'price' => $data['price'],
                 'discounted_price' => $data['discounted_price'] ?? null,
-                'unit'             => $data['unit'],
-                'stock'            => $data['stock'] ?? $ingredient->stock,
-                'category_id'      => $data['category_id'] ?? null,
-                'image_url'        => $image_url,
+                'unit' => $data['unit'],
+                'stock' => $data['stock'] ?? $ingredient->stock,
+                'category_id' => $data['category_id'] ?? null,
+                'image_url' => $image_url,
             ]);
 
             $this->syncStatePrices($ingredient, $data['state_prices'] ?? []);
@@ -79,7 +77,7 @@ class IngredientService
     private function syncLgaPrices(Ingredient $ingredient, array $lgaPrices): void
     {
         $incoming = collect($lgaPrices)
-            ->filter(fn ($lp) => !empty($lp['lga_id']))
+            ->filter(fn ($lp) => ! empty($lp['lga_id']))
             ->keyBy('lga_id');
 
         // Remove LGA prices not in the incoming list
@@ -92,7 +90,7 @@ class IngredientService
             $ingredient->lgaPrices()->updateOrCreate(
                 ['lga_id' => $lgaId],
                 [
-                    'price'            => $lp['price'],
+                    'price' => $lp['price'],
                     'discounted_price' => $lp['discounted_price'] ?? null,
                 ]
             );
@@ -102,7 +100,7 @@ class IngredientService
     private function syncStatePrices(Ingredient $ingredient, array $statePrices): void
     {
         $incoming = collect($statePrices)
-            ->filter(fn ($sp) => !empty($sp['state_id']))
+            ->filter(fn ($sp) => ! empty($sp['state_id']))
             ->keyBy('state_id');
 
         // Remove state prices not in the incoming list
@@ -115,7 +113,7 @@ class IngredientService
             $ingredient->statePrices()->updateOrCreate(
                 ['state_id' => $stateId],
                 [
-                    'price'            => $sp['price'],
+                    'price' => $sp['price'],
                     'discounted_price' => $sp['discounted_price'] ?? null,
                 ]
             );

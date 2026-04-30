@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use App\Exceptions\GeneralException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -47,49 +46,49 @@ class Handler extends ExceptionHandler
 
             if ($e instanceof ValidationException) {
                 return response()->json([
-                    'status'  => false,
+                    'status' => false,
                     'message' => $e->getMessage(),
-                    'errors'  => $e->errors(),
+                    'errors' => $e->errors(),
                 ], 422);
             }
 
             if ($e instanceof GeneralException) {
                 return response()->json([
-                    'status'  => false,
+                    'status' => false,
                     'message' => $e->getMessage(),
                 ], $e->getCode() ?: 400);
             }
 
             if ($e instanceof BindingResolutionException) {
                 return response()->json([
-                    'status'  => false,
+                    'status' => false,
                     'message' => 'A required service is not configured. Please contact support.',
                 ], 503);
             }
 
             if ($e instanceof AuthenticationException) {
                 return response()->json([
-                    'status'  => false,
+                    'status' => false,
                     'message' => 'Unauthenticated. Please log in.',
                 ], 401);
             }
 
             if ($e instanceof ModelNotFoundException) {
                 return response()->json([
-                    'status'  => false,
-                    'message' => class_basename($e->getModel()) . ' not found.',
+                    'status' => false,
+                    'message' => class_basename($e->getModel()).' not found.',
                 ], 404);
             }
 
             if ($e instanceof HttpException) {
                 return response()->json([
-                    'status'  => false,
+                    'status' => false,
                     'message' => $e->getMessage() ?: 'HTTP error.',
                 ], $e->getStatusCode());
             }
 
             return response()->json([
-                'status'  => false,
+                'status' => false,
                 'message' => 'An unexpected error occurred. Please try again.',
             ], 500);
         });

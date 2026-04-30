@@ -20,7 +20,7 @@ abstract class BaseRepository
     protected function builderAll(): Builder
     {
         return $this->model->query();
-    } //end builderAll()
+    } // end builderAll()
 
     /**
      * Get a single instance of the Model.
@@ -28,7 +28,7 @@ abstract class BaseRepository
     protected function builderSingle(int $id): Builder
     {
         return $this->model->query()->where('id', $id);
-    } //end builderSingle()
+    } // end builderSingle()
 
     /**
      * Get base all query with eager loading relationships.
@@ -42,7 +42,7 @@ abstract class BaseRepository
         }
 
         return $this->builderAll()->with($eager);
-    } //end buildAllWith()
+    } // end buildAllWith()
 
     /**
      * Get a single instance of the model with eager loading relationships.
@@ -56,7 +56,7 @@ abstract class BaseRepository
         }
 
         return $this->builderSingle($id)->with($eager);
-    } //end buildSingleWith()
+    } // end buildSingleWith()
 
     /**
      * Get all entries for the model.
@@ -64,7 +64,7 @@ abstract class BaseRepository
     public function getAll(): Collection
     {
         return $this->builderAll()->get();
-    } //end getAll()
+    } // end getAll()
 
     /**
      * Get a single instance of the Model.
@@ -72,7 +72,7 @@ abstract class BaseRepository
     public function getSingle(int $id): ?Model
     {
         return $this->builderSingle($id)->first();
-    } //end getSingle()
+    } // end getSingle()
 
     /**
      * Get a single instance of the Model.
@@ -80,7 +80,7 @@ abstract class BaseRepository
     public function getSingleWith(int $id, array $eager): ?Model
     {
         return $this->buildSingleWith($id, $eager)->first();
-    } //end getSingle()
+    } // end getSingle()
 
     /**
      * Get a new version of the Model.
@@ -88,7 +88,7 @@ abstract class BaseRepository
     public function newModel(array $params): Model
     {
         return $this->model->newInstance($params);
-    } //end newModel()
+    } // end newModel()
 
     /**
      * Insert Into Model.
@@ -98,7 +98,7 @@ abstract class BaseRepository
     public function insert(array $params): bool
     {
         return $this->builderAll()->insert($params);
-    } //end insert()
+    } // end insert()
 
     /**
      * Insert Into Model.
@@ -108,7 +108,7 @@ abstract class BaseRepository
     public function insertOrIgnore(array $params): bool
     {
         return $this->builderAll()->insertOrIgnore($params);
-    } //end insert()
+    } // end insert()
 
     /**
      * Save the model.
@@ -116,7 +116,7 @@ abstract class BaseRepository
     public function saveModel(Model $model): void
     {
         $model->save();
-    } //end saveModel()
+    } // end saveModel()
 
     /**
      * Delete the Model.
@@ -127,12 +127,12 @@ abstract class BaseRepository
     public function deleteModel(Model $model): void
     {
         $model->delete();
-    } //end deleteModel()
+    } // end deleteModel()
 
     public function find(int $id): Model
     {
         return $this->builderSingle($id)->first();
-    } //end find()
+    } // end find()
 
     /**
      * Get instance of model query builder.
@@ -140,5 +140,5 @@ abstract class BaseRepository
     public function queryBuilder(): Builder
     {
         return $this->builderAll();
-    } //end queryBuilder()
-}//end class
+    } // end queryBuilder()
+}// end class

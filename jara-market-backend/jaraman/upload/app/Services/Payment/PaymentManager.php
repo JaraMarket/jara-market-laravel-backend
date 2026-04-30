@@ -43,11 +43,11 @@ class PaymentManager
 
     public function createPaystackPayment()
     {
-        return new Paystack();
+        return new Paystack;
     }
 
     public function createFlutterwavePayment()
     {
-        return new Flutterwave();
+        return new Flutterwave;
     }
 }

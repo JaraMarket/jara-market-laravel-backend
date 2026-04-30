@@ -11,6 +11,6 @@ enum AdvertTypeEnum: string
     use InvokableCases, Names, Values;
 
     case DISCOUNT = 'discount';
-    case OFF      = 'off';
-    case INFO     = 'info';
+    case OFF = 'off';
+    case INFO = 'info';
 }

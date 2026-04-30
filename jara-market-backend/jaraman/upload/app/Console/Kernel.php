@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,33 +19,33 @@ class Kernel extends ConsoleKernel
      * This runs every minute. Laravel's scheduler then decides what to run.
      * ─────────────────────────────────────────────────────────────────────
      */
-   protected function schedule(Schedule $schedule): void
+    protected function schedule(Schedule $schedule): void
     {
         // Queue worker
         $schedule->command('queue:work database --queue=payments,notifications,ai,default --stop-when-empty --tries=3 --timeout=60 --max-jobs=50')
-        ->everyMinute()
-        ->withoutOverlapping(300)
-        ->runInBackground()
-        ->appendOutputTo(storage_path('logs/queue-worker.log'));
-    
+            ->everyMinute()
+            ->withoutOverlapping(300)
+            ->runInBackground()
+            ->appendOutputTo(storage_path('logs/queue-worker.log'));
+
         // Retry failed jobs carefully
         $schedule->command('queue:retry --queue=default')
             ->hourly()
             ->withoutOverlapping();
-    
+
         // Bank sync
         $schedule->command('banks:fetch')
             ->daily()
             ->at('01:00')
             ->withoutOverlapping();
-    
+
         // Prune failed jobs
         $schedule->command('queue:prune-failed --hours=168')
             ->weekly();
-    
+
         // Prune notifications (safe version)
         $schedule->call(function () {
-            \App\Models\User::chunk(100, function ($users) {
+            User::chunk(100, function ($users) {
                 foreach ($users as $user) {
                     $user->notifications()
                         ->where('created_at', '<', now()->subDays(30))

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Wallet;
 use App\Enums\UserPermissionsEnum;
 use App\Http\Requests\UserProfileRequest;
-use Yajra\DataTables\Facades\DataTables;
 use App\Models\User;
-use Illuminate\Support\Str;
+use App\Models\Wallet;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -32,7 +32,7 @@ class UserController extends Controller
             $q->where('is_active', $request->status === 'active' ? 1 : 0);
         }, function ($q) use ($isStatsFetch) {
             // Only restrict to today when it's a normal table load, not the stats call
-            if (!$isStatsFetch) {
+            if (! $isStatsFetch) {
                 $q->whereDate('created_at', now()->toDateString());
             }
         });
@@ -41,8 +41,8 @@ class UserController extends Controller
             $search = $request->search;
             $query->where(function ($sub) use ($search) {
                 $sub->where('firstname', 'like', "%{$search}%")
-                    ->orWhere('lastname',     'like', "%{$search}%")
-                    ->orWhere('email',        'like', "%{$search}%")
+                    ->orWhere('lastname', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('phone_number', 'like', "%{$search}%");
             });
         }
@@ -51,15 +51,15 @@ class UserController extends Controller
             ->addIndexColumn()
 
             // FIX 2: Add raw_active so the blade loadStats() can count active/inactive
-            ->addColumn('raw_active', fn($user) => (int) $user->is_active)
+            ->addColumn('raw_active', fn ($user) => (int) $user->is_active)
 
             // FIX 3: Expose orders_count (already eager-loaded via withCount)
-            ->addColumn('orders_count', fn($user) => $user->orders_count ?? 0)
+            ->addColumn('orders_count', fn ($user) => $user->orders_count ?? 0)
 
             // FIX 4: Add full_name so the delete button can carry data-name properly
-            ->addColumn('full_name', fn($user) => trim($user->firstname . ' ' . $user->lastname))
+            ->addColumn('full_name', fn ($user) => trim($user->firstname.' '.$user->lastname))
 
-            ->editColumn('created_at', fn($user) => $user->created_at->format('d M Y H:i'))
+            ->editColumn('created_at', fn ($user) => $user->created_at->format('d M Y H:i'))
 
             ->editColumn('status', function ($user) {
                 return $user->is_active
@@ -68,18 +68,19 @@ class UserController extends Controller
             })
 
             ->addColumn('actions', function ($user) {
-                $editUrl  = route('users.edit', $user);
-                $fullName = addslashes(trim($user->firstname . ' ' . $user->lastname));
+                $editUrl = route('users.edit', $user);
+                $fullName = addslashes(trim($user->firstname.' '.$user->lastname));
+
                 return '
                     <div class="flex items-center justify-end gap-2">
-                        <a href="' . $editUrl . '"
+                        <a href="'.$editUrl.'"
                            class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors">
                             Edit
                         </a>
                         <button type="button"
                                 class="delete-user inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-red-600 bg-white border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
-                                data-user-id="' . $user->id . '"
-                                data-name="' . $fullName . '">
+                                data-user-id="'.$user->id.'"
+                                data-name="'.$fullName.'">
                             Delete
                         </button>
                     </div>
@@ -100,11 +101,11 @@ class UserController extends Controller
             $data = $request->validated();
 
             $user = User::create([
-                'firstname'     => $data['firstname'],
-                'lastname'      => $data['lastname'],
-                'email'         => $data['email'],
-                'password'      => $data['password'],
-                'role'          => $data['role'],
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'role' => $data['role'],
                 'referral_code' => Str::random(10),
             ]);
 
@@ -128,11 +129,11 @@ class UserController extends Controller
 
             $userData = [
                 'firstname' => $data['firstname'],
-                'lastname'  => $data['lastname'],
+                'lastname' => $data['lastname'],
                 'is_active' => $data['is_active'],
             ];
 
-            if (!empty($data['password'])) {
+            if (! empty($data['password'])) {
                 $userData['password'] = $data['password'];
             }
 
@@ -146,8 +147,9 @@ class UserController extends Controller
 
     public function toggleStatus(User $user)
     {
-        $user->update(['is_active' => !$user->is_active]);
+        $user->update(['is_active' => ! $user->is_active]);
         $status = $user->is_active ? 'Activated' : 'Deactivated';
+
         return redirect()->route('users.index')->with('success', "User {$status} successfully");
     }
 
@@ -155,6 +157,7 @@ class UserController extends Controller
     {
         try {
             $user->delete();
+
             return redirect()->back()->with('success', 'User deleted successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

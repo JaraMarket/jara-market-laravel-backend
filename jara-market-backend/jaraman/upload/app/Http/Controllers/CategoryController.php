@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use Illuminate\Support\Facades\DB;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
 use App\Models\CategoryType;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
@@ -21,50 +20,50 @@ class CategoryController extends Controller
     public function getData()
     {
         $sub = DB::table('category_product')
-        ->select('category_id', DB::raw('COUNT(product_id) as products_count'))
-        ->groupBy('category_id');
+            ->select('category_id', DB::raw('COUNT(product_id) as products_count'))
+            ->groupBy('category_id');
 
-    $query = DB::table('categories')
-        ->leftJoinSub($sub, 'cp', function($join){
-            $join->on('categories.id', '=', 'cp.category_id');
-        })
-        ->leftJoin('category_types', 'categories.category_type_id', '=', 'category_types.id')
-        ->select(
-            'categories.id',
-            'categories.name',
-            'categories.description',
-            'categories.sort_by',
-            'categories.created_at',
-            'category_types.name as type_name',
-            DB::raw('COALESCE(cp.products_count, 0) as products_count')
-        );
+        $query = DB::table('categories')
+            ->leftJoinSub($sub, 'cp', function ($join) {
+                $join->on('categories.id', '=', 'cp.category_id');
+            })
+            ->leftJoin('category_types', 'categories.category_type_id', '=', 'category_types.id')
+            ->select(
+                'categories.id',
+                'categories.name',
+                'categories.description',
+                'categories.sort_by',
+                'categories.created_at',
+                'category_types.name as type_name',
+                DB::raw('COALESCE(cp.products_count, 0) as products_count')
+            );
 
-    return DataTables::of($query)
-        ->addIndexColumn()
-        ->addColumn('actions', function($row) {
-            return '
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($row) {
+                return '
                 <a href="'.route('categories.edit', $row->id).'" class="text-green-600 hover:text-green-900 mr-3">Edit</a>
                 <button type="button" data-id="'.$row->id.'" class="text-red-600 hover:text-red-900 delete-category">Delete</button>
             ';
-        })
-        ->rawColumns(['actions'])
-        ->make(true);
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
     }
 
     public function show($id)
     {
-        $category = Category::with(['products','category_type'])->findOrFail($id);
-        
+        $category = Category::with(['products', 'category_type'])->findOrFail($id);
+
         if (request()->wantsJson()) {
             return response()->json($category);
         }
 
         return view('categories.show', compact('category'));
     }
-    
+
     public function store(Request $request)
     {
-        try{
+        try {
             $validated = $request->validate([
                 'name' => [
                     'required',
@@ -85,23 +84,22 @@ class CategoryController extends Controller
 
             return redirect()->back()
                 ->with('success', 'Category created successfully.');
-        }catch (Exception $e) {      
+        } catch (Exception $e) {
             return redirect()->back()
                 ->with('error', $e->getMessage());
         }
     }
 
-    
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $category = Category::findOrFail($id);
 
             $validated = $request->validate([
-                'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+                'name' => 'required|string|max:255|unique:categories,name,'.$category->id,
                 'description' => 'nullable|string',
                 'category_type_id' => 'required|exists:category_types,id',
-                'sort_by' => 'nullable|integer'
+                'sort_by' => 'nullable|integer',
             ]);
 
             $category->update($validated);
@@ -112,7 +110,7 @@ class CategoryController extends Controller
 
             return redirect()->back()
                 ->with('success', 'Category updated successfully.');
-        }catch (Exception $e) {      
+        } catch (Exception $e) {
             return redirect()->back()
                 ->with('error', $e->getMessage());
         }
@@ -120,7 +118,7 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        try{
+        try {
             $category = Category::findOrFail($id);
             $category->delete();
 
@@ -130,7 +128,7 @@ class CategoryController extends Controller
 
             return redirect()->back()
                 ->with('success', 'Category deleted successfully.');
-        } catch (Exception $e) {      
+        } catch (Exception $e) {
             return redirect()->back()
                 ->with('error', $e->getMessage());
         }
@@ -139,6 +137,7 @@ class CategoryController extends Controller
     public function create()
     {
         $category_types = CategoryType::all();
+
         return view('categories.create', compact('category_types'));
     }
 
@@ -146,6 +145,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category_types = CategoryType::all();
+
         return view('categories.edit', compact(['category', 'category_types']));
     }
 }
