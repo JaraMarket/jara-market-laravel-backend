@@ -5,8 +5,9 @@ set -e
 
 echo "🚀 Initializing JaraMarket App Service..."
 
-# Run migrations (force for production)
+# Run migrations and seeders (force for production)
 php artisan migrate --force
+php artisan db:seed --force
 
 # Create the storage symlink so uploaded files are publicly accessible
 php artisan storage:link --force
