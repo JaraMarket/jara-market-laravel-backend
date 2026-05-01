@@ -1,0 +1,8 @@
+{
+    "phpExtensions": [
+        "gd",
+        "intl",
+        "bcmath",
+        "zip"
+    ]
+}
