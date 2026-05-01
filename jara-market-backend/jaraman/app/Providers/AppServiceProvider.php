@@ -28,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        if (config('app.env') === 'production' || config('app.env') === 'staging') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
         try {
             // Dynamically reconfigure S3 from DB settings if storage_disk = s3
             SettingsController::reconfigureS3();
