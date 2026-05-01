@@ -8,6 +8,9 @@ echo "🚀 Initializing JaraMarket App Service..."
 # Run migrations (force for production)
 php artisan migrate --force
 
+# Create the storage symlink so uploaded files are publicly accessible
+php artisan storage:link --force
+
 # Optimize and Cache
 echo "🧹 Clearing and caching configurations..."
 php artisan optimize:clear

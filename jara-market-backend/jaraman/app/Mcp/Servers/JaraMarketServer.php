@@ -3,6 +3,11 @@
 namespace App\Mcp\Servers;
 
 use App\Mcp\Tools\AuditProductsTool;
+use App\Mcp\Tools\BulkImportTool;
+use App\Mcp\Tools\CreateProductTool;
+use App\Mcp\Tools\DatabaseBackupTool;
+use App\Mcp\Tools\ImageAutoLinkTool;
+use App\Mcp\Tools\PopulateProductsTool;
 use Laravel\Mcp\Server;
 use Laravel\Mcp\Server\Attributes\Instructions;
 use Laravel\Mcp\Server\Attributes\Name;
