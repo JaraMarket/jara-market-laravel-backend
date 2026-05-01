@@ -1,4 +1,10 @@
 {
   "$schema": "https://schema.railpack.com",
-  "phpExtensions": ["gd"]
+  "steps": {
+    "install-php": {
+      "variables": {
+        "INSTALL_EXTENSIONS": "gd"
+      }
+    }
+  }
 }
