@@ -4,7 +4,7 @@
     "keywords": ["laravel", "marketplace", "api"],
     "license": "proprietary",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "arcanedev/log-viewer": "^10.0",
         "archtechx/enums": "^1.0",
         "guzzlehttp/guzzle": "^7.8",
