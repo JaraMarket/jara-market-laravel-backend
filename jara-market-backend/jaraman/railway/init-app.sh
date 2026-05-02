@@ -20,6 +20,10 @@ php artisan event:cache
 php artisan route:cache
 php artisan view:cache
 
+# Generate API Documentation
+echo "📚 Generating API Documentation..."
+php artisan l5-swagger:generate
+
 echo "✅ App Service Initialization Complete."
 
 echo "🚀 Starting Laravel Web Server on port ${PORT:-8080}..."
