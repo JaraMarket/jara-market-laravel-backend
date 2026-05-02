@@ -77,6 +77,15 @@ class ProductController extends Controller
      * All products (filterable).
      * Requires: ?state_id=
      */
+    /**
+     * @OA\Get(
+     *     path="/jaram/fetch/product",
+     *     summary="Get all products",
+     *     tags={"Catalogue"},
+     *     @OA\Response(response=200, description="List of products"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function fetchProduct(Request $request)
     {
         $stateId = (int) $request->query('state_id') ?: null;

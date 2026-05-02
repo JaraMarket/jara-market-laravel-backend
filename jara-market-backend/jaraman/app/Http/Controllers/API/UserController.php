@@ -101,6 +101,22 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/jaram/login",
+     *     summary="User login",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", format="email", example="admin@gmail.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="admin1234")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Successful login"),
+     *     @OA\Response(response=422, description="Validation error")
+     * )
+     */
     public function login(LoginRequest $request)
     {
         try {

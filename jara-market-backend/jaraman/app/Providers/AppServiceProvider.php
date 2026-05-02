@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 use Kreait\Firebase\Contract\Messaging;
 
+use OpenApi\Attributes as OA;
+
+#[OA\Info(title: "JaraMarket API", version: "1.0.0", description: "Official API Documentation for JaraMarket Backend.")]
+#[OA\Server(url: "https://jara-market-laravel-backend-production.up.railway.app/api/jaram", description: "Production Server")]
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
