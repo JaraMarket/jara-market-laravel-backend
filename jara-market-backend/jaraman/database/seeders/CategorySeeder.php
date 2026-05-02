@@ -13,9 +13,11 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['id' => 1, 'name' => 'Cabohydrate', 'description' => 'nil'],
-            ['id' => 2, 'name' => 'Protein', 'description' => 'nil'],
-            ['id' => 3, 'name' => 'Vitamin', 'description' => 'nil'],
+            ['id' => 1, 'name' => 'Carbohydrate', 'description' => 'nil', 'category_type_id' => 1, 'sort_by' => 1],
+            ['id' => 2, 'name' => 'Protein', 'description' => 'nil', 'category_type_id' => 1, 'sort_by' => 2],
+            ['id' => 3, 'name' => 'Vitamin', 'description' => 'nil', 'category_type_id' => 1, 'sort_by' => 3],
+            ['id' => 4, 'name' => 'Grains', 'description' => 'nil', 'category_type_id' => 2, 'sort_by' => 4],
+            ['id' => 5, 'name' => 'Tubers', 'description' => 'nil', 'category_type_id' => 2, 'sort_by' => 5],
         ];
 
         foreach ($categories as $category) {
