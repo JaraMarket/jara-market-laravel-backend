@@ -31,7 +31,7 @@ class Userseeder extends Seeder
         $legacy = User::updateOrCreate(
             ['email' => 'admin@gmail.com'],
             [
-                'password' => 'admin',
+                'password' => 'admin1234',
                 'firstname' => 'admin',
                 'lastname' => 'admin',
                 'phone_number' => '07068628887',

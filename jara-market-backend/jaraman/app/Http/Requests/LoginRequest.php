@@ -23,7 +23,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', filter_var(request()->email, FILTER_VALIDATE_EMAIL) ? 'email:rfc,dns' : ''],
+            'email' => ['required', 'string', 'email'],
             'password' => 'required|min:8',
         ];
     }
