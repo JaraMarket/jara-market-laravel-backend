@@ -12,7 +12,7 @@ class IngredientsSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('ingredients')->insert([
+        $ingredients = [
             [
                 'id' => 1,
                 'name' => 'Garri',
@@ -61,6 +61,13 @@ class IngredientsSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+        ];
+
+        foreach ($ingredients as $ingredient) {
+            DB::table('ingredients')->updateOrInsert(
+                ['id' => $ingredient['id']],
+                $ingredient
+            );
+        }
     }
 }

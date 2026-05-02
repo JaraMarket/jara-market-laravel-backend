@@ -24,6 +24,11 @@ class UomSeeder extends Seeder
             ['code' => 'por', 'name' => 'Portion'],
         ];
 
-        DB::table('uoms')->insert($uoms);
+        foreach ($uoms as $uom) {
+            DB::table('uoms')->updateOrInsert(
+                ['code' => $uom['code']],
+                array_merge($uom, ['created_at' => now(), 'updated_at' => now()])
+            );
+        }
     }
 }
