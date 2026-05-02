@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             FoodIngredientSeeder::class,
             Userseeder::class,
             PermissionSeeder::class,
+            ProfessionalMealSeeder::class,
         ]);
     }
 }
