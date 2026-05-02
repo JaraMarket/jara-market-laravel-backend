@@ -1,3314 +1,3866 @@
 [
   {
+    "id": "8",
     "product_id": "6",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "13",
     "product_id": "7",
     "ingredient_id": "2",
     "quantity": null,
     "unit": null
   },
   {
+    "id": "25",
     "product_id": "11",
     "ingredient_id": "6",
     "quantity": "3.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "26",
     "product_id": "11",
     "ingredient_id": "2",
     "quantity": "2.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "27",
     "product_id": "11",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "28",
     "product_id": "11",
     "ingredient_id": "4",
     "quantity": "2.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "46",
     "product_id": "1",
     "ingredient_id": "4",
     "quantity": null,
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "51",
     "product_id": "8",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "53",
     "product_id": "16",
     "ingredient_id": "4",
     "quantity": null,
     "unit": null
   },
   {
+    "id": "54",
     "product_id": "17",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "55",
     "product_id": "17",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "56",
     "product_id": "18",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "57",
     "product_id": "18",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "58",
     "product_id": "19",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "59",
     "product_id": "19",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "60",
     "product_id": "19",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "61",
     "product_id": "20",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "62",
     "product_id": "20",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "63",
     "product_id": "20",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "64",
     "product_id": "20",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "65",
     "product_id": "21",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "67",
     "product_id": "21",
     "ingredient_id": "1",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "68",
     "product_id": "21",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "71",
     "product_id": "23",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "72",
     "product_id": "23",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "73",
     "product_id": "23",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "74",
     "product_id": "23",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "75",
     "product_id": "23",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "76",
     "product_id": "24",
     "ingredient_id": "5",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "78",
     "product_id": "24",
     "ingredient_id": "13",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "79",
     "product_id": "24",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "80",
     "product_id": "24",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "81",
     "product_id": "24",
     "ingredient_id": "25",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "82",
     "product_id": "24",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "84",
     "product_id": "24",
     "ingredient_id": "33",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "85",
     "product_id": "24",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "86",
     "product_id": "25",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "87",
     "product_id": "25",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "88",
     "product_id": "25",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "89",
     "product_id": "25",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "90",
     "product_id": "25",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "91",
     "product_id": "25",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "92",
     "product_id": "26",
     "ingredient_id": "22",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "93",
     "product_id": "26",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "94",
     "product_id": "26",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "95",
     "product_id": "26",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "96",
     "product_id": "26",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "97",
     "product_id": "26",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "98",
     "product_id": "26",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "99",
     "product_id": "27",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "100",
     "product_id": "27",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "101",
     "product_id": "27",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "102",
     "product_id": "27",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "103",
     "product_id": "27",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "104",
     "product_id": "27",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "105",
     "product_id": "27",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "106",
     "product_id": "28",
     "ingredient_id": "35",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "107",
     "product_id": "28",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "108",
     "product_id": "28",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "109",
     "product_id": "28",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "110",
     "product_id": "28",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "111",
     "product_id": "28",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "112",
     "product_id": "29",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "113",
     "product_id": "29",
     "ingredient_id": "36",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "114",
     "product_id": "29",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "115",
     "product_id": "29",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "116",
     "product_id": "29",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "117",
     "product_id": "29",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "118",
     "product_id": "30",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "119",
     "product_id": "30",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "120",
     "product_id": "30",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "121",
     "product_id": "30",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "122",
     "product_id": "30",
     "ingredient_id": "38",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "123",
     "product_id": "30",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "124",
     "product_id": "30",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "125",
     "product_id": "31",
     "ingredient_id": "39",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "126",
     "product_id": "31",
     "ingredient_id": "40",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "127",
     "product_id": "31",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "128",
     "product_id": "31",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "129",
     "product_id": "31",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "130",
     "product_id": "32",
     "ingredient_id": "41",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "131",
     "product_id": "32",
     "ingredient_id": "42",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "132",
     "product_id": "32",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "133",
     "product_id": "32",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "134",
     "product_id": "32",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "135",
     "product_id": "32",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "136",
     "product_id": "33",
     "ingredient_id": "44",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "137",
     "product_id": "33",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "138",
     "product_id": "33",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "139",
     "product_id": "33",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "140",
     "product_id": "33",
     "ingredient_id": "45",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "141",
     "product_id": "33",
     "ingredient_id": "46",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "142",
     "product_id": "33",
     "ingredient_id": "38",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "143",
     "product_id": "34",
     "ingredient_id": "42",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "144",
     "product_id": "34",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "145",
     "product_id": "34",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "146",
     "product_id": "34",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "147",
     "product_id": "34",
     "ingredient_id": "47",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "148",
     "product_id": "35",
     "ingredient_id": "42",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "150",
     "product_id": "35",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "151",
     "product_id": "35",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "152",
     "product_id": "35",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "153",
     "product_id": "35",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "154",
     "product_id": "35",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "155",
     "product_id": "35",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "156",
     "product_id": "35",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "157",
     "product_id": "35",
     "ingredient_id": "51",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "158",
     "product_id": "35",
     "ingredient_id": "50",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "159",
     "product_id": "35",
     "ingredient_id": "49",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "160",
     "product_id": "35",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "161",
     "product_id": "37",
     "ingredient_id": "25",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "162",
     "product_id": "37",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "163",
     "product_id": "37",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "164",
     "product_id": "37",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "165",
     "product_id": "37",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "166",
     "product_id": "37",
     "ingredient_id": "53",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "167",
     "product_id": "37",
     "ingredient_id": "52",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "168",
     "product_id": "37",
     "ingredient_id": "48",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "169",
     "product_id": "37",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "170",
     "product_id": "38",
     "ingredient_id": "54",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "172",
     "product_id": "38",
     "ingredient_id": "55",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "173",
     "product_id": "38",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "174",
     "product_id": "38",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "175",
     "product_id": "38",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "176",
     "product_id": "38",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "177",
     "product_id": "38",
     "ingredient_id": "38",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "178",
     "product_id": "38",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "179",
     "product_id": "38",
     "ingredient_id": "56",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "180",
     "product_id": "39",
     "ingredient_id": "57",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "181",
     "product_id": "39",
     "ingredient_id": "36",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "182",
     "product_id": "39",
     "ingredient_id": "48",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "183",
     "product_id": "39",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "184",
     "product_id": "40",
     "ingredient_id": "47",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "185",
     "product_id": "40",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "186",
     "product_id": "40",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "187",
     "product_id": "40",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "188",
     "product_id": "40",
     "ingredient_id": "52",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "189",
     "product_id": "40",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "190",
     "product_id": "41",
     "ingredient_id": "58",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "191",
     "product_id": "41",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "192",
     "product_id": "41",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "193",
     "product_id": "41",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "194",
     "product_id": "41",
     "ingredient_id": "33",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "195",
     "product_id": "42",
     "ingredient_id": "39",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "196",
     "product_id": "42",
     "ingredient_id": "36",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "197",
     "product_id": "42",
     "ingredient_id": "48",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "198",
     "product_id": "42",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "199",
     "product_id": "42",
     "ingredient_id": "47",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "200",
     "product_id": "43",
     "ingredient_id": "46",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "201",
     "product_id": "43",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "202",
     "product_id": "43",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "203",
     "product_id": "43",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "204",
     "product_id": "43",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "205",
     "product_id": "43",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "206",
     "product_id": "43",
     "ingredient_id": "59",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "207",
     "product_id": "44",
     "ingredient_id": "39",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "208",
     "product_id": "44",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "209",
     "product_id": "44",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "210",
     "product_id": "44",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "211",
     "product_id": "44",
     "ingredient_id": "31",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "212",
     "product_id": "44",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "213",
     "product_id": "45",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "214",
     "product_id": "45",
     "ingredient_id": "60",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "215",
     "product_id": "45",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "216",
     "product_id": "45",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "217",
     "product_id": "45",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "218",
     "product_id": "45",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "219",
     "product_id": "45",
     "ingredient_id": "31",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "220",
     "product_id": "45",
     "ingredient_id": "61",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "221",
     "product_id": "45",
     "ingredient_id": "62",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "222",
     "product_id": "45",
     "ingredient_id": "63",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "223",
     "product_id": "46",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "224",
     "product_id": "46",
     "ingredient_id": "64",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "225",
     "product_id": "46",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "226",
     "product_id": "46",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "227",
     "product_id": "46",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "228",
     "product_id": "46",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "229",
     "product_id": "46",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "230",
     "product_id": "46",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "231",
     "product_id": "46",
     "ingredient_id": "66",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "232",
     "product_id": "8",
     "ingredient_id": "67",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "233",
     "product_id": "8",
     "ingredient_id": "68",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "234",
     "product_id": "8",
     "ingredient_id": "71",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "235",
     "product_id": "8",
     "ingredient_id": "25",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "236",
     "product_id": "8",
     "ingredient_id": "72",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "237",
     "product_id": "8",
     "ingredient_id": "73",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "238",
     "product_id": "8",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "239",
     "product_id": "8",
     "ingredient_id": "69",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "240",
     "product_id": "8",
     "ingredient_id": "70",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "241",
     "product_id": "8",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "242",
     "product_id": "47",
     "ingredient_id": "76",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "243",
     "product_id": "47",
     "ingredient_id": "75",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "244",
     "product_id": "47",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "245",
     "product_id": "47",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "246",
     "product_id": "47",
     "ingredient_id": "26",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "247",
     "product_id": "47",
     "ingredient_id": "23",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "248",
     "product_id": "47",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "249",
     "product_id": "47",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "250",
     "product_id": "47",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "251",
     "product_id": "47",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "252",
     "product_id": "47",
     "ingredient_id": "78",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "253",
     "product_id": "48",
     "ingredient_id": "79",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "254",
     "product_id": "48",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "255",
     "product_id": "48",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "256",
     "product_id": "48",
     "ingredient_id": "81",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "257",
     "product_id": "48",
     "ingredient_id": "80",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "258",
     "product_id": "48",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "259",
     "product_id": "48",
     "ingredient_id": "82",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "260",
     "product_id": "48",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "261",
     "product_id": "48",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "262",
     "product_id": "48",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "263",
     "product_id": "48",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "264",
     "product_id": "49",
     "ingredient_id": "79",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "265",
     "product_id": "49",
     "ingredient_id": "85",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "266",
     "product_id": "49",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "267",
     "product_id": "49",
     "ingredient_id": "83",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "268",
     "product_id": "49",
     "ingredient_id": "84",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "269",
     "product_id": "49",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "270",
     "product_id": "49",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "271",
     "product_id": "49",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "272",
     "product_id": "49",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "273",
     "product_id": "49",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "274",
     "product_id": "49",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "275",
     "product_id": "50",
     "ingredient_id": "79",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "276",
     "product_id": "50",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "277",
     "product_id": "50",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "278",
     "product_id": "50",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "279",
     "product_id": "50",
     "ingredient_id": "86",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "280",
     "product_id": "50",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "281",
     "product_id": "50",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "282",
     "product_id": "51",
     "ingredient_id": "79",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "283",
     "product_id": "51",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "284",
     "product_id": "51",
     "ingredient_id": "33",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "285",
     "product_id": "51",
     "ingredient_id": "25",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "286",
     "product_id": "51",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "287",
     "product_id": "51",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "288",
     "product_id": "51",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "289",
     "product_id": "51",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "290",
     "product_id": "51",
     "ingredient_id": "47",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "291",
     "product_id": "52",
     "ingredient_id": "87",
     "quantity": "5.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "292",
     "product_id": "52",
     "ingredient_id": "27",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "293",
     "product_id": "52",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "294",
     "product_id": "52",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "295",
     "product_id": "52",
     "ingredient_id": "80",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "296",
     "product_id": "52",
     "ingredient_id": "14",
     "quantity": "5.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "297",
     "product_id": "52",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "298",
     "product_id": "52",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "299",
     "product_id": "53",
     "ingredient_id": "88",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "300",
     "product_id": "53",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "301",
     "product_id": "53",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "302",
     "product_id": "53",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "303",
     "product_id": "53",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "304",
     "product_id": "53",
     "ingredient_id": "31",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "305",
     "product_id": "54",
     "ingredient_id": "87",
     "quantity": "3.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "306",
     "product_id": "54",
     "ingredient_id": "89",
     "quantity": "2.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "307",
     "product_id": "54",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "308",
     "product_id": "54",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "309",
     "product_id": "54",
     "ingredient_id": "25",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "310",
     "product_id": "54",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "311",
     "product_id": "54",
     "ingredient_id": "80",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "312",
     "product_id": "55",
     "ingredient_id": "79",
     "quantity": "4.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "313",
     "product_id": "55",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "314",
     "product_id": "55",
     "ingredient_id": "27",
     "quantity": "4.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "315",
     "product_id": "55",
     "ingredient_id": "84",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "316",
     "product_id": "55",
     "ingredient_id": "83",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "317",
     "product_id": "55",
     "ingredient_id": "31",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "318",
     "product_id": "55",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "319",
     "product_id": "55",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "320",
     "product_id": "55",
     "ingredient_id": "90",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "321",
     "product_id": "55",
     "ingredient_id": "91",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "322",
     "product_id": "55",
     "ingredient_id": "92",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "323",
     "product_id": "55",
     "ingredient_id": "93",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "324",
     "product_id": "56",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "325",
     "product_id": "56",
     "ingredient_id": "94",
     "quantity": "2.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "326",
     "product_id": "57",
     "ingredient_id": "39",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "327",
     "product_id": "57",
     "ingredient_id": "95",
     "quantity": "2.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "328",
     "product_id": "57",
     "ingredient_id": "27",
     "quantity": "3.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "329",
     "product_id": "58",
     "ingredient_id": "98",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "330",
     "product_id": "58",
     "ingredient_id": "95",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "331",
     "product_id": "58",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "332",
     "product_id": "58",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "333",
     "product_id": "58",
     "ingredient_id": "27",
     "quantity": "3.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "334",
     "product_id": "58",
     "ingredient_id": "99",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "335",
     "product_id": "59",
     "ingredient_id": "87",
     "quantity": "5.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "336",
     "product_id": "59",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "337",
     "product_id": "59",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "338",
     "product_id": "59",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "339",
     "product_id": "59",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "340",
     "product_id": "60",
     "ingredient_id": "5",
     "quantity": "2.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "341",
     "product_id": "60",
     "ingredient_id": "42",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "342",
     "product_id": "60",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "343",
     "product_id": "60",
     "ingredient_id": "50",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "344",
     "product_id": "60",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "345",
     "product_id": "60",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "346",
     "product_id": "60",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "347",
     "product_id": "60",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "348",
     "product_id": "60",
     "ingredient_id": "26",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "349",
     "product_id": "60",
     "ingredient_id": "13",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "350",
     "product_id": "61",
     "ingredient_id": "42",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "351",
     "product_id": "61",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "352",
     "product_id": "61",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "353",
     "product_id": "61",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "354",
     "product_id": "61",
     "ingredient_id": "71",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "355",
     "product_id": "61",
     "ingredient_id": "103",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "356",
     "product_id": "61",
     "ingredient_id": "50",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "357",
     "product_id": "61",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "358",
     "product_id": "61",
     "ingredient_id": "101",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "359",
     "product_id": "61",
     "ingredient_id": "102",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "360",
     "product_id": "61",
     "ingredient_id": "78",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "361",
     "product_id": "62",
     "ingredient_id": "79",
     "quantity": "5.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "362",
     "product_id": "62",
     "ingredient_id": "42",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "363",
     "product_id": "62",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "364",
     "product_id": "62",
     "ingredient_id": "81",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "365",
     "product_id": "62",
     "ingredient_id": "48",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "366",
     "product_id": "62",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "367",
     "product_id": "62",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "368",
     "product_id": "62",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "369",
     "product_id": "62",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "370",
     "product_id": "62",
     "ingredient_id": "82",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "371",
     "product_id": "62",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "372",
     "product_id": "62",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "373",
     "product_id": "62",
     "ingredient_id": "80",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "374",
     "product_id": "62",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "375",
     "product_id": "63",
     "ingredient_id": "98",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "376",
     "product_id": "63",
     "ingredient_id": "104",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "377",
     "product_id": "63",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "378",
     "product_id": "63",
     "ingredient_id": "94",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "379",
     "product_id": "63",
     "ingredient_id": "95",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "380",
     "product_id": "63",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "381",
     "product_id": "63",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "382",
     "product_id": "63",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "383",
     "product_id": "63",
     "ingredient_id": "105",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "384",
     "product_id": "63",
     "ingredient_id": "84",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "385",
     "product_id": "64",
     "ingredient_id": "106",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "386",
     "product_id": "64",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "387",
     "product_id": "64",
     "ingredient_id": "81",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "388",
     "product_id": "64",
     "ingredient_id": "80",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "389",
     "product_id": "64",
     "ingredient_id": "27",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "390",
     "product_id": "64",
     "ingredient_id": "92",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "391",
     "product_id": "64",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "392",
     "product_id": "64",
     "ingredient_id": "39",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "393",
     "product_id": "64",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "394",
     "product_id": "64",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "395",
     "product_id": "64",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "396",
     "product_id": "65",
     "ingredient_id": "107",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "398",
     "product_id": "65",
     "ingredient_id": "108",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "399",
     "product_id": "65",
     "ingredient_id": "109",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "400",
     "product_id": "65",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "401",
     "product_id": "65",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "402",
     "product_id": "65",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "403",
     "product_id": "66",
     "ingredient_id": "110",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "404",
     "product_id": "66",
     "ingredient_id": "111",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "405",
     "product_id": "66",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "406",
     "product_id": "66",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "407",
     "product_id": "66",
     "ingredient_id": "84",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "408",
     "product_id": "66",
     "ingredient_id": "112",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "409",
     "product_id": "66",
     "ingredient_id": "92",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "410",
     "product_id": "66",
     "ingredient_id": "64",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "411",
     "product_id": "66",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "412",
     "product_id": "66",
     "ingredient_id": "113",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "413",
     "product_id": "67",
     "ingredient_id": "106",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "414",
     "product_id": "67",
     "ingredient_id": "104",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "415",
     "product_id": "67",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "416",
     "product_id": "67",
     "ingredient_id": "92",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "417",
     "product_id": "67",
     "ingredient_id": "115",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "418",
     "product_id": "67",
     "ingredient_id": "66",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "419",
     "product_id": "67",
     "ingredient_id": "114",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "420",
     "product_id": "67",
     "ingredient_id": "116",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "421",
     "product_id": "68",
     "ingredient_id": "106",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "422",
     "product_id": "68",
     "ingredient_id": "108",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "423",
     "product_id": "68",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "424",
     "product_id": "68",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "425",
     "product_id": "68",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "426",
     "product_id": "68",
     "ingredient_id": "84",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "427",
     "product_id": "68",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "428",
     "product_id": "68",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "429",
     "product_id": "68",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "430",
     "product_id": "68",
     "ingredient_id": "117",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "431",
     "product_id": "68",
     "ingredient_id": "119",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "432",
     "product_id": "68",
     "ingredient_id": "118",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "433",
     "product_id": "68",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "434",
     "product_id": "69",
     "ingredient_id": "120",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "435",
     "product_id": "69",
     "ingredient_id": "104",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "436",
     "product_id": "69",
     "ingredient_id": "95",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "437",
     "product_id": "69",
     "ingredient_id": "121",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "438",
     "product_id": "69",
     "ingredient_id": "105",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "439",
     "product_id": "69",
     "ingredient_id": "118",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "440",
     "product_id": "69",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "441",
     "product_id": "70",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "442",
     "product_id": "70",
     "ingredient_id": "109",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "443",
     "product_id": "70",
     "ingredient_id": "105",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "444",
     "product_id": "70",
     "ingredient_id": "27",
     "quantity": "4.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "445",
     "product_id": "70",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "446",
     "product_id": "70",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "447",
     "product_id": "70",
     "ingredient_id": "122",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "448",
     "product_id": "70",
     "ingredient_id": "123",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "449",
     "product_id": "71",
     "ingredient_id": "9",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "450",
     "product_id": "71",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "451",
     "product_id": "71",
     "ingredient_id": "84",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "452",
     "product_id": "71",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "453",
     "product_id": "71",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "454",
     "product_id": "71",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "455",
     "product_id": "71",
     "ingredient_id": "122",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "456",
     "product_id": "71",
     "ingredient_id": "123",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "457",
     "product_id": "71",
     "ingredient_id": "124",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "458",
     "product_id": "71",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "459",
     "product_id": "72",
     "ingredient_id": "106",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "460",
     "product_id": "72",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "461",
     "product_id": "72",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "462",
     "product_id": "72",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "463",
     "product_id": "72",
     "ingredient_id": "125",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "464",
     "product_id": "72",
     "ingredient_id": "123",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "465",
     "product_id": "72",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "466",
     "product_id": "72",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "467",
     "product_id": "73",
     "ingredient_id": "126",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "468",
     "product_id": "73",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "469",
     "product_id": "73",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "470",
     "product_id": "73",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "471",
     "product_id": "73",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "472",
     "product_id": "73",
     "ingredient_id": "125",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "473",
     "product_id": "73",
     "ingredient_id": "123",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "474",
     "product_id": "73",
     "ingredient_id": "116",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "475",
     "product_id": "73",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "476",
     "product_id": "73",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "477",
     "product_id": "73",
     "ingredient_id": "8",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "478",
     "product_id": "73",
     "ingredient_id": "109",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "479",
     "product_id": "74",
     "ingredient_id": "106",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "480",
     "product_id": "74",
     "ingredient_id": "118",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "481",
     "product_id": "74",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "482",
     "product_id": "74",
     "ingredient_id": "117",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "483",
     "product_id": "74",
     "ingredient_id": "73",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "484",
     "product_id": "74",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "485",
     "product_id": "74",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "486",
     "product_id": "74",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "487",
     "product_id": "74",
     "ingredient_id": "128",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "488",
     "product_id": "74",
     "ingredient_id": "127",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "489",
     "product_id": "74",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'piece'"
+    "unit": "piece"
   },
   {
+    "id": "490",
     "product_id": "74",
     "ingredient_id": "129",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "491",
     "product_id": "74",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "492",
     "product_id": "74",
     "ingredient_id": "47",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "493",
     "product_id": "75",
     "ingredient_id": "39",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "494",
     "product_id": "75",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "495",
     "product_id": "75",
     "ingredient_id": "31",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "496",
     "product_id": "75",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "497",
     "product_id": "75",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "498",
     "product_id": "75",
     "ingredient_id": "86",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "499",
     "product_id": "75",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "500",
     "product_id": "75",
     "ingredient_id": "132",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "501",
     "product_id": "75",
     "ingredient_id": "62",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "502",
     "product_id": "75",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "503",
     "product_id": "75",
     "ingredient_id": "130",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "504",
     "product_id": "75",
     "ingredient_id": "131",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "505",
     "product_id": "76",
     "ingredient_id": "133",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "506",
     "product_id": "76",
     "ingredient_id": "89",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "507",
     "product_id": "76",
     "ingredient_id": "51",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "508",
     "product_id": "76",
     "ingredient_id": "103",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "509",
     "product_id": "76",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "510",
     "product_id": "76",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "511",
     "product_id": "76",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "512",
     "product_id": "76",
     "ingredient_id": "134",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "513",
     "product_id": "76",
     "ingredient_id": "135",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "514",
     "product_id": "76",
     "ingredient_id": "136",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "515",
     "product_id": "77",
     "ingredient_id": "137",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "517",
     "product_id": "77",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "518",
     "product_id": "77",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "519",
     "product_id": "77",
     "ingredient_id": "138",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "520",
     "product_id": "77",
     "ingredient_id": "13",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "521",
     "product_id": "77",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "522",
     "product_id": "77",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "523",
     "product_id": "77",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "524",
     "product_id": "77",
     "ingredient_id": "73",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "525",
     "product_id": "78",
     "ingredient_id": "73",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "526",
     "product_id": "78",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "527",
     "product_id": "78",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "528",
     "product_id": "78",
     "ingredient_id": "32",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "529",
     "product_id": "78",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "530",
     "product_id": "78",
     "ingredient_id": "76",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "531",
     "product_id": "78",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "532",
     "product_id": "78",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "533",
     "product_id": "78",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "534",
     "product_id": "78",
     "ingredient_id": "78",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "535",
     "product_id": "78",
     "ingredient_id": "34",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "536",
     "product_id": "78",
     "ingredient_id": "125",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "537",
     "product_id": "79",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "538",
     "product_id": "79",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "539",
     "product_id": "79",
     "ingredient_id": "26",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "540",
     "product_id": "79",
     "ingredient_id": "13",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "541",
     "product_id": "79",
     "ingredient_id": "1",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "542",
     "product_id": "79",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "543",
     "product_id": "79",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "544",
     "product_id": "79",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "545",
     "product_id": "79",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "546",
     "product_id": "80",
     "ingredient_id": "140",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "547",
     "product_id": "80",
     "ingredient_id": "13",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "548",
     "product_id": "80",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "549",
     "product_id": "80",
     "ingredient_id": "15",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "550",
     "product_id": "80",
     "ingredient_id": "26",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "551",
     "product_id": "80",
     "ingredient_id": "7",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "552",
     "product_id": "80",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "553",
     "product_id": "80",
     "ingredient_id": "73",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "554",
     "product_id": "81",
     "ingredient_id": "46",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "555",
     "product_id": "81",
     "ingredient_id": "71",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "556",
     "product_id": "81",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "557",
     "product_id": "81",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "558",
     "product_id": "81",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "559",
     "product_id": "81",
     "ingredient_id": "80",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "560",
     "product_id": "81",
     "ingredient_id": "14",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "561",
     "product_id": "81",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "562",
     "product_id": "81",
     "ingredient_id": "70",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "563",
     "product_id": "81",
     "ingredient_id": "68",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "564",
     "product_id": "82",
     "ingredient_id": "73",
     "quantity": "500.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "565",
     "product_id": "82",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "566",
     "product_id": "82",
     "ingredient_id": "80",
     "quantity": "4.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "567",
     "product_id": "82",
     "ingredient_id": "30",
     "quantity": "4.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "568",
     "product_id": "82",
     "ingredient_id": "100",
     "quantity": "2.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "569",
     "product_id": "82",
     "ingredient_id": "18",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "570",
     "product_id": "82",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "571",
     "product_id": "82",
     "ingredient_id": "20",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "572",
     "product_id": "82",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'tsp'"
+    "unit": "tsp"
   },
   {
+    "id": "574",
     "product_id": "82",
     "ingredient_id": "131",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "575",
     "product_id": "96",
     "ingredient_id": "79",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "576",
     "product_id": "96",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "577",
     "product_id": "96",
     "ingredient_id": "65",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "578",
     "product_id": "96",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "579",
     "product_id": "96",
     "ingredient_id": "30",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "580",
     "product_id": "96",
     "ingredient_id": "118",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "581",
     "product_id": "96",
     "ingredient_id": "119",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "582",
     "product_id": "96",
     "ingredient_id": "37",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "583",
     "product_id": "96",
     "ingredient_id": "100",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "584",
     "product_id": "96",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "585",
     "product_id": "96",
     "ingredient_id": "17",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "586",
     "product_id": "96",
     "ingredient_id": "4",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "587",
     "product_id": "1",
     "ingredient_id": "41",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "588",
     "product_id": "1",
     "ingredient_id": "139",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "589",
     "product_id": "1",
     "ingredient_id": "26",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "590",
     "product_id": "1",
     "ingredient_id": "50",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "591",
     "product_id": "1",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "592",
     "product_id": "1",
     "ingredient_id": "73",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "593",
     "product_id": "1",
     "ingredient_id": "2",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "594",
     "product_id": "1",
     "ingredient_id": "29",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "595",
     "product_id": "23",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "596",
     "product_id": "23",
     "ingredient_id": "20",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "597",
     "product_id": "28",
     "ingredient_id": "16",
     "quantity": "1.00",
-    "unit": "'tbsp'"
+    "unit": "tbsp"
   },
   {
+    "id": "598",
     "product_id": "21",
     "ingredient_id": "3",
     "quantity": "1.00",
-    "unit": "'l'"
+    "unit": "l"
   },
   {
+    "id": "599",
     "product_id": "21",
     "ingredient_id": "21",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "600",
     "product_id": "21",
     "ingredient_id": "112",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "601",
     "product_id": "21",
     "ingredient_id": "142",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "602",
     "product_id": "21",
     "ingredient_id": "73",
     "quantity": "1.00",
-    "unit": "'g'"
+    "unit": "g"
   },
   {
+    "id": "603",
     "product_id": "21",
     "ingredient_id": "26",
     "quantity": "1.00",
-    "unit": "'por'"
+    "unit": "por"
   },
   {
+    "id": "604",
     "product_id": "21",
     "ingredient_id": "25",
     "quantity": "1.00",
-    "unit": "'kg'"
+    "unit": "kg"
   },
   {
+    "id": "605",
     "product_id": "21",
     "ingredient_id": "143",
     "quantity": "1.00",
-    "unit": "'cup'"
+    "unit": "cup"
   },
   {
+    "id": "606",
     "product_id": "4",
     "ingredient_id": "7",
     "quantity": null,
-    "unit": "'kg'"
+    "unit": "kg"
   }
 ]
