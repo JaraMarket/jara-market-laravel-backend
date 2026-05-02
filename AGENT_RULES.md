@@ -6,9 +6,10 @@
 ## 🔑 1. Production API Key
 The following key has been designated for **Live/Production** use. Do not generate new keys for the frontend developer unless explicitly asked by the user.
 
-*   **Key:** `1|YQnfAKGTv0JvLla8HMuhjAabpiS7Z5dwGxWJGwhv79eddf1a`
+*   **Key:** `2|qZrjSJFP0GKNXHjL0nfuxG03NZfzCRYPuYry3nTo098cb68e`
 *   **User:** `admin@jaramarket.com`
 *   **Purpose:** Primary connection for Customer and Vendor apps.
+
 
 ---
 
