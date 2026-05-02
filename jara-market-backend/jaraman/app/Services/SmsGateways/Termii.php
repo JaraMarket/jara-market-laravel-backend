@@ -18,11 +18,35 @@ class Termii implements SmsGatewayInterface
         $payload = [
             'api_key' => config('app.termii_api_key'),
             'to' => $to,
-            'from' => 'N-Alert',
+            'from' => config('app.termii_sender_id', 'N-Alert'),
             'sms' => $content,
             'type' => $type,
             'channel' => $channel,
         ];
+        $response = Http::termii()->post('/sms/send', $payload);
+        if (! $response->successful()) {
+            info($response->json());
+            throw new GeneralException($response['message'] ?? 'Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $response->json();
+    }
+
+    public function sendWhatsApp(string $to, string $content)
+    {
+        if (app()->isLocal()) {
+            return;
+        }
+
+        $payload = [
+            'api_key' => config('app.termii_api_key'),
+            'to' => $to,
+            'from' => config('app.termii_whatsapp_sender_id'),
+            'sms' => $content,
+            'channel' => 'whatsapp',
+            'type' => 'whatsapp',
+        ];
+        
         $response = Http::termii()->post('/sms/send', $payload);
         if (! $response->successful()) {
             info($response->json());

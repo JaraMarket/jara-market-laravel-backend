@@ -21,6 +21,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PinController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\VendorCategoryController;
+use App\Http\Controllers\API\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,10 @@ Route::prefix('jaram')->group(function () {
 
     // Public catalogue
     Route::get('/vendors/categories', [ProductController::class, 'getVendorCategories']);
+    
+    // Email Verification (Magic Link)
+    Route::get('/verify-email/{id}/{hash}', [VerificationController.class, 'verify'])
+        ->name('verification.verify');
 
     /*
     |--------------------------------------------------------------------------

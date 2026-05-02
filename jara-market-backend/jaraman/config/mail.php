@@ -52,10 +52,10 @@ return [
 
         'postmark' => [
             'transport' => 'postmark',
-            // 'message_stream_id' => null,
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
+        ],
+
+        'resend' => [
+            'transport' => 'resend',
         ],
 
         'mailgun' => [
@@ -82,8 +82,8 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
+                'resend',
                 'smtp',
-                'log',
             ],
         ],
 
