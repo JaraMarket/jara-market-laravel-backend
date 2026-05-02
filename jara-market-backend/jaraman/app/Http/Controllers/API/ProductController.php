@@ -6,6 +6,7 @@ use App\Enums\CategoryTypeEnum;
 use App\Filters\FoodFilter\Name as FoodFilterByName;
 use App\Filters\FoodFilter\Search as FoodFilterSearch;
 use App\Filters\FoodFilter\Type as FoodFilterType;
+use OpenApi\Attributes as OA;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\IngredientResource;
@@ -77,15 +78,15 @@ class ProductController extends Controller
      * All products (filterable).
      * Requires: ?state_id=
      */
-    /**
-     * @OA\Get(
-     *     path="/jaram/fetch/product",
-     *     summary="Get all products",
-     *     tags={"Catalogue"},
-     *     @OA\Response(response=200, description="List of products"),
-     *     @OA\Response(response=401, description="Unauthenticated")
-     * )
-     */
+    #[OA\Get(
+        path: "/jaram/fetch/product",
+        summary: "Get all products",
+        tags: ["Catalogue"],
+        responses: [
+            new OA\Response(response: 200, description: "List of products"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function fetchProduct(Request $request)
     {
         $stateId = (int) $request->query('state_id') ?: null;

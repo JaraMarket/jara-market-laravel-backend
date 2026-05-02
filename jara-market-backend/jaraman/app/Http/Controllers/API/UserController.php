@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use OpenApi\Attributes as OA;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LoginRequest;
@@ -101,22 +102,24 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * @OA\Post(
-     *     path="/jaram/login",
-     *     summary="User login",
-     *     tags={"Authentication"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="email", type="string", format="email", example="admin@gmail.com"),
-     *             @OA\Property(property="password", type="string", format="password", example="admin1234")
-     *         )
-     *     ),
-     *     @OA\Response(response=200, description="Successful login"),
-     *     @OA\Response(response=422, description="Validation error")
-     * )
-     */
+    #[OA\Post(
+        path: "/jaram/login",
+        summary: "User login",
+        tags: ["Authentication"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: "email", type: "string", format: "email", example: "admin@gmail.com"),
+                    new OA\Property(property: "password", type: "string", format: "password", example: "admin1234")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Successful login"),
+            new OA\Response(response: 422, description: "Validation error")
+        ]
+    )]
     public function login(LoginRequest $request)
     {
         try {
