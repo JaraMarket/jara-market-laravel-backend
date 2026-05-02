@@ -33,6 +33,17 @@ class RestoreLegacyDataSeeder extends Seeder
         // 2. Restore Ingredients
         $ingredients = json_decode(file_get_contents("$dataDir/legacy_ingredients.json"), true);
         foreach ($ingredients as $ing) {
+            // Safety Check: Ensure the category exists to prevent foreign key violations
+            if (!DB::table('categories')->where('id', $ing['category_id'])->exists()) {
+                DB::table('categories')->insert([
+                    'id' => $ing['category_id'],
+                    'name' => 'Restored Category ' . $ing['category_id'],
+                    'category_type_id' => 1,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
             DB::table('ingredients')->updateOrInsert(
                 ['id' => $ing['id']],
                 [
@@ -73,24 +84,36 @@ class RestoreLegacyDataSeeder extends Seeder
         // 4. Restore Category-Product Pivot
         $cpPivots = json_decode(file_get_contents("$dataDir/legacy_category_product.json"), true);
         foreach ($cpPivots as $cp) {
-            DB::table('category_product')->updateOrInsert(
-                ['category_id' => $cp['category_id'], 'product_id' => $cp['product_id']],
-                ['created_at' => now(), 'updated_at' => now()]
-            );
+            // Safety Check: Ensure category and product exist
+            $catExists = DB::table('categories')->where('id', $cp['category_id'])->exists();
+            $prodExists = DB::table('products')->where('id', $cp['product_id'])->exists();
+            
+            if ($catExists && $prodExists) {
+                DB::table('category_product')->updateOrInsert(
+                    ['category_id' => $cp['category_id'], 'product_id' => $cp['product_id']],
+                    ['created_at' => now(), 'updated_at' => now()]
+                );
+            }
         }
 
         // 5. Restore Ingredient-Product Pivot
         $ipPivots = json_decode(file_get_contents("$dataDir/legacy_ingredient_product.json"), true);
         foreach ($ipPivots as $ip) {
-            DB::table('ingredient_product')->updateOrInsert(
-                ['product_id' => $ip['product_id'], 'ingredient_id' => $ip['ingredient_id']],
-                [
-                    'quantity' => $ip['quantity'],
-                    'unit' => $ip['unit'],
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]
-            );
+            // Safety Check: Ensure product and ingredient exist
+            $prodExists = DB::table('products')->where('id', $ip['product_id'])->exists();
+            $ingExists = DB::table('ingredients')->where('id', $ip['ingredient_id'])->exists();
+
+            if ($prodExists && $ingExists) {
+                DB::table('ingredient_product')->updateOrInsert(
+                    ['product_id' => $ip['product_id'], 'ingredient_id' => $ip['ingredient_id']],
+                    [
+                        'quantity' => $ip['quantity'],
+                        'unit' => $ip['unit'],
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]
+                );
+            }
         }
     }
 }
