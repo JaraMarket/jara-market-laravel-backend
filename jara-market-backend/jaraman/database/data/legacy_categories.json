@@ -1,0 +1,164 @@
+[
+  {
+    "id": "7",
+    "name": "'Veggies'",
+    "category_type_id": "2",
+    "description": null,
+    "sort_by": "5",
+    "created_at": "'2026-01-12 18:37:17'",
+    "updated_at": "'2026-01-12 18:37:17'"
+  },
+  {
+    "id": "9",
+    "name": "'African Recipes'",
+    "category_type_id": "1",
+    "description": "'African Recipes'",
+    "sort_by": "1",
+    "created_at": "'2026-01-12 19:04:38'",
+    "updated_at": "'2026-04-10 20:26:22'"
+  },
+  {
+    "id": "10",
+    "name": "'Continental Food'",
+    "category_type_id": "1",
+    "description": "'Simply Continental'",
+    "sort_by": "7",
+    "created_at": "'2026-01-12 19:05:58'",
+    "updated_at": "'2026-04-13 18:31:11'"
+  },
+  {
+    "id": "11",
+    "name": "'Tribe Food'",
+    "category_type_id": "1",
+    "description": "'Tribe Food'",
+    "sort_by": "3",
+    "created_at": "'2026-01-12 19:06:46'",
+    "updated_at": "'2026-01-12 19:06:46'"
+  },
+  {
+    "id": "12",
+    "name": "'Stews & Sauces'",
+    "category_type_id": "1",
+    "description": "'Stew & Sauce'",
+    "sort_by": "4",
+    "created_at": "'2026-01-12 19:07:46'",
+    "updated_at": "'2026-04-06 15:52:20'"
+  },
+  {
+    "id": "14",
+    "name": "'Fries & Crunch'",
+    "category_type_id": "1",
+    "description": "'Fries & Crunch'",
+    "sort_by": "6",
+    "created_at": "'2026-01-12 19:13:47'",
+    "updated_at": "'2026-01-12 19:13:47'"
+  },
+  {
+    "id": "15",
+    "name": "'Seafood Specials'",
+    "category_type_id": "1",
+    "description": "'Freshly Seafood'",
+    "sort_by": "6",
+    "created_at": "'2026-01-14 14:47:55'",
+    "updated_at": "'2026-04-06 15:54:17'"
+  },
+  {
+    "id": "16",
+    "name": "'Keto Meal'",
+    "category_type_id": "1",
+    "description": "'Simply Keto'",
+    "sort_by": "7",
+    "created_at": "'2026-01-14 14:49:04'",
+    "updated_at": "'2026-01-14 14:49:04'"
+  },
+  {
+    "id": "17",
+    "name": "'Vegetarian Meal'",
+    "category_type_id": "1",
+    "description": "'Vegetables and More'",
+    "sort_by": "8",
+    "created_at": "'2026-01-14 14:50:08'",
+    "updated_at": "'2026-01-14 14:50:08'"
+  },
+  {
+    "id": "18",
+    "name": "'Carbohydrate'",
+    "category_type_id": "2",
+    "description": "'Grain",
+    "sort_by": "tubers",
+    "created_at": "dry goods'",
+    "updated_at": "1"
+  },
+  {
+    "id": "19",
+    "name": "'Vitamins & Minerals'",
+    "category_type_id": "2",
+    "description": "'Leafy Veggies",
+    "sort_by": "tomatoes",
+    "created_at": "pepper",
+    "updated_at": "onions"
+  },
+  {
+    "id": "20",
+    "name": "'Spices",
+    "category_type_id": "Herbs & Seasoning'",
+    "description": "2",
+    "sort_by": "'Dry spices",
+    "created_at": "local spices",
+    "updated_at": "fresh herbs'"
+  },
+  {
+    "id": "21",
+    "name": "'Legumes & Nut'",
+    "category_type_id": "2",
+    "description": "'Beans",
+    "sort_by": "Peas",
+    "created_at": "Groundnut",
+    "updated_at": "Egusi"
+  },
+  {
+    "id": "22",
+    "name": "'Processed and Convenient Food'",
+    "category_type_id": "2",
+    "description": "'Blended Pepper",
+    "sort_by": "pre-cut Veggies",
+    "created_at": "Marinated Protein",
+    "updated_at": "Canned food'"
+  },
+  {
+    "id": "23",
+    "name": "'Sugars & Sweeteners'",
+    "category_type_id": "2",
+    "description": "'Sugar",
+    "sort_by": "Honey",
+    "created_at": "Syrup",
+    "updated_at": "Date sugar'"
+  },
+  {
+    "id": "24",
+    "name": "'Soups'",
+    "category_type_id": "1",
+    "description": "'All types of Soup'",
+    "sort_by": "3",
+    "created_at": "'2026-04-01 21:24:18'",
+    "updated_at": "'2026-04-01 21:24:57'"
+  },
+  {
+    "id": "25",
+    "name": "'Rice Dishes'",
+    "category_type_id": "1",
+    "description": null,
+    "sort_by": "2",
+    "created_at": "'2026-04-06 15:55:52'",
+    "updated_at": "'2026-04-13 18:31:39'"
+  },
+  {
+    "id": "26",
+    "name": "'Pasta & Noodles'",
+    "category_type_id": "1",
+    "description": null,
+    "sort_by": "3",
+    "created_at": "'2026-04-06 15:56:35'",
+    "updated_at": "'2026-04-13 18:32:35'"
+  }
+]

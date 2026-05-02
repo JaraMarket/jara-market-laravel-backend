@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             Userseeder::class,
             PermissionSeeder::class,
             ProfessionalMealSeeder::class,
+            RestoreLegacyDataSeeder::class,
         ]);
     }
 }
