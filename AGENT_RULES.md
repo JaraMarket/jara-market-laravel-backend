@@ -36,4 +36,11 @@ To ensure the 2,000 entries survive hosting and migration:
 *   **Frontend URL:** `http://localhost:5173`
 
 ---
-*Created by Antigravity - 2026-04-30*
+
+## 🚀 5. Deployment & Monitoring
+*   **MANDATORY:** Whenever an agent makes a push to Git, they **MUST** immediately commence monitoring of Railway logs using the Railway CLI (`railway logs`).
+*   **CONFIRMATION:** Monitoring must continue until the build and deployment are confirmed successful.
+*   **RECTIFICATION:** If any issues are identified in the logs, the agent must immediately attempt to rectify them.
+
+---
+*Created by Antigravity - 2026-05-02*
