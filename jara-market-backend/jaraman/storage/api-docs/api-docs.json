@@ -1,0 +1,83 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "JaraMarket API",
+        "description": "Official API Documentation for JaraMarket Backend.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://jara-market-laravel-backend-production.up.railway.app/api/jaram",
+            "description": "Production Server"
+        }
+    ],
+    "paths": {
+        "/jaram/fetch/product": {
+            "get": {
+                "tags": [
+                    "Catalogue"
+                ],
+                "summary": "Get all products",
+                "description": "All products (filterable).\nRequires: ?state_id=",
+                "operationId": "3c529074efde393e3127da1fb5062602",
+                "responses": {
+                    "200": {
+                        "description": "List of products"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/jaram/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "7ef879d86960924057b0f719b0d28e2d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "admin1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Catalogue",
+            "description": "Catalogue"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        }
+    ]
+}
