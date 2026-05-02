@@ -12,25 +12,17 @@ class FoodIngredientSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('food_ingredients')->insert([
-            [
-                'food_id' => '1',
-                'ingredient_id' => '1',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'food_id' => '1',
-                'ingredient_id' => '2',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'food_id' => '2',
-                'ingredient_id' => '1',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $ingredients = [
+            ['product_id' => 1, 'ingredient_id' => 1],
+            ['product_id' => 1, 'ingredient_id' => 2],
+            ['product_id' => 2, 'ingredient_id' => 1],
+        ];
+
+        foreach ($ingredients as $item) {
+            DB::table('ingredient_product')->updateOrInsert(
+                ['product_id' => $item['product_id'], 'ingredient_id' => $item['ingredient_id']],
+                array_merge($item, ['created_at' => now(), 'updated_at' => now()])
+            );
+        }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\FoodFilter;
+namespace App\Filters\CategoryFilter;
 
 use App\Filters\BaseFilter;
 

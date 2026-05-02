@@ -1,11 +1,12 @@
 {
-    "mcpServers": {
-        "laravel-boost": {
-            "command": "php",
-            "args": [
-                "artisan",
-                "boost:mcp"
-            ]
-        }
+  "mcpServers": {
+    "laravel-boost": {
+      "command": "php artisan boost:mcp",
+      "args": []
+    },
+    "laravel-docs-mcp": {
+      "command": "docker run --rm -i ghcr.io/brianirish/laravel-mcp-companion:latest",
+      "args": []
     }
+  }
 }

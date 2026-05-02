@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             UomSeeder::class,
             IngredientsSeeder::class,
-            // FoodSeeder::class,
-            // FoodIngredientSeeder::class,
+            FoodSeeder::class,
+            FoodIngredientSeeder::class,
             Userseeder::class,
             PermissionSeeder::class,
         ]);

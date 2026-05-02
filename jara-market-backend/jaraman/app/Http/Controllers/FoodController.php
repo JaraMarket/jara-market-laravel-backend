@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Food;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 /**
@@ -19,12 +19,12 @@ class FoodController extends Controller
 {
     public function index()
     {
-        return Food::with(['ingredients', 'steps'])->get();
+        return Product::with(['ingredients', 'steps'])->get();
     }
 
     public function store(Request $request)
     {
-        $food = Food::create($request->only('name', 'description'));
+        $food = Product::create($request->only('name', 'description'));
 
         foreach ($request->ingredients as $ingredient) {
             $food->ingredients()->create($ingredient);
@@ -39,12 +39,12 @@ class FoodController extends Controller
 
     public function show($id)
     {
-        return Food::with(['ingredients', 'steps'])->findOrFail($id);
+        return Product::with(['ingredients', 'steps'])->findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $food = Food::findOrFail($id);
+        $food = Product::findOrFail($id);
         $food->update($request->only('name', 'description'));
 
         if ($request->has('ingredients')) {
@@ -66,7 +66,7 @@ class FoodController extends Controller
 
     public function destroy($id)
     {
-        $food = Food::findOrFail($id);
+        $food = Product::findOrFail($id);
         $food->ingredients()->delete();
         $food->steps()->delete();
         $food->delete();

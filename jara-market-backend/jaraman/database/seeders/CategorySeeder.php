@@ -12,29 +12,17 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('categories')->insert([
-            [
-                'id' => 1,
-                'name' => 'Cabohydrate',
-                'description' => 'nil',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 2,
-                'name' => 'Protein',
-                'description' => 'nil',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 3,
-                'name' => 'Vitamin',
-                'description' => 'nil',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        $categories = [
+            ['id' => 1, 'name' => 'Cabohydrate', 'description' => 'nil'],
+            ['id' => 2, 'name' => 'Protein', 'description' => 'nil'],
+            ['id' => 3, 'name' => 'Vitamin', 'description' => 'nil'],
+        ];
 
-        ]);
+        foreach ($categories as $category) {
+            DB::table('categories')->updateOrInsert(
+                ['id' => $category['id']],
+                array_merge($category, ['created_at' => now(), 'updated_at' => now()])
+            );
+        }
     }
 }

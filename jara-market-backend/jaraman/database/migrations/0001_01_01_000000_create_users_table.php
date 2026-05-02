@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('referral_code')->nullable();
             $table->foreignId('referrer_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->integer('referral_count')->default(0);
+            $table->rememberToken();
             $table->timestamps();
         });
 

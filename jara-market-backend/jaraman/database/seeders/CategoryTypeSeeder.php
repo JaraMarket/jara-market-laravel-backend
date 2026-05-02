@@ -12,19 +12,16 @@ class CategoryTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('category_types')->insert([
-            [
-                'id' => 1,
-                'name' => 'Food',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 2,
-                'name' => 'Vendor',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $types = [
+            ['id' => 1, 'name' => 'Food'],
+            ['id' => 2, 'name' => 'Vendor'],
+        ];
+
+        foreach ($types as $type) {
+            DB::table('category_types')->updateOrInsert(
+                ['id' => $type['id']],
+                array_merge($type, ['created_at' => now(), 'updated_at' => now()])
+            );
+        }
     }
 }

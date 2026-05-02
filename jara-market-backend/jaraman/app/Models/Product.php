@@ -49,6 +49,11 @@ class Product extends Model
         return $this->hasMany(ProductStatePrice::class);
     }
 
+    public function steps()
+    {
+        return $this->hasMany(Step::class);
+    }
+
     // ─── Price Resolution ─────────────────────────────────────────────────────
 
     /**
