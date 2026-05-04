@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\User_otp;
 use App\Models\Wallet;
 use App\Notifications\OtpNotification;
+use App\Notifications\VerifyEmailNotification;
 use App\Notifications\UserCreatedNotification;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -45,8 +46,9 @@ class UserRegistrationService
                 $this->handleReferral($user, $referralCode);
             }
 
-            // Queue the OTP email
+            // Queue the OTP email and Magic Link
             $this->sendOtp($user->email);
+            $user->notify(new VerifyEmailNotification());
 
             return $user;
         });
