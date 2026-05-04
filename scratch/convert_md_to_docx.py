@@ -102,6 +102,10 @@ def convert_md_to_docx(md_path, docx_path):
     print(f"Successfully converted {md_path} to {docx_path}")
 
 if __name__ == "__main__":
-    md_file = r"c:\Users\user\.gemini\jara-market\FRONTEND_INTEGRATION_CONTRACT.md"
-    docx_file = r"c:\Users\user\.gemini\jara-market\FRONTEND_INTEGRATION_CONTRACT.docx"
-    convert_md_to_docx(md_file, docx_file)
+    import sys
+    if len(sys.argv) < 3:
+        print("Usage: python convert_md_to_docx.py <input.md> <output.docx>")
+    else:
+        md_file = sys.argv[1]
+        docx_file = sys.argv[2]
+        convert_md_to_docx(md_file, docx_file)

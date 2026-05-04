@@ -31,7 +31,7 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
     protected function verificationUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'verification.verify',
+            'api.verification.verify',
             now()->addMinutes(60),
             [
                 'id' => $notifiable->getKey(),

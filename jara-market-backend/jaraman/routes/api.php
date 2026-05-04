@@ -52,8 +52,8 @@ Route::prefix('jaram')->group(function () {
     Route::get('/vendors/categories', [ProductController::class, 'getVendorCategories']);
     
     // Email Verification (Magic Link)
-    Route::get('/verify-email/{id}/{hash}', [VerificationController.class, 'verify'])
-        ->name('verification.verify');
+    Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\API\VerificationController::class, 'verify'])
+        ->name('api.verification.verify');
 
     /*
     |--------------------------------------------------------------------------
