@@ -238,3 +238,151 @@ Route::prefix('jaram')->group(function () {
     });
 
 }); // end /jaram
+
+/*
+|==========================================================================
+| /api — Master Endpoint Group
+|
+| These routes satisfy the full master endpoint list for the Flutter apps.
+| They map to the same controllers as /jaram (zero duplication of logic),
+| plus newly created controllers for missing functionality.
+|
+| GOLDEN RULE: /jaram routes above are UNTOUCHED.
+|==========================================================================
+*/
+
+use App\Http\Controllers\API\AuthApiController;
+use App\Http\Controllers\API\CustomerApiController;
+use App\Http\Controllers\API\VendorApiController;
+use App\Http\Controllers\API\AdminApiController;
+use App\Http\Controllers\API\PaymentApiController;
+use App\Http\Controllers\API\ReviewController;
+
+Route::prefix('api')->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | AUTH — Public (guest)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('auth')->group(function () {
+        // Register + Login — delegate to existing UserController
+        Route::post('/register', [UserController::class, 'registerUser']);
+        Route::post('/login',    [UserController::class, 'login']);
+        Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
+        Route::post('/reset-password',  [ResetPasswordController::class, 'reset']);
+
+        // Protected auth routes
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/logout',         [UserController::class, 'logout']);
+            Route::get('/me',              [AuthApiController::class, 'me']);
+            Route::put('/update-profile',  [AuthApiController::class, 'updateProfile']);
+            Route::post('/upload-avatar',  [AuthApiController::class, 'uploadAvatar']);
+        });
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | CUSTOMER — Public catalogue (no auth required)
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/vendors',        [CustomerApiController::class, 'vendors']);
+    Route::get('/vendors/{id}',   [CustomerApiController::class, 'showVendor']);
+    Route::get('/categories',     [CustomerApiController::class, 'categories']);
+    Route::get('/products',       [CustomerApiController::class, 'products']);
+    Route::get('/products/{id}',  [CustomerApiController::class, 'showProduct']);
+    Route::get('/vendors/{id}/reviews',  [ReviewController::class, 'index']);
+    Route::middleware('auth:sanctum')->post('/vendors/{id}/reviews', [ReviewController::class, 'store']);
+    Route::get('/customers/{id}/reviews', [ReviewController::class, 'indexCustomerReviews']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | CUSTOMER — Authenticated
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('auth:sanctum')->group(function () {
+
+        // Orders
+        Route::post('/orders',              [OrderController::class, 'store']);
+        Route::get('/orders',               [OrderController::class, 'all']);
+        Route::get('/orders/{order}',       [OrderController::class, 'show']);
+        Route::put('/orders/{order}/cancel',[OrderController::class, 'cancel']);
+
+        // Payments
+        Route::post('/payments/initiate',   [PaymentApiController::class, 'initiate']);
+        Route::post('/payments/verify',     [PaymentApiController::class, 'verify']);
+        Route::get('/payments/history',     [PaymentApiController::class, 'history']);
+
+        // Notifications
+        Route::post('/notifications/token', function (Request $request) {
+            $request->validate(['token' => 'required|string']);
+            $request->user()->update(['fcm_token' => $request->token]);
+            return response()->json(['status' => true, 'message' => 'FCM token saved.', 'data' => []]);
+        });
+        Route::get('/notifications',             [NotificationController::class, 'index']);
+        Route::put('/notifications/{id}/read',   [NotificationController::class, 'markAsRead']);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | VENDOR — Authenticated + vendor role
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['auth:sanctum', 'vendor'])->prefix('vendor')->group(function () {
+        // Profile
+        Route::get('/profile',         [VendorApiController::class, 'profile']);
+        Route::put('/profile',         [VendorApiController::class, 'updateProfile']);
+        Route::post('/upload-logo',    [VendorApiController::class, 'uploadLogo']);
+        Route::post('/upload-banner',  [VendorApiController::class, 'uploadBanner']);
+
+        // Products (ingredients in vendor context)
+        Route::get('/products',            [VendorApiController::class, 'products']);
+        Route::post('/products',           [VendorApiController::class, 'storeProduct']);
+        Route::get('/products/{id}',       [VendorApiController::class, 'showProduct']);
+        Route::put('/products/{id}',       [VendorApiController::class, 'updateProduct']);
+        Route::delete('/products/{id}',    [VendorApiController::class, 'destroyProduct']);
+        Route::post('/products/{id}/images', [VendorApiController::class, 'uploadProductImage']);
+
+        // Orders
+        Route::get('/orders',              [VendorApiController::class, 'orders']);
+        Route::get('/orders/{id}',         [VendorApiController::class, 'showOrder']);
+        Route::put('/orders/{id}/status',  [VendorApiController::class, 'updateOrderStatus']);
+
+        // Earnings & Payouts
+        Route::get('/earnings',            [VendorApiController::class, 'earnings']);
+        Route::get('/payouts',             [VendorApiController::class, 'payouts']);
+        Route::post('/payouts/request',    [VendorApiController::class, 'requestPayout']);
+        Route::post('/customers/{id}/reviews', [ReviewController::class, 'storeCustomerReview']);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN — Authenticated + admin role
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+        // Users
+        Route::get('/users',                    [AdminApiController::class, 'users']);
+        Route::put('/users/{id}/suspend',       [AdminApiController::class, 'suspendUser']);
+
+        // Vendors
+        Route::get('/vendors',                  [AdminApiController::class, 'vendors']);
+        Route::put('/vendors/{id}/approve',     [AdminApiController::class, 'approveVendor']);
+        Route::put('/vendors/{id}/reject',      [AdminApiController::class, 'rejectVendor']);
+
+        // Orders & Payments
+        Route::get('/orders',                   [AdminApiController::class, 'orders']);
+        Route::get('/payments',                 [AdminApiController::class, 'payments']);
+
+        // Categories
+        Route::get('/categories',               [AdminApiController::class, 'categories']);
+        Route::post('/categories',              [AdminApiController::class, 'storeCategory']);
+        Route::put('/categories/{id}',          [AdminApiController::class, 'updateCategory']);
+        Route::delete('/categories/{id}',       [AdminApiController::class, 'destroyCategory']);
+
+        // Notifications & Dashboard
+        Route::post('/notifications/send',      [AdminApiController::class, 'sendNotification']);
+        Route::get('/dashboard/stats',          [AdminApiController::class, 'dashboardStats']);
+    });
+
+}); // end /api
