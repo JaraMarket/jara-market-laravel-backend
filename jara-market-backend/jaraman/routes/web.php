@@ -22,6 +22,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StateRepresentativeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductImportController;
 use Illuminate\Support\Facades\Route;
 
 // ── Guest only ─────────────────────────────────────────────────────────────────
@@ -97,6 +98,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/', [ProductController::class, 'store'])->middleware('permission:manage_products')->name('products.store');
         Route::get('/{product}/edit', [ProductController::class, 'edit'])->middleware('permission:manage_products')->name('products.edit');
         Route::put('/{product}', [ProductController::class, 'update'])->middleware('permission:manage_products')->name('products.update');
+        Route::get('/import/template', [ProductImportController::class, 'downloadTemplate'])->name('products.import.template');
+        Route::post('/import', [ProductImportController::class, 'import'])->name('products.import');
         Route::delete('/{product}', [ProductController::class, 'destroy'])->middleware('permission:manage_products')->name('products.destroy');
     });
 
