@@ -57,4 +57,8 @@ return [
         'private_key' => env('APPLE_PRIVATE_KEY'),
     ],
 
+    'resend' => [
+        'key' => env('RESEND_API_KEY'),
+    ],
+
 ];
