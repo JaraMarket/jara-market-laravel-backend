@@ -62,8 +62,8 @@ class UserRegistrationService
             throw new Exception('No user record found', 404);
         }
 
-        // Generate a cryptographically secure 6-digit OTP
-        $otp = random_int(100000, 999999);
+        // Generate a 4-digit OTP
+        $otp = random_int(1000, 9999);
 
         // Delete any previous OTP records for this user
         User_otp::where('email', $user->email)->delete();
