@@ -22,11 +22,11 @@ class UserRegistrationService
             $referralCode = $data['referral_code'] ?? null;
 
             $existing_user = User::where('email', $data['email'])->whereNull('deleted_at')->first();
-
+ 
             if ($existing_user) {
                 $existing_user->update(['role' => 'vendor']);
                 $this->sendOtp($existing_user->email);
-
+ 
                 return $existing_user;
             }
 
