@@ -61,16 +61,19 @@ Route::prefix('jaram')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::middleware('guest')->group(function () {
-        Route::post('/register', [UserController::class, 'registerUser']);
-        Route::post('/validate-otp', [UserController::class, 'validateUserRegisterOTP']);
-        Route::post('/validate-email', [UserController::class, 'verifyEmailWithOTP']);
-        Route::post('/resend-otp', [UserController::class, 'resendOtp']);
-        Route::post('/login', [UserController::class, 'login']);
-        Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
+        // Registration: throttle to 10 attempts per minute per IP
+        Route::post('/register', [UserController::class, 'registerUser'])->middleware('throttle:10,1');
+        Route::post('/login', [UserController::class, 'login'])->middleware('throttle:10,1');
+        Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->middleware('throttle:5,1');
         Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
         Route::post('/profile-update/{email}', [UserController::class, 'updateProfile']);
         Route::post('/update-vendor-categories/{email}', [VendorCategoryController::class, 'store']);
-        
+
+        // OTP routes: strictly throttled — max 5 attempts per minute per IP
+        Route::post('/validate-otp', [UserController::class, 'validateUserRegisterOTP'])->middleware('throttle:5,1');
+        Route::post('/validate-email', [UserController::class, 'verifyEmailWithOTP'])->middleware('throttle:5,1');
+        Route::post('/resend-otp', [UserController::class, 'resendOtp'])->middleware('throttle:3,1');
+
         // Social Authentication (Google, Apple, Facebook)
         Route::post('/social/{provider}', [\App\Http\Controllers\API\SocialAuthController::class, 'authenticate']);
     });

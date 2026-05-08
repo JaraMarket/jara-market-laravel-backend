@@ -56,13 +56,14 @@ class UserRegistrationService
 
     public function sendOtp($email)
     {
-        $otp = rand(1000, 9999);
-
         $user = User::where('email', $email)->first();
 
         if (! $user) {
             throw new Exception('No user record found', 404);
         }
+
+        // Generate a cryptographically secure 6-digit OTP
+        $otp = random_int(100000, 999999);
 
         // Delete any previous OTP records for this user
         User_otp::where('email', $user->email)->delete();
