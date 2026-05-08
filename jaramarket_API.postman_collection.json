@@ -1,0 +1,629 @@
+{
+  "info": {
+    "name": "Jara Marketplace API",
+    "description": "Complete verified API for Customer + Vendor Flutter Apps",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "BASE_URL", "value": "https://jara-market-laravel-backend-production.up.railway.app" },
+    { "key": "CUSTOMER_TOKEN", "value": "" },
+    { "key": "VENDOR_TOKEN", "value": "" },
+    { "key": "ADMIN_TOKEN", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\"name\":\"Test User\",\"email\":\"test@bizztechhub.com\",\"password\":\"Password123!\",\"password_confirmation\":\"Password123!\",\"role\":\"customer\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/auth/register", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "register"]}
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\"email\":\"test@bizztechhub.com\",\"password\":\"Password123!\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/auth/login", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "login"]}
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/auth/logout", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "logout"]}
+          }
+        },
+        {
+          "name": "Get Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/auth/me", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "me"]}
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\"email\":\"test@bizztechhub.com\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/auth/forgot-password", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "forgot-password"]}
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\"email\":\"test@bizztechhub.com\",\"token\":\"...\",\"password\":\"NewPass123!\",\"password_confirmation\":\"NewPass123!\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/auth/reset-password", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "reset-password"]}
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"firstname\":\"Test\",\"lastname\":\"User\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/auth/update-profile", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "update-profile"]}
+          }
+        },
+        {
+          "name": "Upload Avatar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "body": {"mode": "formdata", "formdata": [{"key": "avatar", "type": "file", "src": ""}]},
+            "url": {"raw": "{{BASE_URL}}/api/auth/upload-avatar", "host": ["{{BASE_URL}}"], "path": ["api", "auth", "upload-avatar"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "Get Vendors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{BASE_URL}}/api/vendors", "host": ["{{BASE_URL}}"], "path": ["api", "vendors"]}
+          }
+        },
+        {
+          "name": "Get Vendor By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{BASE_URL}}/api/vendors/1", "host": ["{{BASE_URL}}"], "path": ["api", "vendors", "1"]}
+          }
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{BASE_URL}}/api/categories", "host": ["{{BASE_URL}}"], "path": ["api", "categories"]}
+          }
+        },
+        {
+          "name": "Get Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{BASE_URL}}/api/products", "host": ["{{BASE_URL}}"], "path": ["api", "products"]}
+          }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{BASE_URL}}/api/products/1", "host": ["{{BASE_URL}}"], "path": ["api", "products", "1"]}
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"items\":[{\"product_id\":1,\"quantity\":2}]}"},
+            "url": {"raw": "{{BASE_URL}}/api/orders", "host": ["{{BASE_URL}}"], "path": ["api", "orders"]}
+          }
+        },
+        {
+          "name": "Get Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/orders", "host": ["{{BASE_URL}}"], "path": ["api", "orders"]}
+          }
+        },
+        {
+          "name": "Get Order By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/orders/1", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "1"]}
+          }
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/orders/1/cancel", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "1", "cancel"]}
+          }
+        },
+        {
+          "name": "Initiate Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"order_id\":1,\"amount\":5000}"},
+            "url": {"raw": "{{BASE_URL}}/api/payments/initiate", "host": ["{{BASE_URL}}"], "path": ["api", "payments", "initiate"]}
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"reference\":\"JM-XYZ123\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/payments/verify", "host": ["{{BASE_URL}}"], "path": ["api", "payments", "verify"]}
+          }
+        },
+        {
+          "name": "Payment History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/payments/history", "host": ["{{BASE_URL}}"], "path": ["api", "payments", "history"]}
+          }
+        },
+        {
+          "name": "Submit Vendor Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"rating\":5,\"comment\":\"Great!\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/vendors/1/reviews", "host": ["{{BASE_URL}}"], "path": ["api", "vendors", "1", "reviews"]}
+          }
+        },
+        {
+          "name": "Get Vendor Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{BASE_URL}}/api/vendors/1/reviews", "host": ["{{BASE_URL}}"], "path": ["api", "vendors", "1", "reviews"]}
+          }
+        },
+        {
+          "name": "Get Customer Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{BASE_URL}}/api/customers/1/reviews", "host": ["{{BASE_URL}}"], "path": ["api", "customers", "1", "reviews"]}
+          }
+        },
+        {
+          "name": "Save FCM Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"token\":\"FCM_DEVICE_TOKEN_STRING\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/notifications/token", "host": ["{{BASE_URL}}"], "path": ["api", "notifications", "token"]}
+          }
+        },
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/notifications", "host": ["{{BASE_URL}}"], "path": ["api", "notifications"]}
+          }
+        },
+        {
+          "name": "Mark Notification Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/notifications/1/read", "host": ["{{BASE_URL}}"], "path": ["api", "notifications", "1", "read"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vendor",
+      "item": [
+        {
+          "name": "Get Vendor Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/profile", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "profile"]}
+          }
+        },
+        {
+          "name": "Update Vendor Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"business_name\":\"New Business Name\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/profile", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "profile"]}
+          }
+        },
+        {
+          "name": "Upload Vendor Logo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "formdata", "formdata": [{"key": "logo", "type": "file", "src": ""}]},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/upload-logo", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "upload-logo"]}
+          }
+        },
+        {
+          "name": "Upload Vendor Banner",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "formdata", "formdata": [{"key": "banner", "type": "file", "src": ""}]},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/upload-banner", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "upload-banner"]}
+          }
+        },
+        {
+          "name": "Get Vendor Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/products", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "products"]}
+          }
+        },
+        {
+          "name": "Create Vendor Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"name\":\"Rice\",\"price\":1000,\"category_id\":1}"},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/products", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "products"]}
+          }
+        },
+        {
+          "name": "Get Vendor Product By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/products/1", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "products", "1"]}
+          }
+        },
+        {
+          "name": "Update Vendor Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"price\":1500}"},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/products/1", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "products", "1"]}
+          }
+        },
+        {
+          "name": "Delete Vendor Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/products/1", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "products", "1"]}
+          }
+        },
+        {
+          "name": "Upload Vendor Product Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "formdata", "formdata": [{"key": "image", "type": "file", "src": ""}]},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/products/1/images", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "products", "1", "images"]}
+          }
+        },
+        {
+          "name": "Get Vendor Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/orders", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "orders"]}
+          }
+        },
+        {
+          "name": "Get Vendor Order By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/orders/1", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "orders", "1"]}
+          }
+        },
+        {
+          "name": "Update Vendor Order Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"status\":\"accepted\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/orders/1/status", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "orders", "1", "status"]}
+          }
+        },
+        {
+          "name": "Get Vendor Earnings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/earnings", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "earnings"]}
+          }
+        },
+        {
+          "name": "Get Vendor Payouts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/vendor/payouts", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "payouts"]}
+          }
+        },
+        {
+          "name": "Request Vendor Payout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"amount\":5000,\"bank_id\":1,\"remark\":\"Weekly payout\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/vendor/payouts/request", "host": ["{{BASE_URL}}"], "path": ["api", "vendor", "payouts", "request"]}
+          }
+        },
+        {
+          "name": "Submit Customer Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{VENDOR_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"rating\":5,\"comment\":\"Great customer!\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/customers/1/reviews", "host": ["{{BASE_URL}}"], "path": ["api", "customers", "1", "reviews"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get Admin Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/users", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "users"]}
+          }
+        },
+        {
+          "name": "Suspend Admin User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/users/1/suspend", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "users", "1", "suspend"]}
+          }
+        },
+        {
+          "name": "Get Admin Vendors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/vendors", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "vendors"]}
+          }
+        },
+        {
+          "name": "Approve Admin Vendor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/vendors/1/approve", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "vendors", "1", "approve"]}
+          }
+        },
+        {
+          "name": "Reject Admin Vendor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/vendors/1/reject", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "vendors", "1", "reject"]}
+          }
+        },
+        {
+          "name": "Get Admin Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/orders", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "orders"]}
+          }
+        },
+        {
+          "name": "Get Admin Payments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/payments", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "payments"]}
+          }
+        },
+        {
+          "name": "Get Admin Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/categories", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "categories"]}
+          }
+        },
+        {
+          "name": "Create Admin Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"name\":\"Groceries\",\"description\":\"All grocery items\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/admin/categories", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "categories"]}
+          }
+        },
+        {
+          "name": "Update Admin Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"name\":\"Fresh Groceries\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/admin/categories/1", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "categories", "1"]}
+          }
+        },
+        {
+          "name": "Delete Admin Category",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/categories/1", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "categories", "1"]}
+          }
+        },
+        {
+          "name": "Send Admin Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "body": {"mode": "raw", "raw": "{\"title\":\"Welcome\",\"message\":\"Welcome to JaraMarket!\",\"role\":\"customer\"}"},
+            "url": {"raw": "{{BASE_URL}}/api/admin/notifications/send", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "notifications", "send"]}
+          }
+        },
+        {
+          "name": "Get Admin Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}"}
+            ],
+            "url": {"raw": "{{BASE_URL}}/api/admin/dashboard/stats", "host": ["{{BASE_URL}}"], "path": ["api", "admin", "dashboard", "stats"]}
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"Status is 200 or 201\", function () {",
+          "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+          "});",
+          "pm.test(\"Response has status:true\", function () {",
+          "    pm.expect(pm.response.json().status).to.eql(true);",
+          "});"
+        ]
+      }
+    }
+  ]
+}

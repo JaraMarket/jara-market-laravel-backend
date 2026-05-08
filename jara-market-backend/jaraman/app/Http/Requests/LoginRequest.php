@@ -31,7 +31,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'An email address is required to register.',
+            'email.required' => 'An email address is required to login.',
             'email.email' => 'Please provide a valid email address.',
             'email.max' => 'The email address cannot exceed 255 characters.',
             'password.required' => 'A password is required.',

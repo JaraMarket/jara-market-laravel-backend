@@ -25,6 +25,75 @@
             </a>
         </div>
     </div>
+    
+    <div class="w-full px-6 lg:px-8 xl:px-10 pt-6">
+        {{-- BULK IMPORT SECTION --}}
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2a4 4 0 014-4h4m-4-4l4 4-4 4m-5 3v-2a4 4 0 00-4-4H5m4-4L5 8l4 4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">Bulk Product Import</h2>
+                            <p class="text-sm text-slate-500 mt-1 max-w-md">
+                                Upload a CSV file to add multiple products at once. Download the template to ensure your data is formatted correctly.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a href="{{ route('products.import.template') }}" 
+                           class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-emerald-200 hover:border-emerald-400 text-emerald-700 text-sm font-semibold rounded-lg transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Download Template
+                        </a>
+                        
+                        <div class="relative group">
+                            <input type="file" id="csv-upload" class="hidden" accept=".csv">
+                            <button onclick="document.getElementById('csv-upload').click()"
+                                    class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-black text-white text-sm font-semibold rounded-lg shadow-sm transition-all">
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                                Upload CSV File
+                            </button>
+                        </div>
+                        
+                        <button id="start-import" disabled
+                                class="inline-flex items-center gap-2 px-6 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:cursor-not-allowed text-white text-sm font-bold rounded-lg shadow-md transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Process Import
+                        </button>
+                    </div>
+                </div>
+                
+                {{-- PROGRESS AREA --}}
+                <div id="import-progress-area" class="hidden mt-6 pt-6 border-t border-slate-100">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <svg class="animate-spin h-4 w-4 text-emerald-600" id="progress-spinner" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span class="text-sm font-semibold text-slate-700" id="progress-status">Uploading file...</span>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400" id="progress-percent">0%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="w-0 h-full bg-emerald-500 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="w-full px-6 lg:px-8 xl:px-10 py-6 space-y-5">
 
@@ -228,6 +297,83 @@ table.dataTable tbody td { padding:.875rem 1.25rem; vertical-align:middle; }
 @push('scripts')
 <script>
 $(function () {
+
+    // --- Bulk Import Handling ---
+    const $csvUpload = $('#csv-upload');
+    const $startImport = $('#start-import');
+    const $progressArea = $('#import-progress-area');
+    const $progressBar = $('#progress-bar');
+    const $progressStatus = $('#progress-status');
+    const $progressPercent = $('#progress-percent');
+    const $progressSpinner = $('#progress-spinner');
+
+    $csvUpload.on('change', function() {
+        if (this.files && this.files.length > 0) {
+            $startImport.prop('disabled', false).addClass('animate-pulse');
+            showToast('File selected: ' + this.files[0].name, 'success');
+        } else {
+            $startImport.prop('disabled', true).removeClass('animate-pulse');
+        }
+    });
+
+    $startImport.on('click', function() {
+        const file = $csvUpload[0].files[0];
+        if (!file) return;
+
+        $startImport.prop('disabled', true).removeClass('animate-pulse').html('<svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...');
+        $progressArea.removeClass('hidden');
+        $progressBar.css('width', '10%');
+        $progressStatus.text('Parsing CSV data...');
+        $progressPercent.text('10%');
+
+        const formData = new FormData();
+        formData.append('csv_file', file);
+        formData.append('_token', '{{ csrf_token() }}');
+
+        $.ajax({
+            url: '{{ route('products.import') }}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            xhr: function() {
+                const xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        const percentComplete = Math.round((evt.loaded / evt.total) * 50); // First 50% is upload
+                        $progressBar.css('width', (10 + percentComplete) + '%');
+                        $progressPercent.text((10 + percentComplete) + '%');
+                        if (percentComplete > 40) $progressStatus.text('Processing products in database...');
+                    }
+                }, false);
+                return xhr;
+            },
+            success: function(res) {
+                $progressBar.css('width', '100%').addClass('bg-emerald-500');
+                $progressPercent.text('100%');
+                $progressStatus.html('<span class="text-emerald-600 font-bold">✓ ' + res.message + '</span>');
+                $progressSpinner.addClass('hidden');
+                
+                showToast(res.message, 'success');
+                
+                // Reload table and stats
+                if (typeof table !== 'undefined' && table !== null) table.ajax.reload();
+                if (typeof loadStats === 'function') loadStats();
+
+                setTimeout(() => {
+                    $startImport.html('<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Process Import');
+                    $csvUpload.val('');
+                }, 2000);
+            },
+            error: function(xhr) {
+                $progressArea.addClass('hidden');
+                $startImport.prop('disabled', false).html('<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Process Import');
+                
+                const msg = xhr.responseJSON?.message || 'Import failed. Please check your file format.';
+                showToast(msg, 'error');
+            }
+        });
+    });
 
     function loadStats() {
         $.get('{{ route('products.data') }}', { length: -1, start: 0 }, function (res) {

@@ -35,10 +35,10 @@ class RegisterRequest extends FormRequest
             'firstname' => 'required|string|max:30',
             'lastname' => 'required|string|max:30',
             'email' => $email_rules,
-            'password' => 'required|min:8',
+            'password' => ['required', 'string', \Illuminate\Validation\Rules\Password::min(8)->letters()->numbers()->symbols()->mixedCase()],
             'referral_code' => 'nullable|string|exists:users,referral_code',
             'phone_number' => ['nullable', Rule::unique('users', 'phone_number')->whereNull('deleted_at')],
-            'role' => ['nullable', Rule::in(UserPermissionsEnum::values())],
+            'role' => ['nullable', Rule::in([UserPermissionsEnum::CUSTOMER(), UserPermissionsEnum::VENDOR()])],
         ];
     }
 
