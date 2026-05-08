@@ -2,12 +2,13 @@
 
 namespace App\Notifications;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OtpNotification extends Notification
+class OtpNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
