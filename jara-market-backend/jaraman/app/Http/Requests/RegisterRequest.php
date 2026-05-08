@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
         $email_rules = ['email:rfc,dns', 'required', new BlockedDomain];
 
         if ($this->input('role') !== UserPermissionsEnum::VENDOR()) {
-            $emailRules[] = Rule::unique('users', 'email')->whereNull('deleted_at');
+            $email_rules[] = Rule::unique('users', 'email')->whereNull('deleted_at');
         }
 
         return [
