@@ -56,7 +56,7 @@ class RegisterRequest extends FormRequest
             'email.unique' => 'This email is already taken.',
 
             'password.required' => 'Password is required.',
-            'password.min' => 'DEBUG: Min 8 chars required.',
+            'password.min' => 'Password must be at least 8 characters.',
 
             'referral_code.exists' => 'The referral code is invalid.',
 
