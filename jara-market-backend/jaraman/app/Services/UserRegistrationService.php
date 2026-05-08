@@ -35,8 +35,8 @@ class UserRegistrationService
                 'lastname' => $data['lastname'],
                 'email' => $data['email'],
                 'password' => $data['password'],
-                'role' => $data['role'],
-                'phone_number' => $data['phone_number'],
+                'role' => $data['role'] ?? 'customer',
+                'phone_number' => $data['phone_number'] ?? null,
                 'referral_code' => Str::random(10),
             ]);
 
