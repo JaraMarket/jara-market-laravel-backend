@@ -23,7 +23,16 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\VendorCategoryController;
 use App\Http\Controllers\API\VerificationController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+ 
+Route::get('/queue-check', function () {
+    return [
+        'pending_jobs' => DB::table('jobs')->count(),
+        'failed_jobs' => DB::table('failed_jobs')->count(),
+        'queue_connection' => config('queue.default'),
+        'timestamp' => now()->toDateTimeString(),
+    ];
+});
 
 Route::prefix('jaram')->group(function () {
 
