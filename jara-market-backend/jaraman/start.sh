@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Start the queue worker in the background
-echo "🚀 Starting background queue worker..."
-php artisan queue:work --tries=3 --timeout=90 &
+# Start the Laravel Scheduler to handle background tasks and emails
+echo "🚀 Starting JaraMarket Scheduler (Handles Swift OTPs & Automations)..."
+php artisan schedule:work &
 
 # Start the web server
 echo "🚀 Starting web server..."
