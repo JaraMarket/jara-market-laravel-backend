@@ -26,6 +26,7 @@ class UserController extends Controller
 
     public function registerUser(RegisterRequest $request)
     {
+        // dd('LIVE_CODE_V1');
         try {
             $user = $this->userService->register($request->validated());
 
