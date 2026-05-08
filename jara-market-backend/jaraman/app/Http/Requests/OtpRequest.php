@@ -27,7 +27,7 @@ class OtpRequest extends FormRequest
             'otp' => [
                 'required',
                 'integer',
-                'digits:6',
+                'digits:4',
                 Rule::exists('user_otps', 'otp'),
             ],
             'email' => [
@@ -44,7 +44,7 @@ class OtpRequest extends FormRequest
         return [
             'otp.required' => 'OTP is required.',
             'otp.integer' => 'OTP must be a number.',
-            'otp.digits' => 'OTP must be exactly 6 digits.',
+            'otp.digits' => 'OTP must be exactly 4 digits.',
             'otp.exists' => 'This OTP is invalid or has expired.',
 
             'email.required' => 'Email is required.',

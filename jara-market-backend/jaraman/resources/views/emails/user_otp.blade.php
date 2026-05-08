@@ -4,7 +4,7 @@
 <h3 style="font-size:20px; color:#1a1a1a; margin-bottom:10px;">Verify Your JaraMarket Account</h3>
 
 <p style="color:#555; font-size:15px; margin-bottom:6px;">Hello {{ $user->firstname }},</p>
-<p style="color:#555; font-size:15px;">Use the 6-digit code below to complete your registration. This code expires in <strong>15 minutes</strong>.</p>
+<p style="color:#555; font-size:15px;">Use the 4-digit code below to complete your registration. This code expires in <strong>15 minutes</strong>.</p>
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 28px 0; text-align: center;">
     <tr>
