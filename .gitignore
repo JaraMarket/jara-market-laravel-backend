@@ -1,0 +1,8 @@
+*.sql
+*.csv
+*.postman_collection.json
+temp_upload/
+jara-market-backend/jaraman/temp_upload/
+jara-market-backend/jaraman/import_errors.txt
+jara-market-backend/jaraman/run_audit.php
+jara-market-backend/jaraman/run_audit_test.php

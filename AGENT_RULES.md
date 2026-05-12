@@ -6,7 +6,7 @@
 ## 🔑 1. Production API Key
 The following key has been designated for **Live/Production** use. Do not generate new keys for the frontend developer unless explicitly asked by the user.
 
-*   **Key:** `2|qZrjSJFP0GKNXHjL0nfuxG03NZfzCRYPuYry3nTo098cb68e` (Verified: 2026-05-02)
+*   **Variable:** `PROD_FRONTEND_API_KEY` (Stored securely in `.env`)
 *   **User:** `admin@jaramarket.com`
 *   **Purpose:** Primary connection for Customer and Vendor apps.
 
@@ -42,5 +42,16 @@ To ensure the 2,000 entries survive hosting and migration:
 *   **CONFIRMATION:** Monitoring must continue until the build and deployment are confirmed successful.
 *   **RECTIFICATION:** If any issues are identified in the logs, the agent must immediately attempt to rectify them.
 
+
 ---
-*Created by Antigravity - 2026-05-02*
+
+## 🔐 6. Secret Key Handling Protocol (MANDATORY)
+*   **Strict `.gitignore` Validation**: Before any Git operation (add, commit, push), agents must verify that `.env`, `.pem`, and other sensitive files are explicitly listed in the `.gitignore`.
+*   **No Hardcoding**: Agents are strictly forbidden from hardcoding secrets directly into source code. All secrets must be accessed via environment variables.
+*   **Leak Detection & Immediate Halt**: If an agent detects a potential secret key hardcoded in any file tracked by Git, it must immediately halt all operations and notify the user to rotate the key.
+*   **Explicit Consent for `.env` Edits**: Agents must provide a line-by-line explanation of any proposed change to the `.env` file before requesting permission to execute.
+Agents must carry a thorough check through all files,codes e.t.c ensuring there is no risk of exposing secrets before pushing to github.
+
+---
+*Updated by Antigravity - 2026-05-09*
+

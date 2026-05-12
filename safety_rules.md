@@ -13,9 +13,10 @@ This document outlines the mandatory safety protocols that any AI Agent must fol
 *   **Query Limits:** Avoid running `SELECT *` on large tables. Always use `LIMIT` and specify columns to conserve resources and prevent accidental data exposure.
 
 ## 2. Environment & Secret Management
-*   **.env Protection:** The `.env` file must never be committed to Git. The Agent must verify `.gitignore` contains `.env` before every push.
-*   **Secret Injection:** Secrets should only be managed via the Railway Dashboard or the local `.env` file. Never hardcode API keys, passwords, or S3 credentials into the codebase.
-*   **Permission Required:** The Agent must request explicit permission before reading or modifying the `.env` file.
+*   **Strict `.gitignore` Validation**: Before any Git operation (add, commit, push), agents must verify that `.env`, `.pem`, and other sensitive files are explicitly listed in the `.gitignore`.
+*   **No Hardcoding**: Agents are strictly forbidden from hardcoding secrets directly into source code. All secrets must be accessed via environment variables.
+*   **Leak Detection & Immediate Halt**: If an agent detects a potential secret key hardcoded in any file tracked by Git, it must immediately halt all operations and notify the user to rotate the key.
+*   **Explicit Consent for `.env` Edits**: Agents must provide a line-by-line explanation of any proposed change to the `.env` file before requesting permission to execute.
 
 ## 3. Git & Railway Deployment Workflow
 *   **Sync Before Push:** Always run `git pull origin master` (or the active branch) before pushing to ensure the local state is synchronized and to avoid merge conflicts.
