@@ -35,7 +35,7 @@
                 "tags": [
                     "Authentication"
                 ],
-                "summary": "User login",
+                "summary": "User login (Email & Password)",
                 "operationId": "7ef879d86960924057b0f719b0d28e2d",
                 "requestBody": {
                     "required": true,
@@ -68,6 +68,97 @@
                     }
                 }
             }
+        },
+        "/jaram/social/{provider}": {
+            "post": {
+                "tags": [
+                    "Social Authentication"
+                ],
+                "summary": "Sign In / Sign Up with Social Provider (Google, Facebook, Apple)",
+                "description": "Authenticates a user via a social provider token obtained natively by the Flutter app.\n\n**Flow:**\n1. The Flutter app triggers the native Google/Facebook/Apple sign-in SDK.\n2. On success, the SDK returns an ID Token (or Access Token).\n3. Send that token to this endpoint.\n4. The backend verifies it with the provider, finds or creates the user, and returns a Sanctum bearer token.\n\n**Supported providers:** `google`, `facebook`, `apple`\n\n**Account Linking:** If a user with the same email already exists (registered via email/password), this endpoint will automatically link their social account and return a valid session — no duplicate account is created.",
+                "operationId": "social_auth_authenticate",
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "required": true,
+                        "description": "The social provider to authenticate with.",
+                        "schema": {
+                            "type": "string",
+                            "enum": ["google", "facebook", "apple"],
+                            "example": "google"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["token"],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "The ID Token or Access Token returned by the native Google/Facebook/Apple SDK on the Flutter app.",
+                                        "example": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg..."
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "description": "The desired role for a new user. Existing users keep their current role.",
+                                        "enum": ["customer", "vendor"],
+                                        "default": "customer",
+                                        "example": "customer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful. Returns user profile + Sanctum bearer token.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Authentication successful."
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": { "type": "integer", "example": 42 },
+                                                "firstname": { "type": "string", "example": "Inimfon" },
+                                                "lastname": { "type": "string", "example": "Udofa" },
+                                                "email": { "type": "string", "example": "user@gmail.com" },
+                                                "role": { "type": "string", "example": "customer" },
+                                                "token": { "type": "string", "example": "1|abcdef123456..." },
+                                                "token_type": { "type": "string", "example": "Bearer" },
+                                                "expires_in": { "type": "integer", "example": 3600 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid or expired token from the social provider."
+                    },
+                    "422": {
+                        "description": "Validation error — token is missing or provider is not supported."
+                    },
+                    "500": {
+                        "description": "Server error."
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -77,7 +168,11 @@
         },
         {
             "name": "Authentication",
-            "description": "Authentication"
+            "description": "Standard email and password authentication"
+        },
+        {
+            "name": "Social Authentication",
+            "description": "OAuth2 social login via Google, Facebook, and Apple"
         }
     ]
 }
