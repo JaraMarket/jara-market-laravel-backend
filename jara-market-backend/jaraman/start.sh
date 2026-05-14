@@ -1,17 +1,35 @@
 #!/bin/bash
 
-# Run database migrations on every deploy to keep schema up to date
-echo "🔄 Running database migrations..."
+# Exit on error
+set -e
+
+echo "🚀 JaraMarket Production Startup Initializing..."
+
+# 1. Run migrations
+echo "🔄 Syncing database schema..."
 php artisan migrate --force
 
-# Start the Laravel Queue Worker in the background to process OTPs and emails instantly
-echo "📬 Starting Queue Worker (Swift OTP delivery)..."
-php artisan queue:work --daemon --tries=3 --timeout=60 &
+# 2. Clear and Cache everything (Ensures no Mailtrap settings remain)
+echo "🧹 Purging and rebuilding caches..."
+php artisan config:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
 
-# Start the Laravel Scheduler in the background for cron-based tasks
-echo "🕐 Starting Laravel Scheduler..."
+# 3. Generate Docs (Required for the API)
+echo "📚 Refreshing API Documentation..."
+php artisan l5-swagger:generate
+
+# 4. Start the Queue Worker (DAEMON MODE)
+echo "👷 Starting Background Queue Worker (Swift OTP Delivery)..."
+php artisan queue:work --tries=3 --timeout=90 --daemon &
+
+# 5. Start the Scheduler
+echo "🕐 Starting Task Scheduler..."
 php artisan schedule:work &
 
-# Start the web server
-echo "🚀 Starting web server..."
+# 6. Final handoff to web server
+echo "✅ Initialization complete. Launching web server..."
 vendor/bin/heroku-php-apache2 public/
+
