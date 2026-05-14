@@ -31,5 +31,5 @@ php artisan schedule:work &
 
 # 6. Final handoff to web server
 echo "✅ Initialization complete. Launching web server..."
-vendor/bin/heroku-php-apache2 public/
+php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
 
