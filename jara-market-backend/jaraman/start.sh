@@ -21,9 +21,9 @@ php artisan event:cache
 echo "📚 Refreshing API Documentation..."
 php artisan l5-swagger:generate
 
-# 4. Start the Queue Worker (DAEMON MODE)
+# 4. Start the Queue Worker
 echo "👷 Starting Background Queue Worker (Swift OTP Delivery)..."
-php artisan queue:work --tries=3 --timeout=90 --daemon &
+php artisan queue:work --tries=3 --timeout=90 &
 
 # 5. Start the Scheduler
 echo "🕐 Starting Task Scheduler..."
