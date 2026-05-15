@@ -58,14 +58,19 @@ class UserController extends Controller
     public function validateUserRegisterOTP(OtpRequest $request)
     {
         try {
-
             $data = $request->validated();
             $user = $this->userService->validateOTP($data['email'], $data['otp']);
 
+            // Mark email as verified and active
+            $this->userService->validateEmail($user);
+
+            // Generate token for immediate login
+            $authData = $this->loginService->mergeUserWithToken($user);
+
             return response()->json([
                 'status' => true,
-                'message' => 'OTP validated successfully',
-                'data' => $user,
+                'message' => 'OTP validated successfully and email verified',
+                'data' => $authData,
             ], 201);
 
         } catch (Exception $e) {

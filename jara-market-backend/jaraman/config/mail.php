@@ -108,8 +108,9 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@jaramarket.com'),
-        'name' => env('MAIL_FROM_NAME', 'JaraMarket'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@yaramarket.com'),
+        'name' => env('MAIL_FROM_NAME', 'YaraMarket'),
+
     ],
 
     /*

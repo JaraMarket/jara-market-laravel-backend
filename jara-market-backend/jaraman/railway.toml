@@ -3,6 +3,6 @@ builder = "nixpacks"
 buildCommand = "npm install && npm run build && composer install --no-dev --optimize-autoloader --ignore-platform-reqs"
 
 [deploy]
-startCommand = "bash start.sh"
+startCommand = "sh ./railway/init-app.sh"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3

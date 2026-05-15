@@ -26,9 +26,5 @@ php artisan l5-swagger:generate
 
 echo "✅ App Service Initialization Complete."
 
-# Start the Queue Worker in the background
-echo "👷 Starting JaraMarket Queue Worker..."
-php artisan queue:work --tries=3 --timeout=90 &
-
 echo "🚀 Starting Laravel Web Server on port ${PORT:-8080}..."
 php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
