@@ -6,6 +6,8 @@ use App\Http\Resources\NotificationResource;
 use Exception;
 use Illuminate\Http\Request;
 
+use OpenApi\Attributes as OA;
+
 class NotificationController extends Controller
 {
     /**
@@ -40,9 +42,20 @@ class NotificationController extends Controller
         }
     }
 
-    /**
-     * Web notification list (API — used by mobile app).
-     */
+    #[OA\Get(
+        path: "/api/notifications",
+        summary: "Get Notifications",
+        description: "Retrieve a paginated list of notifications for the authenticated user.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "page", in: "query", description: "Page number", schema: new OA\Schema(type: "integer", default: 1))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Notifications retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function index(Request $request)
     {
         try {
@@ -52,19 +65,30 @@ class NotificationController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(20);
 
-            return response()->success(
-                'Notifications retrieved successfully',
-                NotificationResource::collection($notifications)
-            );
+            return response()->json([
+                'status'  => true,
+                'message' => 'Notifications retrieved successfully',
+                'data'    => NotificationResource::collection($notifications)
+            ]);
         } catch (Exception $e) {
-            return response()->errorResponse('Failed to fetch notifications', [], 500);
+            return response()->json(['status' => false, 'message' => 'Failed to fetch notifications'], 500);
         }
     }
 
-    /**
-     * Mark a single notification as read.
-     * Supports both web (redirect back) and AJAX (JSON).
-     */
+    #[OA\Put(
+        path: "/api/notifications/{id}/read",
+        summary: "Mark Notification as Read",
+        description: "Mark a specific notification as read.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "Notification UUID", schema: new OA\Schema(type: "string"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Marked as read"),
+            new OA\Response(response: 404, description: "Notification not found")
+        ]
+    )]
     public function markAsRead(Request $request, $id)
     {
         try {
@@ -79,11 +103,42 @@ class NotificationController extends Controller
             return back();
         } catch (Exception $e) {
             if ($request->expectsJson() || $request->ajax()) {
-                return response()->json(['status' => false], 500);
+                return response()->json(['status' => false, 'message' => 'Notification not found'], 404);
             }
 
             return back();
         }
+    }
+
+    #[OA\Post(
+        path: "/api/notifications/token",
+        summary: "Update FCM Token",
+        description: "Save the user's Firebase Cloud Messaging token for push notifications.",
+        tags: ["Customer", "Vendor"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["fcm_token"],
+                properties: [
+                    new OA\Property(property: "fcm_token", type: "string", example: "fcm_token_123456")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Token updated successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
+    public function updateFcmToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => 'required|string',
+        ]);
+
+        $request->user()->update(['fcm_token' => $request->fcm_token]);
+
+        return response()->json(['status' => true, 'message' => 'Token updated']);
     }
 
     /**

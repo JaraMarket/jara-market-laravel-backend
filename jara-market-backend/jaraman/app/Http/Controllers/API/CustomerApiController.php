@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use OpenApi\Attributes as OA;
 use App\Models\Category;
 use App\Models\Ingredient;
 use App\Models\Product;
@@ -29,6 +30,23 @@ class CustomerApiController extends Controller
     | Supports: ?category={id}  ?search={keyword}
     |--------------------------------------------------------------------------
     */
+    #[OA\Get(
+        path: "/api/vendors",
+        summary: "Search and List Vendors",
+        description: "Retrieve a list of active vendors with optional filters for name, business name, and category.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "search", in: "query", description: "Search by vendor name or business name", schema: new OA\Schema(type: "string")),
+            new OA\Parameter(name: "category", in: "query", description: "Filter by category ID", schema: new OA\Schema(type: "integer")),
+            new OA\Parameter(name: "per_page", in: "query", description: "Number of items per page", schema: new OA\Schema(type: "integer", default: 20))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Vendors retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 500, description: "Server Error")
+        ]
+    )]
     public function vendors(Request $request): JsonResponse
     {
         try {
@@ -76,6 +94,21 @@ class CustomerApiController extends Controller
     | GET /api/vendors/{id}
     |--------------------------------------------------------------------------
     */
+    #[OA\Get(
+        path: "/api/vendors/{id}",
+        summary: "Get Vendor Details",
+        description: "Retrieve detailed information about a specific vendor.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "The Vendor ID", schema: new OA\Schema(type: "integer"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Vendor retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 404, description: "Vendor not found")
+        ]
+    )]
     public function showVendor(int $id): JsonResponse
     {
         try {
@@ -109,6 +142,20 @@ class CustomerApiController extends Controller
     | GET /api/categories
     |--------------------------------------------------------------------------
     */
+    #[OA\Get(
+        path: "/api/categories",
+        summary: "List Categories",
+        description: "Retrieve all product categories.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "search", in: "query", description: "Search by category name", schema: new OA\Schema(type: "string"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Categories retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function categories(Request $request): JsonResponse
     {
         try {
@@ -135,6 +182,23 @@ class CustomerApiController extends Controller
     | Supports: ?vendor_id={id}  ?search={keyword}  ?category_id={id}
     |--------------------------------------------------------------------------
     */
+    #[OA\Get(
+        path: "/api/products",
+        summary: "Search and List Products",
+        description: "Retrieve a list of products (ingredients) with filters for vendor, category, and name.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "search", in: "query", description: "Search by product name", schema: new OA\Schema(type: "string")),
+            new OA\Parameter(name: "category_id", in: "query", description: "Filter by category ID", schema: new OA\Schema(type: "integer")),
+            new OA\Parameter(name: "vendor_id", in: "query", description: "Filter by vendor ID", schema: new OA\Schema(type: "integer")),
+            new OA\Parameter(name: "per_page", in: "query", description: "Number of items per page", schema: new OA\Schema(type: "integer", default: 20))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Products retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function products(Request $request): JsonResponse
     {
         try {
@@ -172,6 +236,21 @@ class CustomerApiController extends Controller
     | GET /api/products/{id}
     |--------------------------------------------------------------------------
     */
+    #[OA\Get(
+        path: "/api/products/{id}",
+        summary: "Get Product Details",
+        description: "Retrieve detailed information about a specific product.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "The Product ID", schema: new OA\Schema(type: "integer"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Product retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 404, description: "Product not found")
+        ]
+    )]
     public function showProduct(int $id): JsonResponse
     {
         try {

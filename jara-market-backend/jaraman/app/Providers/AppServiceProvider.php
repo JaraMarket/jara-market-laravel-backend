@@ -14,8 +14,6 @@ use Kreait\Firebase\Contract\Messaging;
 
 use OpenApi\Attributes as OA;
 
-#[OA\Info(title: "JaraMarket API", version: "1.0.0", description: "Official API Documentation for JaraMarket Backend.")]
-#[OA\Server(url: "https://jara-market-laravel-backend-production.up.railway.app/api/jaram", description: "Production Server")]
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
@@ -35,11 +33,13 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production' || config('app.env') === 'staging') {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
-        try {
-            // Dynamically reconfigure S3 from DB settings if storage_disk = s3
-            SettingsController::reconfigureS3();
-        } catch (\Throwable $e) {
-            // Ignore errors if the database or settings table doesn't exist yet (e.g. during migrations)
+        if (! $this->app->runningInConsole()) {
+            try {
+                // Dynamically reconfigure S3 from DB settings if storage_disk = s3
+                SettingsController::reconfigureS3();
+            } catch (\Throwable $e) {
+                // Ignore errors if the database or settings table doesn't exist yet (e.g. during migrations)
+            }
         }
 
         // Register firebase as a notification channel

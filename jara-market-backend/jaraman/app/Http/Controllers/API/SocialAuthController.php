@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Enums\UserPermissionsEnum;
 use App\Http\Controllers\Controller;
+use OpenApi\Attributes as OA;
 use App\Http\Requests\SocialLoginRequest;
 use App\Services\SocialAuthService;
 use Exception;
@@ -29,6 +30,35 @@ class SocialAuthController extends Controller
      * @param  string  $provider  The OAuth provider (google, facebook, apple).
      * @return JsonResponse
      */
+    #[OA\Post(
+        path: "/jaram/social/{provider}",
+        summary: "Social Authentication",
+        description: "Authenticate using a social provider (google, facebook, apple). The mobile app should provide the token obtained from the provider.",
+        tags: ["Customer Authentication", "Vendor Authentication"],
+        parameters: [
+            new OA\Parameter(
+                name: "provider",
+                in: "path",
+                required: true,
+                description: "The social provider",
+                schema: new OA\Schema(type: "string", enum: ["google", "facebook", "apple"])
+            )
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["token"],
+                properties: [
+                    new OA\Property(property: "token", type: "string", description: "The access token or ID token from the provider"),
+                    new OA\Property(property: "role", type: "string", enum: ["customer", "vendor"], example: "customer")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Authentication successful"),
+            new OA\Response(response: 400, description: "Invalid token or provider")
+        ]
+    )]
     public function authenticate(SocialLoginRequest $request, string $provider): JsonResponse
     {
         try {

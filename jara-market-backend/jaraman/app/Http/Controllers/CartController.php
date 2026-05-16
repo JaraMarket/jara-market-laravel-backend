@@ -7,22 +7,21 @@ use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Info(title="JaraMarket API", version="1.0")
- *
- * @OA\Server(url="http://localhost:8000")
- *
- * @OA\PathItem(
- *     path="/orders",
- *     description="Operations related to orders"
- * )
- */
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the user's carts.
-     */
+    #[OA\Get(
+        path: "/api/cart",
+        summary: "View Cart",
+        description: "Retrieve the authenticated user's cart items.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        responses: [
+            new OA\Response(response: 200, description: "Cart retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function index()
     {
         $user = Auth::user();
@@ -36,9 +35,28 @@ class CartController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created cart.
-     */
+    #[OA\Post(
+        path: "/api/cart",
+        summary: "Add to Cart",
+        description: "Add a product to the user's cart. If the product already exists, the quantity is updated.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["product_id", "quantity"],
+                properties: [
+                    new OA\Property(property: "product_id", type: "integer", example: 1),
+                    new OA\Property(property: "quantity", type: "integer", minimum: 1, example: 2)
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: "Product added to cart successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 422, description: "Validation Error")
+        ]
+    )]
     public function store(Request $request)
     {
         $request->validate([
@@ -85,9 +103,21 @@ class CartController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified cart.
-     */
+    #[OA\Get(
+        path: "/api/cart/{id}",
+        summary: "Get Cart Details",
+        description: "Retrieve details of a specific cart (usually only one active cart exists per user).",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "The Cart ID", schema: new OA\Schema(type: "integer"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Cart retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 404, description: "Cart not found")
+        ]
+    )]
     public function show(string $id)
     {
         $user = Auth::user();
@@ -101,9 +131,31 @@ class CartController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified cart item.
-     */
+    #[OA\Put(
+        path: "/api/cart/{id}",
+        summary: "Update Cart Item",
+        description: "Update the quantity of a specific item in the cart.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "The Cart ID", schema: new OA\Schema(type: "integer"))
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["item_id", "quantity"],
+                properties: [
+                    new OA\Property(property: "item_id", type: "integer", example: 10, description: "The ID of the CartItem record"),
+                    new OA\Property(property: "quantity", type: "integer", minimum: 1, example: 5)
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Cart item updated successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 404, description: "Cart or Item not found")
+        ]
+    )]
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -135,9 +187,22 @@ class CartController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified cart item.
-     */
+    #[OA\Delete(
+        path: "/api/cart/{id}",
+        summary: "Remove Cart Item",
+        description: "Remove a specific item from the cart.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "The Cart ID", schema: new OA\Schema(type: "integer")),
+            new OA\Parameter(name: "item_id", in: "query", required: true, description: "The ID of the CartItem record", schema: new OA\Schema(type: "integer"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Cart item removed successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 404, description: "Cart or Item not found")
+        ]
+    )]
     public function destroy(Request $request, string $id)
     {
         $user = Auth::user();

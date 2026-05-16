@@ -5,27 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Info(
- *     title="JaraMarket API",
- *     version="1.0.0",
- *     description="Official API Documentation for JaraMarket Backend. Includes endpoints for products, orders, and authentication."
- * )
- *
- * @OA\Server(
- *     url="https://jara-market-laravel-backend-production.up.railway.app/api",
- *     description="Production Server"
- * )
- *
- * @OA\SecurityScheme(
- *     securityScheme="bearerAuth",
- *     type="http",
- *     scheme="bearer",
- *     bearerFormat="JWT"
- * )
- */
+#[OA\Info(
+    title: "Jaramarket API",
+    version: "1.0.0",
+    description: "Jaramarket Meals Marketplace API for Customer and Vendor mobile applications"
+)]
+#[OA\Server(
+    url: "L5_SWAGGER_CONST_HOST",
+    description: "API Server"
+)]
+#[OA\SecurityScheme(
+    securityScheme: "bearerAuth",
+    type: "http",
+    scheme: "bearer",
+    bearerFormat: "JWT",
+    description: "Enter token in format (Bearer <token>)"
+)]
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;

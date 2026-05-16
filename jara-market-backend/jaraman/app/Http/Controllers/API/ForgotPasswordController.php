@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use OpenApi\Attributes as OA;
 use App\Http\Requests\ForgotPasswordLinkRequest;
 use App\Models\User;
 use App\Services\UserRegistrationService;
@@ -12,6 +13,25 @@ class ForgotPasswordController extends Controller
 {
     public function __construct(public UserRegistrationService $userService) {}
 
+    #[OA\Post(
+        path: "/api/auth/forgot-password",
+        summary: "Request Password Reset OTP",
+        description: "Sends a 6-digit OTP to the user's email address to initiate password reset.",
+        tags: ["Customer Authentication", "Vendor Authentication"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["email"],
+                properties: [
+                    new OA\Property(property: "email", type: "string", format: "email", example: "user@example.com")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: "OTP Sent"),
+            new OA\Response(response: 500, description: "User not found or inactive")
+        ]
+    )]
     public function sendResetLink(ForgotPasswordLinkRequest $request)
     {
         try {

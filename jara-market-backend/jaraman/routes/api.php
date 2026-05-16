@@ -102,14 +102,6 @@ Route::prefix('jaram')->group(function () {
         Route::patch('/user/change-password', [UserController::class, 'changePassword']);
         Route::get('/my-referrals', [UserController::class, 'myRefferals']);
 
-        // FCM token
-        Route::post('/fcm-token', function (Request $request) {
-            $request->validate(['token' => 'required|string']);
-            $request->user()->update(['fcm_token' => $request->token]);
-
-            return response()->json(['status' => true, 'message' => 'FCM token saved.']);
-        });
-
         /*
         |----------------------------------------------------------------------
         | WALLET
@@ -151,7 +143,8 @@ Route::prefix('jaram')->group(function () {
         */
         Route::prefix('notifications')->controller(NotificationController::class)->group(function () {
             Route::get('/', 'index');
-            Route::post('/{id}/read', 'markAsRead');
+            Route::put('/{id}/read', 'markAsRead');
+            Route::post('/token', 'updateFcmToken');
             Route::get('/unread-count', fn () => response()->json([
                 'unread' => auth()->user()->unreadNotifications()->count(),
             ]));
@@ -319,6 +312,9 @@ Route::prefix('api')->group(function () {
         Route::get('/orders',               [OrderController::class, 'all']);
         Route::get('/orders/{order}',       [OrderController::class, 'show']);
         Route::put('/orders/{order}/cancel',[OrderController::class, 'cancel']);
+
+        // Cart
+        Route::apiResource('cart', \App\Http\Controllers\CartController::class);
 
         // Payments
         Route::post('/payments/initiate',   [PaymentApiController::class, 'initiate']);

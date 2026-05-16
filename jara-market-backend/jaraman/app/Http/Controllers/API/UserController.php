@@ -24,6 +24,43 @@ class UserController extends Controller
 {
     public function __construct(public UserRegistrationService $userService, public LoginService $loginService) {}
 
+    #[OA\Post(
+        path: "/api/auth/register",
+        summary: "Register a new user",
+        description: "Creates a new user account (Customer or Vendor). A verification OTP will be sent to the email address.",
+        tags: ["Customer Authentication", "Vendor Authentication"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["firstname", "lastname", "email", "password", "role"],
+                properties: [
+                    new OA\Property(property: "firstname", type: "string", example: "John"),
+                    new OA\Property(property: "lastname", type: "string", example: "Doe"),
+                    new OA\Property(property: "email", type: "string", format: "email", example: "user@example.com"),
+                    new OA\Property(property: "password", type: "string", format: "password", example: "Password123!"),
+                    new OA\Property(property: "password_confirmation", type: "string", format: "password", example: "Password123!"),
+                    new OA\Property(property: "role", type: "string", enum: ["customer", "vendor"], example: "customer"),
+                    new OA\Property(property: "phone_number", type: "string", example: "08012345678"),
+                    new OA\Property(property: "referral_code", type: "string", example: "REF123")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "Success - OTP sent to email",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "status", type: "boolean", example: true),
+                        new OA\Property(property: "message", type: "string", example: "An OTP has been sent to your email address."),
+                        new OA\Property(property: "data", type: "object")
+                    ]
+                )
+            ),
+            new OA\Response(response: 422, description: "Validation Error"),
+            new OA\Response(response: 500, description: "Server Error")
+        ]
+    )]
     public function registerUser(RegisterRequest $request)
     {
         // dd('LIVE_CODE_V1');
@@ -40,6 +77,25 @@ class UserController extends Controller
         }
     }
 
+    #[OA\Post(
+        path: "/jaram/resend-otp",
+        summary: "Resend verification OTP",
+        description: "Resends a new 6-digit OTP to the user's email address.",
+        tags: ["Customer Authentication", "Vendor Authentication"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["email"],
+                properties: [
+                    new OA\Property(property: "email", type: "string", format: "email", example: "user@example.com")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: "OTP Resent"),
+            new OA\Response(response: 422, description: "Validation Error")
+        ]
+    )]
     public function resendOtp(ResendOtpRequest $request)
     {
         try {
@@ -55,6 +111,39 @@ class UserController extends Controller
         }
     }
 
+    #[OA\Post(
+        path: "/jaram/validate-otp",
+        summary: "Verify email with OTP",
+        description: "Validates the 6-digit OTP sent to the user's email. On success, returns a Sanctum Bearer token for immediate login.",
+        tags: ["Customer Authentication", "Vendor Authentication"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["email", "otp"],
+                properties: [
+                    new OA\Property(property: "email", type: "string", format: "email", example: "user@example.com"),
+                    new OA\Property(property: "otp", type: "string", example: "123456")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "Email verified & Token generated",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "status", type: "boolean", example: true),
+                        new OA\Property(property: "message", type: "string", example: "OTP validated successfully"),
+                        new OA\Property(property: "data", type: "object", properties: [
+                            new OA\Property(property: "token", type: "string", example: "1|abcdef123456..."),
+                            new OA\Property(property: "user", type: "object")
+                        ])
+                    ]
+                )
+            ),
+            new OA\Response(response: 400, description: "Invalid or expired OTP")
+        ]
+    )]
     public function validateUserRegisterOTP(OtpRequest $request)
     {
         try {
@@ -109,21 +198,37 @@ class UserController extends Controller
     }
 
     #[OA\Post(
-        path: "/jaram/login",
-        summary: "User login",
-        tags: ["Authentication"],
+        path: "/api/auth/login",
+        summary: "Login user",
+        description: "Authenticates a user and returns a Sanctum Bearer token.",
+        tags: ["Customer Authentication", "Vendor Authentication"],
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
+                required: ["email", "password"],
                 properties: [
-                    new OA\Property(property: "email", type: "string", format: "email", example: "admin@gmail.com"),
-                    new OA\Property(property: "password", type: "string", format: "password", example: "admin1234")
+                    new OA\Property(property: "email", type: "string", format: "email", example: "user@example.com"),
+                    new OA\Property(property: "password", type: "string", format: "password", example: "Password123!")
                 ]
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: "Successful login"),
-            new OA\Response(response: 422, description: "Validation error")
+            new OA\Response(
+                response: 201,
+                description: "Login successful",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "status", type: "boolean", example: true),
+                        new OA\Property(property: "message", type: "string", example: "User Authenticated successfully"),
+                        new OA\Property(property: "data", type: "object", properties: [
+                            new OA\Property(property: "token", type: "string", example: "2|xyz789..."),
+                            new OA\Property(property: "user", type: "object")
+                        ])
+                    ]
+                )
+            ),
+            new OA\Response(response: 401, description: "Invalid credentials"),
+            new OA\Response(response: 403, description: "Account not verified")
         ]
     )]
     public function login(LoginRequest $request)
@@ -147,6 +252,17 @@ class UserController extends Controller
         }
     }
 
+    #[OA\Post(
+        path: "/api/auth/logout",
+        summary: "Logout user",
+        description: "Revokes the current access token.",
+        tags: ["Customer Authentication", "Vendor Authentication"],
+        security: [["bearerAuth" => []]],
+        responses: [
+            new OA\Response(response: 200, description: "Logged out successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function logout(Request $request)
     {
         if ($request->user()) {

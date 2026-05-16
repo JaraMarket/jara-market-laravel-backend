@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use OpenApi\Attributes as OA;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -11,11 +12,18 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthApiController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | GET /api/auth/me
-    |--------------------------------------------------------------------------
-    */
+    #[OA\Get(
+        path: "/api/auth/me",
+        summary: "Get My Profile",
+        description: "Retrieve the authenticated user's profile details, including wallet balance and location.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        responses: [
+            new OA\Response(response: 200, description: "Profile retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 500, description: "Server Error")
+        ]
+    )]
     public function me(Request $request): JsonResponse
     {
         try {
@@ -48,11 +56,31 @@ class AuthApiController extends Controller
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | PUT /api/auth/update-profile
-    |--------------------------------------------------------------------------
-    */
+    #[OA\Put(
+        path: "/api/auth/update-profile",
+        summary: "Update Profile",
+        description: "Update user's basic information such as name, phone, and location.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: "firstname", type: "string", example: "John"),
+                    new OA\Property(property: "lastname", type: "string", example: "Doe"),
+                    new OA\Property(property: "phone_number", type: "string", example: "+2348012345678"),
+                    new OA\Property(property: "state_id", type: "integer", example: 1),
+                    new OA\Property(property: "lga_id", type: "integer", example: 1)
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Profile updated successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 422, description: "Validation Error"),
+            new OA\Response(response: 500, description: "Server Error")
+        ]
+    )]
     public function updateProfile(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -83,11 +111,31 @@ class AuthApiController extends Controller
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | POST /api/auth/upload-avatar
-    |--------------------------------------------------------------------------
-    */
+    #[OA\Post(
+        path: "/api/auth/upload-avatar",
+        summary: "Upload Profile Picture",
+        description: "Upload and update the user's profile picture (avatar).",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: "multipart/form-data",
+                schema: new OA\Schema(
+                    required: ["avatar"],
+                    properties: [
+                        new OA\Property(property: "avatar", type: "string", format: "binary", description: "Image file (max 2MB)")
+                    ]
+                )
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Avatar uploaded successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 422, description: "Validation Error"),
+            new OA\Response(response: 500, description: "Server Error")
+        ]
+    )]
     public function uploadAvatar(Request $request): JsonResponse
     {
         $request->validate([
