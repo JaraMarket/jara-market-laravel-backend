@@ -12,6 +12,249 @@
         }
     ],
     "paths": {
+        "/api/admin/ingredients": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "List All Ingredients",
+                "description": "Retrieve a paginated list of all ingredients in the system.",
+                "operationId": "cbfcf847e5073b225ed78e1155bd10e9",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search by name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "schema": {
+                            "type": "integer",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ingredients retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Create Ingredient",
+                "description": "Add a new ingredient to the system.",
+                "operationId": "d48f079998823f62c8f8dc4ca63e5b44",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "price",
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Tomato"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Fresh red tomatoes"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 500
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "image_url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://example.com/tomato.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ingredient created successfully"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/ingredients/{id}": {
+            "put": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Update Ingredient",
+                "description": "Update an existing ingredient.",
+                "operationId": "98b31e64c506a4b8146e87c8cf381c06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Ingredient ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Red Tomato"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 550
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ingredient updated successfully"
+                    },
+                    "404": {
+                        "description": "Ingredient not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Delete Ingredient",
+                "description": "Remove an ingredient from the system.",
+                "operationId": "a8868b35e9339ec6f59bff80e55d5a58",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Ingredient ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ingredient deleted successfully"
+                    },
+                    "404": {
+                        "description": "Ingredient not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/ingredients/{id}/upload-image": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Upload Ingredient Image",
+                "description": "Upload an image for a specific ingredient.",
+                "operationId": "ec7676db9f437d6c383a1a5895541701",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Ingredient ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "Image file (max 2MB)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Image uploaded successfully"
+                    },
+                    "404": {
+                        "description": "Ingredient not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/auth/me": {
             "get": {
                 "tags": [
@@ -802,6 +1045,21 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/jaram/vendors/categories": {
+            "get": {
+                "tags": [
+                    "Catalogue"
+                ],
+                "summary": "Get Vendor Categories",
+                "description": "Retrieve all categories specifically for vendors.",
+                "operationId": "9828e3b02ba0fc470eb970f991aeb705",
+                "responses": {
+                    "200": {
+                        "description": "Vendor categories retrieved successfully"
                     }
                 }
             }
@@ -1633,8 +1891,8 @@
                 "tags": [
                     "Vendor"
                 ],
-                "summary": "List Vendor Products (Ingredients)",
-                "description": "Retrieve a list of ingredients managed by the vendor.",
+                "summary": "List Available Ingredients",
+                "description": "Retrieve a list of ingredients available to the vendor based on their categories. Note: Ingredients are managed by Admin.",
                 "operationId": "fd6a6c937ebe7daf5297d5eaf3675535",
                 "parameters": [
                     {
@@ -1668,73 +1926,6 @@
                         "bearerAuth": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Vendor"
-                ],
-                "summary": "Create Product",
-                "description": "Add a new ingredient/product to the vendor's catalog.",
-                "operationId": "03ba26ba5bea468012d1a429d8da1f0f",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "price",
-                                    "category_id"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Tomato"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Fresh red tomatoes"
-                                    },
-                                    "price": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 500
-                                    },
-                                    "category_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "stock": {
-                                        "type": "integer",
-                                        "example": 100
-                                    },
-                                    "image_url": {
-                                        "type": "string",
-                                        "format": "url",
-                                        "example": "https://example.com/tomato.jpg"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Product created successfully"
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
         "/api/vendor/products/{id}": {
@@ -1742,7 +1933,7 @@
                 "tags": [
                     "Vendor"
                 ],
-                "summary": "Get Product Details",
+                "summary": "Get Ingredient Details",
                 "description": "Retrieve details of a specific ingredient.",
                 "operationId": "c0e60d99f761ca57c20ea8cdc735630d",
                 "parameters": [
@@ -1762,155 +1953,6 @@
                     },
                     "404": {
                         "description": "Product not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Vendor"
-                ],
-                "summary": "Update Product",
-                "description": "Update details of an existing product.",
-                "operationId": "54db2db10100e936964c75ac2bb5a45a",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The Product ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Red Tomato"
-                                    },
-                                    "price": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 550
-                                    },
-                                    "stock": {
-                                        "type": "integer",
-                                        "example": 150
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Product updated successfully"
-                    },
-                    "404": {
-                        "description": "Product not found"
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Vendor"
-                ],
-                "summary": "Delete Product",
-                "description": "Remove a product from the vendor's catalog.",
-                "operationId": "eb998cd381d955bd77a0f7baa4c01925",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The Product ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Product deleted successfully"
-                    },
-                    "404": {
-                        "description": "Product not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/vendor/products/{id}/images": {
-            "post": {
-                "tags": [
-                    "Vendor"
-                ],
-                "summary": "Upload Product Image",
-                "description": "Upload an image for a specific product.",
-                "operationId": "710028be2a2ded7fbda02e1faa20c932",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The Product ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "image"
-                                ],
-                                "properties": {
-                                    "image": {
-                                        "description": "Product image (max 2MB)",
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Image uploaded successfully"
-                    },
-                    "404": {
-                        "description": "Product not found"
-                    },
-                    "422": {
-                        "description": "Validation Error"
                     }
                 },
                 "security": [
@@ -2197,6 +2239,185 @@
                 }
             }
         },
+        "/api/wallet/balance": {
+            "get": {
+                "tags": [
+                    "Customer",
+                    "Vendor"
+                ],
+                "summary": "Get Wallet Balance",
+                "description": "Retrieve the authenticated user's wallet balance and status.",
+                "operationId": "75fe3af2bc45063072bde3e64baa3d98",
+                "responses": {
+                    "200": {
+                        "description": "Wallet retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Wallet not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/wallet/fund": {
+            "post": {
+                "tags": [
+                    "Customer",
+                    "Vendor"
+                ],
+                "summary": "Initialize Wallet Funding",
+                "description": "Initialize a transaction to add funds to the wallet via Paystack.",
+                "operationId": "bac7e9a94c31fb2108742c7bbabff6b2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "amount"
+                                ],
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "example": 2000
+                                    },
+                                    "callback_url": {
+                                        "type": "string",
+                                        "example": "https://example.com/callback"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Funding initialized"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/wallet/withdraw": {
+            "post": {
+                "tags": [
+                    "Customer",
+                    "Vendor"
+                ],
+                "summary": "Withdraw to Bank",
+                "description": "Initiate a transfer from wallet to a verified bank account.",
+                "operationId": "34c6053987316c832ee3c49175f2a9ad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "amount",
+                                    "bank_id"
+                                ],
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "example": 5000
+                                    },
+                                    "bank_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "remark": {
+                                        "type": "string",
+                                        "example": "Pocket money"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Withdrawal initiated"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Insufficient balance or Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/wallet/transactions": {
+            "get": {
+                "tags": [
+                    "Customer",
+                    "Vendor"
+                ],
+                "summary": "Transaction History",
+                "description": "Retrieve a list of all wallet transactions (credits and debits).",
+                "operationId": "b2b08be01bac074f11cf6e31f418324f",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter by type (credit, debit)",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "credit",
+                                "debit"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "schema": {
+                            "type": "integer",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transactions retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/cart": {
             "get": {
                 "tags": [
@@ -2414,7 +2635,8 @@
         "/api/notifications": {
             "get": {
                 "tags": [
-                    "Customer"
+                    "Customer",
+                    "Vendor"
                 ],
                 "summary": "Get Notifications",
                 "description": "Retrieve a paginated list of notifications for the authenticated user.",
@@ -2448,7 +2670,8 @@
         "/api/notifications/{id}/read": {
             "put": {
                 "tags": [
-                    "Customer"
+                    "Customer",
+                    "Vendor"
                 ],
                 "summary": "Mark Notification as Read",
                 "description": "Mark a specific notification as read.",
@@ -2534,6 +2757,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Admin",
+            "description": "Admin"
+        },
         {
             "name": "Customer",
             "description": "Customer"

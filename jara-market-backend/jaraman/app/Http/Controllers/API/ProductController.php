@@ -137,6 +137,15 @@ class ProductController extends Controller
 
     // ─── Vendor ───────────────────────────────────────────────────────────────
 
+    #[OA\Get(
+        path: "/jaram/vendors/categories",
+        summary: "Get Vendor Categories",
+        description: "Retrieve all categories specifically for vendors.",
+        tags: ["Catalogue"],
+        responses: [
+            new OA\Response(response: 200, description: "Vendor categories retrieved successfully")
+        ]
+    )]
     public function getVendorCategories()
     {
         $data = Category::with('ingredients')

@@ -50,12 +50,8 @@ To ensure the 2,000 entries survive hosting and migration:
 *   **No Hardcoding**: Agents are strictly forbidden from hardcoding secrets directly into source code. All secrets must be accessed via environment variables.
 *   **Leak Detection & Immediate Halt**: If an agent detects a potential secret key hardcoded in any file tracked by Git, it must immediately halt all operations and notify the user to rotate the key.
 *   **Explicit Consent for `.env` Edits**: Agents must provide a line-by-line explanation of any proposed change to the `.env` file before requesting permission to execute.
-*   **Leak Prevention**: Agents must carry out a thorough check through all files, codes, etc., ensuring there is no risk of exposing secrets before pushing to GitHub.
+Agents must carry a thorough check through all files,codes e.t.c ensuring there is no risk of exposing secrets before pushing to github.
 
 ---
+*Updated by Antigravity - 2026-05-09*
 
-## 🚀 7. Efficiency & Brainstorming Protocol
-When assigned a task or you observe the user trying to perform a task that is inherently tedious, repetitive, or exceptionally time-consuming (such as bulk data entry, large-scale code migration, or manual auditing) etc., agents **MUST** first pause and brainstorm faster, automated, or more innovative alternative approaches. Agents should present these options, estimated time savings, and quality assurance measures to the user for approval before proceeding.
-
----
-*Updated by Antigravity - 2026-05-14*

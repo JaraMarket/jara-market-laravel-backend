@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use OpenApi\Attributes as OA;
 
 class WalletController extends Controller
 {
@@ -23,6 +24,18 @@ class WalletController extends Controller
     | GET /jaram/wallet
     |--------------------------------------------------------------------------
     */
+    #[OA\Get(
+        path: "/api/wallet/balance",
+        summary: "Get Wallet Balance",
+        description: "Retrieve the authenticated user's wallet balance and status.",
+        tags: ["Customer", "Vendor"],
+        security: [["bearerAuth" => []]],
+        responses: [
+            new OA\Response(response: 200, description: "Wallet retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 404, description: "Wallet not found")
+        ]
+    )]
     public function balance(Request $request): JsonResponse
     {
         try {
@@ -46,6 +59,28 @@ class WalletController extends Controller
     | Body: { amount, currency, callback_url, payment_gateway, metadata? }
     |--------------------------------------------------------------------------
     */
+    #[OA\Post(
+        path: "/api/wallet/fund",
+        summary: "Initialize Wallet Funding",
+        description: "Initialize a transaction to add funds to the wallet via Paystack.",
+        tags: ["Customer", "Vendor"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["amount"],
+                properties: [
+                    new OA\Property(property: "amount", type: "number", example: 2000.00),
+                    new OA\Property(property: "callback_url", type: "string", example: "https://example.com/callback")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Funding initialized"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 422, description: "Validation Error")
+        ]
+    )]
     public function initializeFunding(FundWalletRequest $request): JsonResponse
     {
         try {
@@ -72,6 +107,29 @@ class WalletController extends Controller
     | Body: { amount, bank_id, currency?, remark? }
     |--------------------------------------------------------------------------
     */
+    #[OA\Post(
+        path: "/api/wallet/withdraw",
+        summary: "Withdraw to Bank",
+        description: "Initiate a transfer from wallet to a verified bank account.",
+        tags: ["Customer", "Vendor"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["amount", "bank_id"],
+                properties: [
+                    new OA\Property(property: "amount", type: "number", example: 5000.00),
+                    new OA\Property(property: "bank_id", type: "integer", example: 1),
+                    new OA\Property(property: "remark", type: "string", example: "Pocket money")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Withdrawal initiated"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 422, description: "Insufficient balance or Validation error")
+        ]
+    )]
     public function transferToBank(TransferToBankRequest $request): JsonResponse
     {
         try {
@@ -95,6 +153,21 @@ class WalletController extends Controller
     | GET /jaram/wallet/transactions?type=credit|debit&per_page=20
     |--------------------------------------------------------------------------
     */
+    #[OA\Get(
+        path: "/api/wallet/transactions",
+        summary: "Transaction History",
+        description: "Retrieve a list of all wallet transactions (credits and debits).",
+        tags: ["Customer", "Vendor"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "type", in: "query", description: "Filter by type (credit, debit)", schema: new OA\Schema(type: "string", enum: ["credit", "debit"])),
+            new OA\Parameter(name: "per_page", in: "query", description: "Items per page", schema: new OA\Schema(type: "integer", default: 20))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Transactions retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function transactions(Request $request): JsonResponse
     {
         $request->validate([

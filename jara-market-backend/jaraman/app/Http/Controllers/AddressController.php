@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
+    #[OA\Get(
+        path: "/api/addresses",
+        summary: "List Addresses",
+        description: "Retrieve all saved delivery addresses for the authenticated user.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        responses: [
+            new OA\Response(response: 200, description: "Addresses retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
     public function index()
     {
         try {
@@ -21,6 +32,31 @@ class AddressController extends Controller
         }
     }
 
+    #[OA\Post(
+        path: "/api/addresses",
+        summary: "Create Address",
+        description: "Save a new delivery address.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["address", "state_id", "lga_id"],
+                properties: [
+                    new OA\Property(property: "address", type: "string", example: "123 Main St, Ikeja"),
+                    new OA\Property(property: "state_id", type: "integer", example: 1),
+                    new OA\Property(property: "lga_id", type: "integer", example: 1),
+                    new OA\Property(property: "is_default", type: "boolean", example: true),
+                    new OA\Property(property: "label", type: "string", example: "Home")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: "Address created successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 422, description: "Validation Error")
+        ]
+    )]
     public function store(AddressRequest $request)
     {
         try {
@@ -41,6 +77,32 @@ class AddressController extends Controller
         }
     }
 
+    #[OA\Put(
+        path: "/api/addresses/{address}",
+        summary: "Update Address",
+        description: "Update an existing delivery address.",
+        tags: ["Customer"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "address", in: "path", required: true, description: "The Address ID", schema: new OA\Schema(type: "integer"))
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: "address", type: "string", example: "456 Updated St"),
+                    new OA\Property(property: "is_default", type: "boolean", example: false),
+                    new OA\Property(property: "label", type: "string", example: "Office")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Address updated successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated"),
+            new OA\Response(response: 403, description: "Unauthorized"),
+            new OA\Response(response: 404, description: "Address not found")
+        ]
+    )]
     public function update(AddressRequest $request, Address $address)
     {
         try {

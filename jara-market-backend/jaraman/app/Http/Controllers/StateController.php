@@ -11,12 +11,15 @@ use Illuminate\Http\Response;
 
 class StateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     *π
-     */
+    #[OA\Get(
+        path: "/jaram/states",
+        summary: "List States",
+        description: "Retrieve all states with their LGAs.",
+        tags: ["Catalogue"],
+        responses: [
+            new OA\Response(response: 200, description: "States retrieved successfully")
+        ]
+    )]
     public function index()
     {
         $states = State::with('lgas')->filterWithPipeline([
@@ -29,6 +32,19 @@ class StateController extends Controller
         return response()->success('successful', $states_collection);
     }
 
+    #[OA\Get(
+        path: "/jaram/states/{state}",
+        summary: "Get State Details",
+        description: "Retrieve details of a specific state and its LGAs.",
+        tags: ["Catalogue"],
+        parameters: [
+            new OA\Parameter(name: "state", in: "path", required: true, description: "The State ID or slug", schema: new OA\Schema(type: "string"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "State retrieved successfully"),
+            new OA\Response(response: 404, description: "State not found")
+        ]
+    )]
     public function findState(State $state)
     {
         $state = $state->load('lgas');

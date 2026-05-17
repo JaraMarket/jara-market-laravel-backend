@@ -46,7 +46,7 @@ class NotificationController extends Controller
         path: "/api/notifications",
         summary: "Get Notifications",
         description: "Retrieve a paginated list of notifications for the authenticated user.",
-        tags: ["Customer"],
+        tags: ["Customer", "Vendor"],
         security: [["bearerAuth" => []]],
         parameters: [
             new OA\Parameter(name: "page", in: "query", description: "Page number", schema: new OA\Schema(type: "integer", default: 1))
@@ -79,7 +79,7 @@ class NotificationController extends Controller
         path: "/api/notifications/{id}/read",
         summary: "Mark Notification as Read",
         description: "Mark a specific notification as read.",
-        tags: ["Customer"],
+        tags: ["Customer", "Vendor"],
         security: [["bearerAuth" => []]],
         parameters: [
             new OA\Parameter(name: "id", in: "path", required: true, description: "Notification UUID", schema: new OA\Schema(type: "string"))

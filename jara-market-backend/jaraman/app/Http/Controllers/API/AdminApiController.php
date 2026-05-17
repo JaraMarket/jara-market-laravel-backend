@@ -12,9 +12,227 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use App\Models\Ingredient;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 
 class AdminApiController extends Controller
 {
+    #[OA\Get(
+        path: "/api/admin/ingredients",
+        summary: "List All Ingredients",
+        description: "Retrieve a paginated list of all ingredients in the system.",
+        tags: ["Admin"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "search", in: "query", description: "Search by name", schema: new OA\Schema(type: "string")),
+            new OA\Parameter(name: "per_page", in: "query", description: "Items per page", schema: new OA\Schema(type: "integer", default: 20))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Ingredients retrieved successfully"),
+            new OA\Response(response: 401, description: "Unauthenticated")
+        ]
+    )]
+    public function ingredients(Request $request): JsonResponse
+    {
+        try {
+            $ingredients = Ingredient::with(['category'])
+                ->when($request->search, fn ($q) => $q->where('name', 'like', "%{$request->search}%"))
+                ->latest()
+                ->paginate((int) $request->get('per_page', 20));
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Ingredients retrieved successfully',
+                'data'    => $ingredients->items(),
+                'meta'    => [
+                    'total'        => $ingredients->total(),
+                    'current_page' => $ingredients->currentPage(),
+                    'last_page'    => $ingredients->lastPage(),
+                ],
+            ], 200);
+        } catch (Exception $e) {
+            report($e);
+            return response()->json(['status' => false, 'message' => 'Failed to retrieve ingredients'], 500);
+        }
+    }
+
+    #[OA\Post(
+        path: "/api/admin/ingredients",
+        summary: "Create Ingredient",
+        description: "Add a new ingredient to the system.",
+        tags: ["Admin"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["name", "price", "category_id"],
+                properties: [
+                    new OA\Property(property: "name", type: "string", example: "Tomato"),
+                    new OA\Property(property: "description", type: "string", example: "Fresh red tomatoes"),
+                    new OA\Property(property: "price", type: "number", format: "float", example: 500.00),
+                    new OA\Property(property: "category_id", type: "integer", example: 1),
+                    new OA\Property(property: "image_url", type: "string", format: "url", example: "https://example.com/tomato.jpg")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: "Ingredient created successfully"),
+            new OA\Response(response: 422, description: "Validation Error")
+        ]
+    )]
+    public function storeIngredient(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'name'        => 'required|string|max:200',
+            'description' => 'nullable|string',
+            'price'       => 'required|numeric|min:0',
+            'category_id' => 'required|integer|exists:categories,id',
+            'image_url'   => 'nullable|url',
+        ]);
+
+        try {
+            $ingredient = Ingredient::create($validated);
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Ingredient created successfully',
+                'data'    => $ingredient,
+            ], 201);
+        } catch (Exception $e) {
+            report($e);
+            return response()->json(['status' => false, 'message' => 'Failed to create ingredient'], 500);
+        }
+    }
+
+    #[OA\Put(
+        path: "/api/admin/ingredients/{id}",
+        summary: "Update Ingredient",
+        description: "Update an existing ingredient.",
+        tags: ["Admin"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "Ingredient ID", schema: new OA\Schema(type: "integer"))
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: "name", type: "string", example: "Red Tomato"),
+                    new OA\Property(property: "price", type: "number", format: "float", example: 550.00)
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Ingredient updated successfully"),
+            new OA\Response(response: 404, description: "Ingredient not found")
+        ]
+    )]
+    public function updateIngredient(Request $request, int $id): JsonResponse
+    {
+        $validated = $request->validate([
+            'name'        => 'sometimes|string|max:200',
+            'description' => 'nullable|string',
+            'price'       => 'sometimes|numeric|min:0',
+            'category_id' => 'sometimes|integer|exists:categories,id',
+            'image_url'   => 'nullable|url',
+        ]);
+
+        try {
+            $ingredient = Ingredient::findOrFail($id);
+            $ingredient->update($validated);
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Ingredient updated successfully',
+                'data'    => $ingredient,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'message' => 'Ingredient not found'], 404);
+        }
+    }
+
+    #[OA\Delete(
+        path: "/api/admin/ingredients/{id}",
+        summary: "Delete Ingredient",
+        description: "Remove an ingredient from the system.",
+        tags: ["Admin"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "Ingredient ID", schema: new OA\Schema(type: "integer"))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "Ingredient deleted successfully"),
+            new OA\Response(response: 404, description: "Ingredient not found")
+        ]
+    )]
+    public function destroyIngredient(int $id): JsonResponse
+    {
+        try {
+            $ingredient = Ingredient::findOrFail($id);
+            $ingredient->delete();
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Ingredient deleted successfully',
+                'data'    => [],
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'message' => 'Ingredient not found'], 404);
+        }
+    }
+
+    #[OA\Post(
+        path: "/api/admin/ingredients/{id}/upload-image",
+        summary: "Upload Ingredient Image",
+        description: "Upload an image for a specific ingredient.",
+        tags: ["Admin"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(name: "id", in: "path", required: true, description: "Ingredient ID", schema: new OA\Schema(type: "integer"))
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: "multipart/form-data",
+                schema: new OA\Schema(
+                    required: ["image"],
+                    properties: [
+                        new OA\Property(property: "image", type: "string", format: "binary", description: "Image file (max 2MB)")
+                    ]
+                )
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Image uploaded successfully"),
+            new OA\Response(response: 404, description: "Ingredient not found")
+        ]
+    )]
+    public function uploadIngredientImage(Request $request, int $id): JsonResponse
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        try {
+            $ingredient = Ingredient::findOrFail($id);
+
+            $path = Storage::disk('s3')->put('ingredients', $request->file('image'), 'public');
+            $url  = Storage::disk('s3')->url($path);
+
+            $ingredient->update(['image_url' => $url]);
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Image uploaded successfully',
+                'data'    => ['url' => $url],
+            ], 200);
+        } catch (Exception $e) {
+            report($e);
+            return response()->json(['status' => false, 'message' => 'Upload failed'], 500);
+        }
+    }
     /*
     |--------------------------------------------------------------------------
     | GET /api/admin/users

@@ -335,6 +335,9 @@ Route::prefix('api')->group(function () {
     |--------------------------------------------------------------------------
     | VENDOR — Authenticated + vendor role
     |--------------------------------------------------------------------------
+    | Vendors can only view ingredients linked to their categories.
+    | Management is handled by Admin.
+    |--------------------------------------------------------------------------
     */
     Route::middleware(['auth:sanctum', 'vendor'])->prefix('vendor')->group(function () {
         // Profile
@@ -343,13 +346,9 @@ Route::prefix('api')->group(function () {
         Route::post('/upload-logo',    [VendorApiController::class, 'uploadLogo']);
         Route::post('/upload-banner',  [VendorApiController::class, 'uploadBanner']);
 
-        // Products (ingredients in vendor context)
+        // Products (ingredients in vendor context — READ ONLY)
         Route::get('/products',            [VendorApiController::class, 'products']);
-        Route::post('/products',           [VendorApiController::class, 'storeProduct']);
         Route::get('/products/{id}',       [VendorApiController::class, 'showProduct']);
-        Route::put('/products/{id}',       [VendorApiController::class, 'updateProduct']);
-        Route::delete('/products/{id}',    [VendorApiController::class, 'destroyProduct']);
-        Route::post('/products/{id}/images', [VendorApiController::class, 'uploadProductImage']);
 
         // Orders
         Route::get('/orders',              [VendorApiController::class, 'orders']);
@@ -377,6 +376,13 @@ Route::prefix('api')->group(function () {
         Route::get('/vendors',                  [AdminApiController::class, 'vendors']);
         Route::put('/vendors/{id}/approve',     [AdminApiController::class, 'approveVendor']);
         Route::put('/vendors/{id}/reject',      [AdminApiController::class, 'rejectVendor']);
+
+        // Ingredients Management (Products)
+        Route::get('/ingredients',               [AdminApiController::class, 'ingredients']);
+        Route::post('/ingredients',              [AdminApiController::class, 'storeIngredient']);
+        Route::put('/ingredients/{id}',          [AdminApiController::class, 'updateIngredient']);
+        Route::delete('/ingredients/{id}',       [AdminApiController::class, 'destroyIngredient']);
+        Route::post('/ingredients/{id}/upload-image', [AdminApiController::class, 'uploadIngredientImage']);
 
         // Orders & Payments
         Route::get('/orders',                   [AdminApiController::class, 'orders']);

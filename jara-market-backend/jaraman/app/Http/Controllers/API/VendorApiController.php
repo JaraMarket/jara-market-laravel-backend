@@ -214,8 +214,8 @@ class VendorApiController extends Controller
 
     #[OA\Get(
         path: "/api/vendor/products",
-        summary: "List Vendor Products (Ingredients)",
-        description: "Retrieve a list of ingredients managed by the vendor.",
+        summary: "List Available Ingredients",
+        description: "Retrieve a list of ingredients available to the vendor based on their categories. Note: Ingredients are managed by Admin.",
         tags: ["Vendor"],
         security: [["bearerAuth" => []]],
         parameters: [
@@ -232,7 +232,7 @@ class VendorApiController extends Controller
         try {
             $vendor = $request->user();
 
-            // Vendors are linked to ingredients via categories
+            // Vendors see ingredients linked to their categories
             $categoryIds = $vendor->categories()->pluck('categories.id');
 
             $ingredients = Ingredient::with(['category', 'statePrices', 'lgaPrices'])
@@ -258,62 +258,9 @@ class VendorApiController extends Controller
         }
     }
 
-    #[OA\Post(
-        path: "/api/vendor/products",
-        summary: "Create Product",
-        description: "Add a new ingredient/product to the vendor's catalog.",
-        tags: ["Vendor"],
-        security: [["bearerAuth" => []]],
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(
-                required: ["name", "price", "category_id"],
-                properties: [
-                    new OA\Property(property: "name", type: "string", example: "Tomato"),
-                    new OA\Property(property: "description", type: "string", example: "Fresh red tomatoes"),
-                    new OA\Property(property: "price", type: "number", format: "float", example: 500.00),
-                    new OA\Property(property: "category_id", type: "integer", example: 1),
-                    new OA\Property(property: "stock", type: "integer", example: 100),
-                    new OA\Property(property: "image_url", type: "string", format: "url", example: "https://example.com/tomato.jpg")
-                ]
-            )
-        ),
-        responses: [
-            new OA\Response(response: 201, description: "Product created successfully"),
-            new OA\Response(response: 422, description: "Validation Error"),
-            new OA\Response(response: 500, description: "Server Error")
-        ]
-    )]
-    public function storeProduct(Request $request): JsonResponse
-    {
-        $validated = $request->validate([
-            'name'        => 'required|string|max:200',
-            'description' => 'nullable|string',
-            'price'       => 'required|numeric|min:0',
-            'category_id' => 'required|integer|exists:categories,id',
-            'stock'       => 'nullable|integer|min:0',
-            'image_url'   => 'nullable|url',
-        ]);
-
-        try {
-            $ingredient = Ingredient::create(array_merge($validated, [
-                'vendor_id' => $request->user()->id,
-            ]));
-
-            return response()->json([
-                'status'  => true,
-                'message' => 'Product created successfully',
-                'data'    => $ingredient,
-            ], 201);
-        } catch (Exception $e) {
-            report($e);
-            return response()->json(['status' => false, 'message' => 'Failed to create product: ' . $e->getMessage()], 500);
-        }
-    }
-
     #[OA\Get(
         path: "/api/vendor/products/{id}",
-        summary: "Get Product Details",
+        summary: "Get Ingredient Details",
         description: "Retrieve details of a specific ingredient.",
         tags: ["Vendor"],
         security: [["bearerAuth" => []]],
@@ -345,144 +292,6 @@ class VendorApiController extends Controller
         }
     }
 
-    #[OA\Put(
-        path: "/api/vendor/products/{id}",
-        summary: "Update Product",
-        description: "Update details of an existing product.",
-        tags: ["Vendor"],
-        security: [["bearerAuth" => []]],
-        parameters: [
-            new OA\Parameter(name: "id", in: "path", required: true, description: "The Product ID", schema: new OA\Schema(type: "integer"))
-        ],
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(
-                properties: [
-                    new OA\Property(property: "name", type: "string", example: "Red Tomato"),
-                    new OA\Property(property: "price", type: "number", format: "float", example: 550.00),
-                    new OA\Property(property: "stock", type: "integer", example: 150)
-                ]
-            )
-        ),
-        responses: [
-            new OA\Response(response: 200, description: "Product updated successfully"),
-            new OA\Response(response: 404, description: "Product not found"),
-            new OA\Response(response: 422, description: "Validation Error")
-        ]
-    )]
-    public function updateProduct(Request $request, int $id): JsonResponse
-    {
-        $validated = $request->validate([
-            'name'        => 'sometimes|string|max:200',
-            'description' => 'nullable|string',
-            'price'       => 'sometimes|numeric|min:0',
-            'stock'       => 'nullable|integer|min:0',
-        ]);
-
-        try {
-            $vendor      = $request->user();
-            $categoryIds = $vendor->categories()->pluck('categories.id');
-
-            $ingredient = Ingredient::whereIn('category_id', $categoryIds)->findOrFail($id);
-            $ingredient->update($validated);
-
-            return response()->json([
-                'status'  => true,
-                'message' => 'Product updated successfully',
-                'data'    => $ingredient,
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json(['status' => false, 'message' => 'Product not found or update failed'], 404);
-        }
-    }
-
-    #[OA\Delete(
-        path: "/api/vendor/products/{id}",
-        summary: "Delete Product",
-        description: "Remove a product from the vendor's catalog.",
-        tags: ["Vendor"],
-        security: [["bearerAuth" => []]],
-        parameters: [
-            new OA\Parameter(name: "id", in: "path", required: true, description: "The Product ID", schema: new OA\Schema(type: "integer"))
-        ],
-        responses: [
-            new OA\Response(response: 200, description: "Product deleted successfully"),
-            new OA\Response(response: 404, description: "Product not found")
-        ]
-    )]
-    public function destroyProduct(Request $request, int $id): JsonResponse
-    {
-        try {
-            $vendor      = $request->user();
-            $categoryIds = $vendor->categories()->pluck('categories.id');
-
-            $ingredient = Ingredient::whereIn('category_id', $categoryIds)->findOrFail($id);
-            $ingredient->delete();
-
-            return response()->json([
-                'status'  => true,
-                'message' => 'Product deleted successfully',
-                'data'    => [],
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json(['status' => false, 'message' => 'Product not found'], 404);
-        }
-    }
-
-    #[OA\Post(
-        path: "/api/vendor/products/{id}/images",
-        summary: "Upload Product Image",
-        description: "Upload an image for a specific product.",
-        tags: ["Vendor"],
-        security: [["bearerAuth" => []]],
-        parameters: [
-            new OA\Parameter(name: "id", in: "path", required: true, description: "The Product ID", schema: new OA\Schema(type: "integer"))
-        ],
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\MediaType(
-                mediaType: "multipart/form-data",
-                schema: new OA\Schema(
-                    required: ["image"],
-                    properties: [
-                        new OA\Property(property: "image", type: "string", format: "binary", description: "Product image (max 2MB)")
-                    ]
-                )
-            )
-        ),
-        responses: [
-            new OA\Response(response: 200, description: "Image uploaded successfully"),
-            new OA\Response(response: 404, description: "Product not found"),
-            new OA\Response(response: 422, description: "Validation Error")
-        ]
-    )]
-    public function uploadProductImage(Request $request, int $id): JsonResponse
-    {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ]);
-
-        try {
-            $vendor      = $request->user();
-            $categoryIds = $vendor->categories()->pluck('categories.id');
-
-            $ingredient = Ingredient::whereIn('category_id', $categoryIds)->findOrFail($id);
-
-            $path = Storage::disk('s3')->put('vendor/products', $request->file('image'), 'public');
-            $url  = Storage::disk('s3')->url($path);
-
-            $ingredient->update(['image_url' => $url]);
-
-            return response()->json([
-                'status'  => true,
-                'message' => 'Product image uploaded successfully',
-                'data'    => ['url' => $url],
-            ], 200);
-        } catch (Exception $e) {
-            report($e);
-            return response()->json(['status' => false, 'message' => 'Image upload failed: ' . $e->getMessage()], 500);
-        }
-    }
 
     #[OA\Get(
         path: "/api/vendor/orders",
