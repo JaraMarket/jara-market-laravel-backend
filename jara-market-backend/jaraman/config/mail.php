@@ -82,8 +82,8 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'resend',
                 'smtp',
+                'resend',
             ],
         ],
 
