@@ -16,14 +16,16 @@ class RegisterRequest extends FormRequest
     protected function prepareForValidation()
     {
         $email = $this->input('email');
-        if ($email === 'iudofa0@gmail.com') {
-            $user = \App\Models\User::where('email', 'iudofa0@gmail.com')->first();
+        $testEmails = ['iudofa0@gmail.com', 'stenographersservices0@gmail.com'];
+        
+        if (in_array($email, $testEmails)) {
+            $user = \App\Models\User::withTrashed()->where('email', $email)->first();
             if ($user) {
                 if ($user->wallet) {
                     $user->wallet->delete();
                 }
                 $user->userPermissions()->detach();
-                \App\Models\User_otp::where('email', 'iudofa0@gmail.com')->delete();
+                \App\Models\User_otp::where('email', $email)->delete();
                 $user->forceDelete();
             }
         }
