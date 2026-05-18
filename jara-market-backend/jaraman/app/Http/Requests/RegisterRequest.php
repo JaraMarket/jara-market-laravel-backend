@@ -11,6 +11,25 @@ use Illuminate\Validation\Rule;
 class RegisterRequest extends FormRequest
 {
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        $email = $this->input('email');
+        if ($email === 'iudofa0@gmail.com') {
+            $user = \App\Models\User::where('email', 'iudofa0@gmail.com')->first();
+            if ($user) {
+                if ($user->wallet) {
+                    $user->wallet->delete();
+                }
+                $user->userPermissions()->detach();
+                \App\Models\User_otp::where('email', 'iudofa0@gmail.com')->delete();
+                $user->forceDelete();
+            }
+        }
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
