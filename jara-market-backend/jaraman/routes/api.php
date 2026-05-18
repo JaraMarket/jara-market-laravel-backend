@@ -399,29 +399,4 @@ Route::prefix('api')->group(function () {
         Route::get('/dashboard/stats',          [AdminApiController::class, 'dashboardStats']);
     });
 
-    // TEMPORARY TESTING ROUTE — WILL BE REMOVED IMMEDIATELY AFTER RUNNING
-    Route::get('/temp-clean-test-users', function () {
-        $emails = ['iudofa0@gmail.com', 'stenographersservices0@gmail.com'];
-        $results = [];
-        foreach ($emails as $email) {
-            $user = \App\Models\User::where('email', $email)->first();
-            if ($user) {
-                if ($user->wallet) {
-                    $user->wallet->delete();
-                }
-                $user->userPermissions()->detach();
-                \App\Models\User_otp::where('email', $email)->delete();
-                $user->forceDelete();
-                $results[$email] = 'Deleted successfully';
-            } else {
-                $results[$email] = 'Not found';
-            }
-        }
-        return response()->json([
-            'status' => true,
-            'message' => 'Test users clean up completed successfully.',
-            'results' => $results
-        ]);
-    });
-
 }); // end /api
