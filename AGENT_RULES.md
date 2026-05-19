@@ -52,6 +52,10 @@ To ensure the 2,000 entries survive hosting and migration:
 *   **Explicit Consent for `.env` Edits**: Agents must provide a line-by-line explanation of any proposed change to the `.env` file before requesting permission to execute.
 Agents must carry a thorough check through all files,codes e.t.c ensuring there is no risk of exposing secrets before pushing to github.
 
+## 📐 7. SOLID Design Principles (MANDATORY)
+*   **SOLID Compliance:** Whenever you write code, it must follow software engineering SOLID design principles.
+*   **No Violations:** Never write code that violates these principles. If you do, you will be asked to refactor it immediately.
+
 ---
-*Updated by Antigravity - 2026-05-09*
+*Updated by Antigravity - 2026-05-19*
 
