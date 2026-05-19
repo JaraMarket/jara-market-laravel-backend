@@ -11,6 +11,7 @@ use App\Http\Controllers\API\ResetPasswordController;
 use App\Http\Controllers\API\SettingsController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorDashboardController;
+use App\Http\Controllers\API\VerificationController;
 use App\Http\Controllers\API\WalletController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FavoritesController;
@@ -21,10 +22,9 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PinController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\VendorCategoryController;
-use App\Http\Controllers\API\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
- 
+
 Route::get('/queue-check', function () {
     return [
         'pending_jobs' => DB::table('jobs')->count(),
@@ -59,9 +59,9 @@ Route::prefix('jaram')->group(function () {
 
     // Public catalogue
     Route::get('/vendors/categories', [ProductController::class, 'getVendorCategories']);
-    
+
     // Email Verification (Magic Link)
-    Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\API\VerificationController::class, 'verify'])
+    Route::get('/verify-email/{id}/{hash}', [VerificationController::class, 'verify'])
         ->name('api.verification.verify');
 
     /*
@@ -84,7 +84,7 @@ Route::prefix('jaram')->group(function () {
         Route::post('/resend-otp', [UserController::class, 'resendOtp'])->middleware('throttle:3,1');
 
         // Social Authentication (Google, Apple, Facebook)
-        Route::post('/social/{provider}', [\App\Http\Controllers\API\SocialAuthController::class, 'authenticate']);
+        Route::post('/social/{provider}', [SocialAuthController::class, 'authenticate']);
     });
 
     /*
@@ -256,14 +256,16 @@ Route::prefix('jaram')->group(function () {
 |==========================================================================
 */
 
+use App\Http\Controllers\API\AdminApiController;
 use App\Http\Controllers\API\AuthApiController;
 use App\Http\Controllers\API\CustomerApiController;
-use App\Http\Controllers\API\VendorApiController;
-use App\Http\Controllers\API\AdminApiController;
 use App\Http\Controllers\API\PaymentApiController;
 use App\Http\Controllers\API\ReviewController;
+use App\Http\Controllers\API\SocialAuthController;
+use App\Http\Controllers\API\VendorApiController;
+use App\Http\Controllers\CartController;
 
-Route::prefix('api')->group(function () {
+Route::group([], function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -273,16 +275,16 @@ Route::prefix('api')->group(function () {
     Route::prefix('auth')->group(function () {
         // Register + Login — delegate to existing UserController
         Route::post('/register', [UserController::class, 'registerUser']);
-        Route::post('/login',    [UserController::class, 'login']);
+        Route::post('/login', [UserController::class, 'login']);
         Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
-        Route::post('/reset-password',  [ResetPasswordController::class, 'reset']);
+        Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
         // Protected auth routes
         Route::middleware('auth:sanctum')->group(function () {
-            Route::post('/logout',         [UserController::class, 'logout']);
-            Route::get('/me',              [AuthApiController::class, 'me']);
-            Route::put('/update-profile',  [AuthApiController::class, 'updateProfile']);
-            Route::post('/upload-avatar',  [AuthApiController::class, 'uploadAvatar']);
+            Route::post('/logout', [UserController::class, 'logout']);
+            Route::get('/me', [AuthApiController::class, 'me']);
+            Route::put('/update-profile', [AuthApiController::class, 'updateProfile']);
+            Route::post('/upload-avatar', [AuthApiController::class, 'uploadAvatar']);
         });
     });
 
@@ -291,12 +293,12 @@ Route::prefix('api')->group(function () {
     | CUSTOMER — Public catalogue (no auth required)
     |--------------------------------------------------------------------------
     */
-    Route::get('/vendors',        [CustomerApiController::class, 'vendors']);
-    Route::get('/vendors/{id}',   [CustomerApiController::class, 'showVendor']);
-    Route::get('/categories',     [CustomerApiController::class, 'categories']);
-    Route::get('/products',       [CustomerApiController::class, 'products']);
-    Route::get('/products/{id}',  [CustomerApiController::class, 'showProduct']);
-    Route::get('/vendors/{id}/reviews',  [ReviewController::class, 'index']);
+    Route::get('/vendors', [CustomerApiController::class, 'vendors']);
+    Route::get('/vendors/{id}', [CustomerApiController::class, 'showVendor']);
+    Route::get('/categories', [CustomerApiController::class, 'categories']);
+    Route::get('/products', [CustomerApiController::class, 'products']);
+    Route::get('/products/{id}', [CustomerApiController::class, 'showProduct']);
+    Route::get('/vendors/{id}/reviews', [ReviewController::class, 'index']);
     Route::middleware('auth:sanctum')->post('/vendors/{id}/reviews', [ReviewController::class, 'store']);
     Route::get('/customers/{id}/reviews', [ReviewController::class, 'indexCustomerReviews']);
 
@@ -308,27 +310,28 @@ Route::prefix('api')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
 
         // Orders
-        Route::post('/orders',              [OrderController::class, 'store']);
-        Route::get('/orders',               [OrderController::class, 'all']);
-        Route::get('/orders/{order}',       [OrderController::class, 'show']);
-        Route::put('/orders/{order}/cancel',[OrderController::class, 'cancel']);
+        Route::post('/orders', [OrderController::class, 'store']);
+        Route::get('/orders', [OrderController::class, 'all']);
+        Route::get('/orders/{order}', [OrderController::class, 'show']);
+        Route::put('/orders/{order}/cancel', [OrderController::class, 'cancel']);
 
         // Cart
-        Route::apiResource('cart', \App\Http\Controllers\CartController::class);
+        Route::apiResource('cart', CartController::class);
 
         // Payments
-        Route::post('/payments/initiate',   [PaymentApiController::class, 'initiate']);
-        Route::post('/payments/verify',     [PaymentApiController::class, 'verify']);
-        Route::get('/payments/history',     [PaymentApiController::class, 'history']);
+        Route::post('/payments/initiate', [PaymentApiController::class, 'initiate']);
+        Route::post('/payments/verify', [PaymentApiController::class, 'verify']);
+        Route::get('/payments/history', [PaymentApiController::class, 'history']);
 
         // Notifications
         Route::post('/notifications/token', function (Request $request) {
             $request->validate(['token' => 'required|string']);
             $request->user()->update(['fcm_token' => $request->token]);
+
             return response()->json(['status' => true, 'message' => 'FCM token saved.', 'data' => []]);
         });
-        Route::get('/notifications',             [NotificationController::class, 'index']);
-        Route::put('/notifications/{id}/read',   [NotificationController::class, 'markAsRead']);
+        Route::get('/notifications', [NotificationController::class, 'index']);
+        Route::put('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
     });
 
     /*
@@ -341,24 +344,24 @@ Route::prefix('api')->group(function () {
     */
     Route::middleware(['auth:sanctum', 'vendor'])->prefix('vendor')->group(function () {
         // Profile
-        Route::get('/profile',         [VendorApiController::class, 'profile']);
-        Route::put('/profile',         [VendorApiController::class, 'updateProfile']);
-        Route::post('/upload-logo',    [VendorApiController::class, 'uploadLogo']);
-        Route::post('/upload-banner',  [VendorApiController::class, 'uploadBanner']);
+        Route::get('/profile', [VendorApiController::class, 'profile']);
+        Route::put('/profile', [VendorApiController::class, 'updateProfile']);
+        Route::post('/upload-logo', [VendorApiController::class, 'uploadLogo']);
+        Route::post('/upload-banner', [VendorApiController::class, 'uploadBanner']);
 
         // Products (ingredients in vendor context — READ ONLY)
-        Route::get('/products',            [VendorApiController::class, 'products']);
-        Route::get('/products/{id}',       [VendorApiController::class, 'showProduct']);
+        Route::get('/products', [VendorApiController::class, 'products']);
+        Route::get('/products/{id}', [VendorApiController::class, 'showProduct']);
 
         // Orders
-        Route::get('/orders',              [VendorApiController::class, 'orders']);
-        Route::get('/orders/{id}',         [VendorApiController::class, 'showOrder']);
-        Route::put('/orders/{id}/status',  [VendorApiController::class, 'updateOrderStatus']);
+        Route::get('/orders', [VendorApiController::class, 'orders']);
+        Route::get('/orders/{id}', [VendorApiController::class, 'showOrder']);
+        Route::put('/orders/{id}/status', [VendorApiController::class, 'updateOrderStatus']);
 
         // Earnings & Payouts
-        Route::get('/earnings',            [VendorApiController::class, 'earnings']);
-        Route::get('/payouts',             [VendorApiController::class, 'payouts']);
-        Route::post('/payouts/request',    [VendorApiController::class, 'requestPayout']);
+        Route::get('/earnings', [VendorApiController::class, 'earnings']);
+        Route::get('/payouts', [VendorApiController::class, 'payouts']);
+        Route::post('/payouts/request', [VendorApiController::class, 'requestPayout']);
         Route::post('/customers/{id}/reviews', [ReviewController::class, 'storeCustomerReview']);
     });
 
@@ -369,34 +372,34 @@ Route::prefix('api')->group(function () {
     */
     Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
         // Users
-        Route::get('/users',                    [AdminApiController::class, 'users']);
-        Route::put('/users/{id}/suspend',       [AdminApiController::class, 'suspendUser']);
+        Route::get('/users', [AdminApiController::class, 'users']);
+        Route::put('/users/{id}/suspend', [AdminApiController::class, 'suspendUser']);
 
         // Vendors
-        Route::get('/vendors',                  [AdminApiController::class, 'vendors']);
-        Route::put('/vendors/{id}/approve',     [AdminApiController::class, 'approveVendor']);
-        Route::put('/vendors/{id}/reject',      [AdminApiController::class, 'rejectVendor']);
+        Route::get('/vendors', [AdminApiController::class, 'vendors']);
+        Route::put('/vendors/{id}/approve', [AdminApiController::class, 'approveVendor']);
+        Route::put('/vendors/{id}/reject', [AdminApiController::class, 'rejectVendor']);
 
         // Ingredients Management (Products)
-        Route::get('/ingredients',               [AdminApiController::class, 'ingredients']);
-        Route::post('/ingredients',              [AdminApiController::class, 'storeIngredient']);
-        Route::put('/ingredients/{id}',          [AdminApiController::class, 'updateIngredient']);
-        Route::delete('/ingredients/{id}',       [AdminApiController::class, 'destroyIngredient']);
+        Route::get('/ingredients', [AdminApiController::class, 'ingredients']);
+        Route::post('/ingredients', [AdminApiController::class, 'storeIngredient']);
+        Route::put('/ingredients/{id}', [AdminApiController::class, 'updateIngredient']);
+        Route::delete('/ingredients/{id}', [AdminApiController::class, 'destroyIngredient']);
         Route::post('/ingredients/{id}/upload-image', [AdminApiController::class, 'uploadIngredientImage']);
 
         // Orders & Payments
-        Route::get('/orders',                   [AdminApiController::class, 'orders']);
-        Route::get('/payments',                 [AdminApiController::class, 'payments']);
+        Route::get('/orders', [AdminApiController::class, 'orders']);
+        Route::get('/payments', [AdminApiController::class, 'payments']);
 
         // Categories
-        Route::get('/categories',               [AdminApiController::class, 'categories']);
-        Route::post('/categories',              [AdminApiController::class, 'storeCategory']);
-        Route::put('/categories/{id}',          [AdminApiController::class, 'updateCategory']);
-        Route::delete('/categories/{id}',       [AdminApiController::class, 'destroyCategory']);
+        Route::get('/categories', [AdminApiController::class, 'categories']);
+        Route::post('/categories', [AdminApiController::class, 'storeCategory']);
+        Route::put('/categories/{id}', [AdminApiController::class, 'updateCategory']);
+        Route::delete('/categories/{id}', [AdminApiController::class, 'destroyCategory']);
 
         // Notifications & Dashboard
-        Route::post('/notifications/send',      [AdminApiController::class, 'sendNotification']);
-        Route::get('/dashboard/stats',          [AdminApiController::class, 'dashboardStats']);
+        Route::post('/notifications/send', [AdminApiController::class, 'sendNotification']);
+        Route::get('/dashboard/stats', [AdminApiController::class, 'dashboardStats']);
     });
 
 }); // end /api
