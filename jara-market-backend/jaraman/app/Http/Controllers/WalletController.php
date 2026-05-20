@@ -6,10 +6,6 @@ use App\Models\Wallet;
 use Illuminate\Http\Request; // Assuming you have a Wallet model
 
 /**
- * @OA\Info(title="JaraMarket API", version="1.0")
- *
- * @OA\Server(url="http://localhost:8000")
- *
  * @OA\PathItem(
  *     path="/orders",
  *     description="Operations related to orders"
